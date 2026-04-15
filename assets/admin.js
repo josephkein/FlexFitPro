@@ -1,4 +1,19 @@
 
+    
+
+    fetch('./api/dashboard-api.php', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json'},
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('total_revenue').textContent = `$${data.total}`;
+        document.getElementById('year').textContent = data.year;
+        document.getElementById('monthly_visit').textContent = data.monthly_visit;
+        document.getElementById('daily_revenue').textContent = `$${data.daily}`;
+        document.getElementById('total_visit').textContent = data.total_visit;
+    })
+
     const options = {
         chart: {
             type: 'area',
@@ -6,7 +21,7 @@
         },
         series: [{
             name: 'Revenue',
-            data: [4000, 1500, 2000, 3800, 3550, 5400, 1200, 2400, 2800, 1400, 3200, 4200]
+            data: [1000, 1500, 2000, 3800, 3550, 5400, 1200, 2400, 2800, 1400, 3200, 4200]
         }],
         colors:['#7F22FE'],
         xaxis: {
