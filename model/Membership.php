@@ -8,6 +8,10 @@
             $this->db = $db;
         }
        
+        // display members
+        public function display(){
+            
+        }
     }
 
 ?>
