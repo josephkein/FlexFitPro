@@ -13,6 +13,9 @@
         public function totalVisit(){
             return $this->visit->getTotalVisits();
         }
+        public function dailyVisits(){
+            return $this->visit->dailyVisits();
+        }
     }
 
 ?>

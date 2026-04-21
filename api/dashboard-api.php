@@ -20,14 +20,18 @@
     $daily = $payController->dailyRevenue();
     $monthly = $visitController->monthlyVisit();
     $total_visit = $visitController->totalVisit();
+    $monthlyReven = $payController->getMonthly();
+    $daily_visit = $visitController->dailyVisits();
     
 
     echo json_encode([
         'total' => $data,
+        'monthly_revenue' => $monthlyReven,
         'year' => date('Y'),
         'monthly_visit' => $monthly,
         'daily' => $daily,
-        'total_visit' => $total_visit
+        'total_visit' => $total_visit,
+        'daily_visit' => $daily_visit
     ]);
 
 ?>

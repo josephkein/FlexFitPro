@@ -11,8 +11,8 @@
         public function login($user, $pass){
             return $this->user->auth($user, $pass);
         }
-        public function create($user, $pass, $role){
-            return $this->user->create($user, $pass, $role);
+        public function create($user, $pass, $role, $status){
+            return $this->user->create($user, $pass, $role, $status);
         }
     }
 

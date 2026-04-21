@@ -21,6 +21,9 @@
         case 'trainers':
             require './views/trainers.php';
             break;
+        case 'assign':
+            require './views/trainer_assignment.php';
+            break;
         case 'visits':
             require './views/visits.php';
             break;

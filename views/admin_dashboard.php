@@ -30,17 +30,13 @@
         <?php include './views/sidebar.php' ?>
         <!-- MAIN CONTENTS -->
         <div class="flex flex-col w-full">
-            <header class="flex justify-between items-center px-6 py-4">
-                <div class="flex flex-col gap-2">
-                    <div class="text-2xl font-medium">Dashboard</div>
-                    <span class="text-3xl text-gray-400">Welcome! Admin</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span class="flex items-center justify-center rounded-full text-xl text-white font-bold p-3 bg-violet-500"><?= strtoupper($_SESSION['role'][0] . $_SESSION['role'][1]) ?></span>
-                </div>
-            </header>
-            <main class="flex flex-col w-full px-6 mt-2 gap-6">  
-                <div class="flex flex-col gap-2 w-full">
+            <?php include './views/header.php'?>
+            <main class="flex flex-col w-full px-6 mt-5 gap-6">  
+                <div class="flex flex-col gap-4 w-full">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-3xl font-medium">Dashboard</span>
+                        <span class="text-gray-500 text-lg">Overview of gym revenue, visits, and activity analytics.</span>
+                    </div>
                     <div class="flex gap-4 flex-wrap">
 
                         <div class="flex flex-1 flex-col justify-center gap-2 p-4 bg-white shadow-md rounded border-l-2 border-violet-600 w-full">
@@ -51,7 +47,6 @@
                                 </div>
                             </div>
                             <div class="text-3xl font-bold" id="total_revenue">$482,300</div>
-                            <span class="text-sm text-green-500">+12.4% vs last month</span>
                         </div>
 
                         <div class="flex flex-1 flex-col justify-center gap-2 p-4 bg-white shadow-md rounded border-l-2 border-violet-600 w-full">
@@ -62,7 +57,6 @@
                                 </div>
                             </div>
                             <div class="text-3xl font-bold" id="daily_revenue">$0</div>
-                            <span class="text-sm text-green-500">+12.4% vs lastmonth</span>
                         </div>
 
                         <div class="flex flex-1 flex-col justify-center gap-2 p-4 bg-white shadow-md rounded border-l-2 border-violet-600 w-full">
@@ -73,7 +67,6 @@
                                 </div>
                             </div>
                             <div class="text-3xl font-bold" id="total_visit">0</div>
-                            <span class="text-sm text-green-500">+12.4% vs last month</span>
                         </div>
 
                         <div class="flex flex-1 flex-col justify-center gap-2 p-4 bg-white shadow-md rounded border-l-2 border-violet-600 w-full">
@@ -84,7 +77,6 @@
                                 </div>
                             </div>
                             <div class="text-3xl font-bold" id="monthly_visit">0</div>
-                            <span class="text-sm text-green-500">+12.4% vs last month</span>
                         </div>
 
                     </div>
@@ -92,7 +84,6 @@
                 <!-- ANALYTICS CHARTS -->
                 <div class="analytics">
                     <div class="flex flex-col gap-2 w-full">
-                        <div class="text-gray-500 font-medium">ANALYTICS</div>
                         <div class="flex flex-wrap gap-4">
                             <div class="flex flex-1 flex-col gap-4 bg-white p-6 rounded-lg shadow-md">
                                 <div class="flex justify-between">

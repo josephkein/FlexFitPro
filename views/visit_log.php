@@ -25,16 +25,14 @@
 
         <!-- MAIN CONTENTS -->
         <div class="flex flex-col w-full overflow-auto">
-            <header class="flex justify-between items-center px-10 py-4 bg-white border-b-1 border-violet-200">
-                <div class="text-2xl font-medium">Visit Log</div>
-                <div class="flex items-center gap-4">
-                    <span class="flex items-center justify-center rounded-full text-xl text-white font-bold p-3 bg-violet-500"><?= strtoupper($_SESSION['role'][0] . $_SESSION['role'][1]) ?></span>
-                </div>
-            </header>
+            <?php include './views/header.php'?>
 
             <main class="flex flex-col w-full px-6 mt-5 gap-6">
 
-
+                <div class="flex flex-col gap-1">
+                        <span class="text-3xl font-medium">Visit Log</span>
+                        <span class="text-gray-500 text-lg">Record daily gym visits and monitor customer attendance.</span>
+                </div>
                 <!-- TOOLBAR -->
                 <div class="flex flex-wrap items-center justify-between gap-4">
                     <div class="flex items-center gap-2 bg-white border border-gray-200 rounded px-4 py-2 w-full max-w-sm">
@@ -58,64 +56,39 @@
                 <!-- TABLE -->
                 <div class="bg-white shadow-md rounded overflow-auto">
                     <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-                        <span class="font-medium">Visit Log — <?= date('F d, Y') ?></span>
-                        <span class="text-sm text-gray-400">0 entries</span>
+                        <span class="font-medium text-lg">Visit List</span>
                     </div>
-                    <table class="w-full text-sm">
-                        <thead class="text-gray-400 text-xs uppercase border-b border-gray-100">
+                    <table class="w-full text-md">
+                        <thead class="text-gray-400 text-md uppercase border-b border-gray-100">
                             <tr>
-                                <th class="px-6 py-3 text-left">Member</th>
-                                <th class="px-6 py-3 text-left">Member ID</th>
-                                <th class="px-6 py-3 text-left">Check-in</th>
-                                <th class="px-6 py-3 text-left">Check-out</th>
-                                <th class="px-6 py-3 text-left">Duration</th>
-                                <th class="px-6 py-3 text-left">Status</th>
+                                <th class="px-6 py-3 text-left">Date</th>
+                                <th class="px-6 py-3 text-left">Customer</th>
+                                <th class="px-6 py-3 text-left">Type</th>
+                                <th class="px-6 py-3 text-left">Staff</th>
+                                <th class="px-6 py-3 text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <tr>
+                                <td class="px-6 py-3">2026-01-01</td>
+                                <td class="px-6 py-3">John Doe</td>
+                                <td class="px-6 py-3">Student</td>
+                                <td class="px-6 py-3">John Doe</td>
                                 <td class="px-6 py-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-8 h-8 rounded-full bg-violet-500 text-white flex items-center justify-center text-xs font-bold">JR</span>
-                                        Juan Reyes
+                                    <div class="flex gap-2">
+                                        <button class="bg-blue-500 p-2 rounded-md text-md">
+                                            <img src="./images/edit.png" alt="">
+                                        </button>
+                                        <button class="bg-red-500 p-2 rounded-md text-md">
+                                            <img src="./images/delete.png" alt="">
+                                        </button>
                                     </div>
                                 </td>
-                                <td class="px-6 py-3 text-gray-400">MBR-0041</td>
-                                <td class="px-6 py-3">6:12 AM</td>
-                                <td class="px-6 py-3">7:45 AM</td>
-                                <td class="px-6 py-3">93 min</td>
-                                <td class="px-6 py-3"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">Completed</span></td>
                             </tr>
-                            <tr>
-                                <td class="px-6 py-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">MC</span>
-                                        Maria Cruz
-                                    </div>
-                                </td>
-                                <td class="px-6 py-3 text-gray-400">MBR-0039</td>
-                                <td class="px-6 py-3">7:01 AM</td>
-                                <td class="px-6 py-3">8:30 AM</td>
-                                <td class="px-6 py-3">89 min</td>
-                                <td class="px-6 py-3"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-8 h-8 rounded-full bg-yellow-500 text-white flex items-center justify-center text-xs font-bold">AL</span>
-                                        Angelo Lim
-                                    </div>
-                                </td>
-                                <td class="px-6 py-3 text-gray-400">MBR-0035</td>
-                                <td class="px-6 py-3">5:30 PM</td>
-                                <td class="px-6 py-3">—</td>
-                                <td class="px-6 py-3">Active</td>
-                                <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Checked In</span></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
-                    <div class="flex justify-between items-center px-6 py-4 border-t border-gray-100">
-                        <span class="text-sm text-gray-400">Showing 1–10 of 0 results</span>
+                    <div class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-sm border border-gray-200 rounded hover:bg-violet-50">Prev</button>
                             <button class="px-3 py-1 text-sm border border-violet-600 bg-violet-600 text-white rounded">1</button>

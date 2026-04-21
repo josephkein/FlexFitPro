@@ -7,8 +7,8 @@
         {
             $this->payment = $payment;
         }
-        public function getRevenue($month){
-            return $this->payment->getRevenue($month);
+        public function getMonthly(){
+            return $this->payment->monthly();
         }
         public function totalRevenue(){
             return $this->payment->getTotalRevenue();

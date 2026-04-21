@@ -25,15 +25,13 @@
 
         <!-- MAIN CONTENTS -->
         <div class="flex flex-col w-full overflow-auto">
-            <header class="flex justify-between items-center px-10 py-4 bg-white border-b-1 border-violet-200">
-                <div class="text-2xl font-medium">Memberships</div>
-                <div class="flex items-center gap-4">
-                    <span class="flex items-center justify-center rounded-full text-xl text-white font-bold p-3 bg-violet-500"><?= strtoupper($_SESSION['role'][0] . $_SESSION['role'][1]) ?></span>
-                </div>
-            </header>
+            <?php include './views/header.php'?>
 
             <main class="flex flex-col w-full px-6 mt-5 gap-6">
-
+                <div class="flex flex-col gap-1">
+                        <span class="text-3xl font-medium">Memberships</span>
+                        <span class="text-gray-500 text-lg">View active and expired memberships based on payment history.</span>
+                </div>
                 <!-- PLAN CARDS -->
                 <div class="flex flex-col gap-3">
                     <div class="flex justify-between items-center">
@@ -96,46 +94,64 @@
                 </div>
 
                 <!-- SUBSCRIBER TABLE -->
-                <div class="bg-white shadow-md rounded overflow-auto">
+                <div class="bg-white shadow-md rounded overflow-auto max-h-150">
                     <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-                        <span class="font-medium text-lg">Subscriber Breakdown</span>
+                        <span class="font-medium text-lg">Members Breakdown</span>
                     </div>
                     <table class="w-full text-md">
                         <thead class="text-gray-400 text-xs uppercase border-b border-gray-100">
                             <tr>
+                                <th class="px-6 py-3 text-left">Customer</th>
                                 <th class="px-6 py-3 text-left">Plan</th>
-                                <th class="px-6 py-3 text-left">Price</th>
-                                <th class="px-6 py-3 text-left">Duration</th>
-                                <th class="px-6 py-3 text-left">Subscribers</th>
-                                <th class="px-6 py-3 text-left">Est. Monthly Rev.</th>
+                                <th class="px-6 py-3 text-left">Start Date</th>
+                                <th class="px-6 py-3 text-left">Expiration Date</th>
                                 <th class="px-6 py-3 text-left">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <tr>
+                                <td class="px-6 py-3">Jkeinskie</td>
                                 <td class="px-6 py-3"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">Basic</span></td>
-                                <td class="px-6 py-3">₱800</td>
-                                <td class="px-6 py-3">Monthly</td>
-                                <td class="px-6 py-3 font-medium">384</td>
-                                <td class="px-6 py-3 font-medium">₱460,800</td>
+                                <td class="px-6 py-3">2026-01-20</td>
+                                <td class="px-6 py-3">2026-02-20</td>
                                 <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Active</span></td>
                             </tr>
                             <tr>
+                                <td class="px-6 py-3">Jkeinskie</td>
                                 <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Pro</span></td>
-                                <td class="px-6 py-3">₱2,300</td>
-                                <td class="px-6 py-3">Quarterly</td>
-                                <td class="px-6 py-3 font-medium">455</td>
-                                <td class="px-6 py-3 font-medium">₱532,500</td>
+                                <td class="px-6 py-3">2026-01-20</td>
+                                <td class="px-6 py-3">2026-02-20</td>
                                 <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Active</span></td>
                             </tr>
                             <tr>
+                                <td class="px-6 py-3">Jkeinskie</td>
                                 <td class="px-6 py-3"><span class="bg-violet-100 text-violet-700 text-xs px-2 py-1 rounded-full">Premium</span></td>
-                                <td class="px-6 py-3">₱5,800</td>
-                                <td class="px-6 py-3">Annual</td>
-                                <td class="px-6 py-3 font-medium">245</td>
-                                <td class="px-6 py-3 font-medium">₱118,250</td>
+                                <td class="px-6 py-3">2026-01-20</td>
+                                <td class="px-6 py-3">2026-02-20</td>
                                 <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Active</span></td>
                             </tr>
+                             <tr>
+                                <td class="px-6 py-3">Jkeinskie</td>
+                                <td class="px-6 py-3"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">Basic</span></td>
+                                <td class="px-6 py-3">2026-01-20</td>
+                                <td class="px-6 py-3">2026-02-20</td>
+                                <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-3">Jkeinskie</td>
+                                <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Pro</span></td>
+                                <td class="px-6 py-3">2026-01-20</td>
+                                <td class="px-6 py-3">2026-02-20</td>
+                                <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-3">Jkeinskie</td>
+                                <td class="px-6 py-3"><span class="bg-violet-100 text-violet-700 text-xs px-2 py-1 rounded-full">Premium</span></td>
+                                <td class="px-6 py-3">2026-01-20</td>
+                                <td class="px-6 py-3">2026-02-20</td>
+                                <td class="px-6 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Active</span></td>
+                            </tr>
+                            
                         </tbody>
                     </table>
                 </div>

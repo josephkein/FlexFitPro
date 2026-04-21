@@ -29,8 +29,8 @@
 
             <main class="flex flex-col w-full px-6 mt-5 gap-6">
                 <div class="flex flex-col gap-1">
-                        <span class="text-3xl font-medium">Trainers</span>
-                        <span class="text-gray-500 text-lg">Manage trainers and track status.</span>
+                        <span class="text-3xl font-medium">Assign Trainers</span>
+                        <span class="text-gray-500 text-lg">Manage trainer assignment and track date.</span>
                 </div>
                 <!-- KEY METRICS -->
                 <!-- <div class="flex flex-col gap-2 w-full">
@@ -56,14 +56,15 @@
                         <input type="text" placeholder="Search trainer..." class="outline-none text-md w-full">
                     </div>
                     <div class="flex gap-3">
-                        <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
-                            <option value="">All Status</option>
-                            <option value="available">Available</option>
-                            <option value="full">Full</option>
-                        </select>
+                        <div>
+                            <label for="date">End date:</label>
+                            <input type="date" value="<?= date('Y-m-d') ?>" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                        </div>
+                        
+                
                         <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            Add Trainer
+                            Assign
                         </button>
                     </div>
                 </div>
@@ -71,16 +72,15 @@
                 <!-- TABLE -->
                 <div class="bg-white shadow-md rounded overflow-auto">
                     <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-                        <span class="font-medium text-lg">Trainer List</span>
+                        <span class="font-medium text-lg">Assign List</span>
                     </div>  
                     <table class="w-full text-md">
                         <thead class="text-gray-400 text-md uppercase border-b border-gray-100">
                             <tr>
-                                <th class="px-6 py-3 text-left">Name</th>
-                                <th class="px-6 py-3 text-left">Rate</th>  
-                                <th class="px-6 py-3 text-left">Capacity</th>
-                                <th class="px-6 py-3 text-left">Current Trainees</th>
-                                <th class="px-6 py-3 text-left">Status</th>
+                                <th class="px-6 py-3 text-left">Customer</th>
+                                <th class="px-6 py-3 text-left">Trainer</th>  
+                                <th class="px-6 py-3 text-left">Start Date</th>
+                                <th class="px-6 py-3 text-left">End Date</th>
                                 <th class="px-6 py-3 text-left">Actions</th>
                             </tr>
                         </thead>
@@ -88,10 +88,9 @@
                             <!-- Rows populated via PHP or JS -->
                             <tr>
                                 <td class="px-6 py-3">John Doe</td>
-                                <td class="px-6 py-3">$300</td>
-                                <td class="px-6 py-3">5</td>
-                                <td class="px-6 py-3">4</td>
-                                <td class="px-6 py-3">Available</td>
+                                <td class="px-6 py-3">John Doe</td>
+                                <td class="px-6 py-3">2025-02-04</td>
+                                <td class="px-6 py-3">2025-03-04</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         <button class="bg-blue-500 p-2 rounded-md text-md">
@@ -104,11 +103,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-3">Court Justice</td>
-                                <td class="px-6 py-3">$100</td>
-                                <td class="px-6 py-3">4</td>
-                                <td class="px-6 py-3">2</td>
-                                <td class="px-6 py-3">Available</td>
+                                <td class="px-6 py-3">John Doe</td>
+                                <td class="px-6 py-3">John Doe</td>
+                                <td class="px-6 py-3">2025-02-04</td>
+                                <td class="px-6 py-3">2025-03-04</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         <button class="bg-blue-500 p-2 rounded-md text-md">
@@ -120,24 +118,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="px-6 py-3">Juan Ponce</td>
-                                <td class="px-6 py-3">$200</td>
-                                <td class="px-6 py-3">3</td>
-                                <td class="px-6 py-3">3</td>
-                                <td class="px-6 py-3">Full</td>
-                                <td class="px-6 py-3">
-                                    <div class="flex gap-2">
-                                        <button class="bg-blue-500 p-2 rounded-md text-md">
-                                            <img src="./images/edit.png" alt="">
-                                        </button>
-                                        <button class="bg-red-500 p-2 rounded-md text-md">
-                                            <img src="./images/delete.png" alt="">
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            
+
                         </tbody>
                     </table>
                     <!-- Pagination -->

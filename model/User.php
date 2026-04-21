@@ -23,7 +23,7 @@
             }
 
         }
-        public function create($user, $pass, $role){
+        public function create($user, $pass, $role, $status){
 
             // check if username already exist
             $check = $this->db->prepare('SELECT username FROM users WHERE username = ?');
@@ -35,9 +35,9 @@
             }
             // insert new user
             $hashed = password_hash($pass, PASSWORD_DEFAULT);
-            $query = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+            $query = "INSERT INTO users (username, password, role, status) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param('sss', $user, $hashed, $role);
+            $stmt->bind_param('ssss', $user, $hashed, $role, $status);
             return $stmt->execute();
         }
         public function update(){

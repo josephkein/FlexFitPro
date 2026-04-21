@@ -18,7 +18,7 @@
 </head>
 <body>
     <!-- SIDE BAR -->
-        <aside class="hidden md:flex flex-col gap-6 bg-violet-600 h-full max-w-sm w-full py-6 shrink">
+        <aside class="hidden md:flex flex-col gap-6 bg-violet-600 h-screen max-w-sm w-full py-6 shrink">
             <div class="flex gap-4 px-10 items-center cursor-pointer">
                 <div class="flex items-center justify-center bg-violet-400 p-2 rounded-xl h-15 w-15">
                     <img src="./images/flexfit.png" alt="logo" class="h-full w-full">
@@ -49,6 +49,12 @@
                             <img src="./images/trainer.png" alt="">
                         </div>
                         <span class="text-white text-xl">Trainers</span>
+                    </a>
+                    <a href="./index.php?url=assign" class="flex gap-4">
+                        <div class="">
+                            <img src="./images/file.png" alt="">
+                        </div>
+                        <span class="text-white text-xl">Assign-Trainer</span>
                     </a>
                     <a href="./index.php?url=visits" class="flex gap-4">
                         <div class="">
