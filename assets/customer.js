@@ -97,3 +97,22 @@ document.getElementById('memberFilter').addEventListener('change', function(){
     })
 
 })
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    e.preventDefault();
+    debounce(e.target.value);
+})
+
+let timeout;
+
+function debounce(text){
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() =>{
+        fetch(`./api/customers/display.php?search=${text}`)
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+    }, 1000)
+}

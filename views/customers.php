@@ -154,7 +154,7 @@
                 </div>
                
                <div class="flex justify-end gap-3 pt-2">
-                   <button onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                   <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
                    <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Member</button>
                </div>
            </form>
