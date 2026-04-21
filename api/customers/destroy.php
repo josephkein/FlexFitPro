@@ -9,13 +9,13 @@
     $customer = new Customer($db->getConnection());
     $controller = new CustomerController($customer);
 
-
+    $id = $_POST['id'] ?? '';
 
     $controller->delete($id);
     
     echo json_encode([
         'status' => 'success',
-        'message' => 'Customer added successfully'
+        'message' => 'Customer deleted successfully'
     ]); 
 
 ?>

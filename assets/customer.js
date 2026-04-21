@@ -1,10 +1,14 @@
+
+// Open add customer form
 function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
 
+// Close add customer form
 function closeAddModal() { 
     document.getElementById('addModal').classList.add('hidden'); 
     document.getElementById('customer-form').reset();
 }
 
+// Render or display customer's data
 function renderData(data){
     document.getElementById('membersTable').innerHTML = '';
         data.forEach((d) => {
@@ -14,25 +18,25 @@ function renderData(data){
                             <tr>
                                 <td class="px-6 py-3">${d.name}</td>
                                 <td class="px-6 py-3 flex items-center"><span class="${type} py-1 px-3 rounded-full">${d.type}</span></td>
-                                <td class="px-6 py-3">${d.member == null ? 'None' : d.member}</td>
+                                <td class="px-6 py-3">${d.member == null ? 'None' : 'Member'}</td>
                                 <td class="px-6 py-3 ${color}">${d.trainer == null ? 'None' : d.trainer}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         <button class="bg-blue-500 p-2 rounded-md text-md" id="update-customer">
                                             <img src="./images/edit.png" alt="">
                                         </button>
-                                        <button class="bg-red-500 p-2 rounded-md text-md" id="delete-customer" onclick="deleteCustomer(${d.id})">
-                                            <img src="./images/delete.png" alt="">
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
             `;
         })
+
+        // Display pagination when length of data is 7 above
         if (data.length < 7) document.getElementById('pagination').classList.add('hidden');
        else document.getElementById('pagination').classList.remove('hidden');
 }
 
+// Load customers in table
 function loadCustomers(){
     fetch('./api/customers/display.php')
     .then(res => res.json())
@@ -44,7 +48,7 @@ function loadCustomers(){
 
 loadCustomers();
 
-
+// Add new customer
 document.getElementById('customer-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -76,6 +80,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     })
 })
 
+// Filter customer by type
 document.getElementById('typeFilter').addEventListener('change', function(){
     let val = this.value;
 
@@ -87,6 +92,7 @@ document.getElementById('typeFilter').addEventListener('change', function(){
 
 })
 
+// Filter customer by membership
 document.getElementById('memberFilter').addEventListener('change', function(){
     let val = this.value;
 
@@ -98,11 +104,13 @@ document.getElementById('memberFilter').addEventListener('change', function(){
 
 })
 
+// Live search by name
 document.getElementById('searchInput').addEventListener('input', (e) => {
     e.preventDefault();
     debounce(e.target.value);
 })
 
+// Debouncing technique for controlling live search
 let timeout;
 
 function debounce(text){
@@ -116,3 +124,39 @@ function debounce(text){
         })
     }, 1000)
 }
+
+// // Delete customer
+// function deleteCustomer(id){
+//     Swal.fire({
+//         icon: 'warning',
+//         title: 'Are you sure?',
+//         text: "You won't be able to revert this!",
+//         showCancelButton: true,
+//         confirmButtonColor: "#3085d6",
+//         cancelButtonColor: "#d33",
+//         confirmButtonText: "Yes, delete it!"
+//     })
+//     .then((res) => {
+//         if (res.isConfirmed){
+//             fetch ('./api/customers/destroy.php', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded'
+//                 },
+//                 body: new URLSearchParams({ id })
+//             })
+//             .then(res => res.json())
+//             .then(data => {
+//                 if (data.status == 'success'){
+//                     Swal.fire({
+//                         title: "Deleted!",
+//                         text: "Customer successfully deleted!",
+//                         icon: "success"
+//                     })
+//                     loadCustomers();
+//                 }
+//             })
+//         }
+//     })
+    
+// }
