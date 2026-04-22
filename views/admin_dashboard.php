@@ -115,7 +115,7 @@
         </div>
    </div>
 
-   <script src="./assets/admin.js"></script>
+   <script src="./assets/js/admin.js"></script>
 
 </body>
 </html>

@@ -19,9 +19,8 @@
                 if (password_verify($pass, $assoc['password'])){
                     return $assoc['role'];
                 }
-                return null;
             }
-
+            return null;
         }
         public function create($user, $pass, $role, $status){
 

@@ -161,6 +161,6 @@
        </div>
    </div>
 
-   <script src="./assets/customer.js"></script>
+   <script src="./assets/js/customer.js"></script>
 </body>
 </html>

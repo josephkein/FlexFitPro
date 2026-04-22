@@ -125,7 +125,7 @@ function debounce(text){
     }, 1000)
 }
 
-// // Delete customer
+// Delete customer
 // function deleteCustomer(id){
 //     Swal.fire({
 //         icon: 'warning',

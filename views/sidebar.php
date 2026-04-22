@@ -7,6 +7,7 @@
     <!-- <link rel="stylesheet" href="./assets/output.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Dashboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
@@ -95,7 +96,7 @@
             </div>
             <div class="flex flex-col gap-2 border-t-2 border-violet-500 pt-4">
                 <nav class="flex flex-col [&>a]:hover:bg-violet-500 [&>a]:py-3 [&>a]:px-10">
-                    <a href="./actions/logout.php" class="flex gap-4 items-center">
+                    <a class="flex gap-4 items-center cursor-pointer" id="logout">
                         <div class="">
                             <img src="./images/out.png" alt="">
                         </div>
@@ -104,5 +105,6 @@
                 </nav>
             </div>
         </aside>
+        <script src="./assets/js/sidebar.js"></script>
 </body>
 </html>
