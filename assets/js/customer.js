@@ -7,9 +7,39 @@ function closeAddModal() {
     document.getElementById('addModal').classList.add('hidden'); 
     document.getElementById('customer-form').reset();
 }
+let page = 1;
+
+const next = document.getElementById('next');
+const prev = document.getElementById('prev');
+// Pagination
+next.addEventListener('click', (e) => {
+    e.preventDefault();
+    page++;
+    fetch(`./api/customers/display.php?page=${page}`)
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('page').textContent = page;
+        renderData(data);
+    })
+})
+
+prev.addEventListener('click', (e) => {
+    e.preventDefault();
+    page--;
+    fetch(`./api/customers/display.php?page=${page}`)
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('page').textContent = page;
+        renderData(data);
+    })
+})
 
 // Render or display customer's data
 function renderData(data){
+
+    next.disabled = false;
+    prev.disabled = false;
+
     document.getElementById('membersTable').innerHTML = '';
         data.forEach((d) => {
             let type = d.type == 'student' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600';
@@ -22,7 +52,7 @@ function renderData(data){
                                 <td class="px-6 py-3 ${color}">${d.trainer == null ? 'None' : d.trainer}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
-                                        <button class="bg-blue-500 p-2 rounded-md text-md" id="update-customer">
+                                        <button class="bg-blue-500 p-2 rounded-md text-md" id="update-customer" onclick="updateCustomer(${d.id})">
                                             <img src="./images/edit.png" alt="">
                                         </button>
                                     </div>
@@ -32,8 +62,11 @@ function renderData(data){
         })
 
         // Display pagination when length of data is 7 above
-        if (data.length < 7) document.getElementById('pagination').classList.add('hidden');
+        if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
        else document.getElementById('pagination').classList.remove('hidden');
+
+       if (data.length < 7) next.disabled = true;
+       if (page == 1) prev.disabled = true;
 }
 
 // Load customers in table
@@ -77,6 +110,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
             })
            
         }
+        loadCustomers();
     })
 })
 
@@ -93,10 +127,10 @@ document.getElementById('typeFilter').addEventListener('change', function(){
 })
 
 // Filter customer by membership
-document.getElementById('memberFilter').addEventListener('change', function(){
+document.getElementById('orderFilter').addEventListener('change', function(){
     let val = this.value;
 
-    fetch(`./api/customers/display.php?member=${val}`)
+    fetch(`./api/customers/display.php?order=${val}`)
     .then(res => res.json())
     .then(data => {
         renderData(data);
@@ -160,3 +194,25 @@ function debounce(text){
 //     })
     
 // }
+function openUpdate(){
+    document.getElementById('updateDiv').classList.remove('hidden');
+}
+
+function closeUpdate(){
+    document.getElementById('updateDiv').classList.add('hidden');
+}
+
+function updateCustomer(id){
+    openUpdate();
+
+    console.log(id);
+    fetch('./api/customers/get.php?id=' + id)
+    .then(res => res.json())
+    .then(data => {
+        let name = data.customer_name.split(' ');
+        document.getElementById('up_first').value = name[0];
+        document.getElementById('up_last').value = name[1];
+        document.getElementById('up_type').value = data.customer_type;
+    })
+
+}

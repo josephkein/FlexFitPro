@@ -14,13 +14,18 @@
         }
 
         // display customers
-        public function display($search, $type, $member){
-            return $this->customer->display($search, $type, $member);
+        public function display($search, $type, $order, $limit, $off){
+            return $this->customer->display($search, $type, $order, $limit, $off);
         }
 
         // delete customers
         public function delete($id){
             return $this->customer->destroy($id);
+        }
+
+        // get user
+        public function getCustomer($id){
+            return $this->customer->get($id);
         }
     }
 

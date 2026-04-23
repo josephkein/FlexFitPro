@@ -10,18 +10,12 @@ function showPass(){
 
 const loginForm = document.getElementById('login');
 const loginBtn = document.getElementById('loginBtn');
-const user = d
-
 
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     loginBtn.disabled = true;
     loginBtn.textContent = 'Logging in..';
-
-    const outline = 'focus:outline-violet-500';
-    const error_out = 'border-red-500 focus:outline-red-400';
-
 
     try{
         fetch('./api/auth.php', {

@@ -9,7 +9,6 @@
     $empty_user = $_SESSION['empty_user'] ?? '';
     $empty_pass = $_SESSION['empty_pass'] ?? '';
 
-    // <?= $empty_pass ? 'border-red-500 focus:outline-red-400' : 'focus:outline-violet-500' ?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +47,7 @@
                     <div class="absolute top-10 left-3">
                         <img src="./images/user.png" alt="">
                     </div>
-                    <input type="text" name="user" id="user" class="border rounded py-2 px-11">
+                    <input type="text" name="user" id="user" class="border rounded py-2 px-11 focus:outline-violet-500">
                     <span class="text-red-500" id="error_required"></span>
                 </div>
                 <div class="relative flex flex-col gap-2">
@@ -56,7 +55,7 @@
                     <div class="absolute top-10 left-3">
                         <img src="./images/padlock.png" alt="">
                     </div>
-                    <input type="password" name="pass" id="pass" class="border rounded py-2 px-11">
+                    <input type="password" name="pass" id="pass" class="border rounded py-2 px-11 focus:outline-violet-500">
                     <span class="text-red-500" id="error_required"></span>
                     <label for="show" class="flex gap-2">
                         <input type="checkbox" name="show" id="show" onclick="showPass()">Show password

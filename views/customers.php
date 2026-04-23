@@ -65,10 +65,10 @@
                             <option value="regular">Regular</option>
                             <option value="student">Student</option>
                         </select>
-                        <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white" id="memberFilter">
-                            <option value="">Member</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                        <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white" id="orderFilter">
+                            <option value="">Order by</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
                         </select>
                         <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -116,14 +116,46 @@
                     <!-- Pagination -->
                     <div class="flex justify-center items-center px-6 py-4 border-t border-gray-100" id="pagination">
                         <div class="flex gap-2">
-                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded">1</button>
-                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50">Next</button>
+                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
+                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
                 </div>
 
             </main>
+        </div>
+   </div>
+
+   <div class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" id="updateDiv">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-xl">Customer Details</span>
+               <button onclick="closeUpdate()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form class="px-6 py-4 flex flex-col gap-4">
+                <input type="hidden" id="Upid" name="up_id">
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">First Name</label>
+                    <input type="text" name="update_first" id="up_first" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter first name">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Last Name</label>
+                    <input type="text" name="update_last" id="up_last"  class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter last name">
+                </div>
+                <div class="flex flex-col gap-1 flex-1">
+                    <label class="text-md text-gray-500">Type</label>
+                   <select name="up_type" id="up_type" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                       <option value="">Type</option>
+                       <option value="regular">Regular</option>
+                       <option value="student">Student</option>
+                   </select>
+                </div>
+                <div class="flex justify-end gap-3 pt-2">
+                   <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                   <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update</button>
+               </div>
+           </form>
         </div>
    </div>
 
@@ -155,7 +187,7 @@
                
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Member</button>
+                   <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Customer</button>
                </div>
            </form>
        </div>

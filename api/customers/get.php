@@ -9,15 +9,9 @@
     $customer = new Customer($db->getConnection());
     $controller = new CustomerController($customer);
 
-    $type = $_GET['type'] ?? '';
-    $order = $_GET['order'] ?? '';
-    $search = $_GET['search'] ?? '';
-    $page = $_GET['page'] ?? 1;
+    $id = $_GET['id'] ?? '';
 
-    $limit = 7;
-    $off = ($page - 1) * $limit;
-
-    $display = $controller->display($search, $type, strtoupper($order), $limit, $off);
+    $display = $controller->getCustomer($id);
     
     echo json_encode($display); 
 
