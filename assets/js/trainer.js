@@ -117,7 +117,7 @@ document.getElementById('trainerForm').addEventListener('submit', function(e) {
             })
            
         }
-        loadCustomers();
+        loadTrainers();
     })
 })
 
@@ -167,40 +167,40 @@ function debounce(text){
 }
 
 // Delete customer
-function deleteCustomer(id){
-    Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    })
-    .then((res) => {
-        if (res.isConfirmed){
-            fetch ('./api/customers/destroy.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({ id })
-            })
-            .then(res => res.json())
-            .then(data => { 
-                if (data.status == 'success'){
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Customer successfully deleted!",
-                        icon: "success"
-                    })
-                    loadCustomers();
-                }
-            })
-        }
-    })
+// function deleteTraine(id){
+//     Swal.fire({
+//         icon: 'warning',
+//         title: 'Are you sure?',
+//         text: "You won't be able to revert this!",
+//         showCancelButton: true,
+//         confirmButtonColor: "#3085d6",
+//         cancelButtonColor: "#d33",
+//         confirmButtonText: "Yes, delete it!"
+//     })
+//     .then((res) => {
+//         if (res.isConfirmed){
+//             fetch ('./api/customers/destroy.php', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded'
+//                 },
+//                 body: new URLSearchParams({ id })
+//             })
+//             .then(res => res.json())
+//             .then(data => { 
+//                 if (data.status == 'success'){
+//                     Swal.fire({
+//                         title: "Deleted!",
+//                         text: "Customer successfully deleted!",
+//                         icon: "success"
+//                     })
+//                     loadCustomers();
+//                 }
+//             })
+//         }
+//     })
     
-}
+// }
 
 function openUpdate(){
     document.getElementById('updateDiv').classList.remove('hidden');
@@ -210,7 +210,7 @@ function closeUpdate(){
     document.getElementById('updateDiv').classList.add('hidden');
 }
 
-function updateCustomer(id){
+function updateTrainer(id){
     openUpdate();
 
     console.log(id);

@@ -202,10 +202,42 @@ function closeUpdate(){
     document.getElementById('updateDiv').classList.add('hidden');
 }
 
+// Update form
+document.getElementById('updateCusomter').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    fetch('./api/customers/update.php', {
+        method: 'POST',
+        body: new FormData(this)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status == 'success'){
+            console.log(data.message);
+            closeUpdate();
+            this.reset();
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfullt Added!',
+                text: 'Customer added successfully'
+            })
+        }
+        else{
+            // console.log(data.errors);
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Cannot be empty!',
+            //     text: 'Inputs cannot be empty. Input something!'
+            // })
+           
+        }
+        loadCustomers();
+    })
+});
+
 function updateCustomer(id){
     openUpdate();
 
-    console.log(id);
     fetch('./api/customers/get.php?id=' + id)
     .then(res => res.json())
     .then(data => {

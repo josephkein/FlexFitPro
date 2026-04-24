@@ -1,4 +1,5 @@
 <?php
+    
     require __DIR__ . '/../../database/database.php';
     require __DIR__ . '/../../controllers/TrainerController.php';
     require __DIR__ . '/../../model/Trainer.php';
@@ -9,10 +10,10 @@
     $trainer = new Trainer($db->getConnection());
     $controller = new TrainerController($trainer);
 
-    $first = htmlspecialchars(trim($_POST['first_name']));
-    $last = htmlspecialchars(trim($_POST['last_name']));
-    $rate = htmlspecialchars(trim($_POST['rate']));
-    $capacity = htmlspecialchars(trim($_POST['capacity']));
+    $first = htmlspecialchars(trim($_POST['first_name'] ?? ''));
+    $last = htmlspecialchars(trim($_POST['last_name'] ?? ''));
+    $rate = htmlspecialchars(trim($_POST['rate'] ?? ''));
+    $capacity = htmlspecialchars(trim($_POST['capacity'] ?? ''));
 
     $errors = [];
 

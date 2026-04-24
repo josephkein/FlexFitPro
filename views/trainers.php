@@ -113,11 +113,11 @@
            <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="trainerForm">
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">First Name</label>
-                   <input type="text" name="first_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
+                   <input type="text" name="first_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name">
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Last Name</label>
-                   <input type="text" name="last_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
+                   <input type="text" name="last_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name">
                </div>
               
                <div class="flex gap-4">
@@ -128,6 +128,41 @@
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Capacity</label>
                        <input type="number" name="capacity" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 5, 4">
+                   </div>
+               </div>
+               <div class="flex justify-end gap-3 pt-2">
+                   <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Trainer</button>
+               </div>
+           </form>
+       </div>
+   </div>
+
+   <!-- UPDATE MODAL -->
+   <div id="updateTrainer" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-xl">Add New Trainer</span>
+               <button onclick="closeUpdate()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="trainerForm">
+               <div class="flex flex-col gap-1">
+                   <label class="text-md text-gray-500">First Name</label>
+                   <input type="text" name="up_first" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
+               </div>
+               <div class="flex flex-col gap-1">
+                   <label class="text-md text-gray-500">Last Name</label>
+                   <input type="text" name="up_last" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
+               </div>
+              
+               <div class="flex gap-4">
+                   <div class="flex flex-col gap-1 flex-1">
+                       <label class="text-md text-gray-500">Rate</label>
+                       <input type="number" name="up_rate" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 250, 500">
+                   </div>
+                   <div class="flex flex-col gap-1 flex-1">
+                       <label class="text-md text-gray-500">Capacity</label>
+                       <input type="number" name="up_cap" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 5, 4">
                    </div>
                </div>
                <div class="flex justify-end gap-3 pt-2">

@@ -11,7 +11,7 @@
             return $this->trainer->display($search, $limit, $off);
         }
         public function addTrainer($first, $last, $rate, $capacity){
-            return $this->trainer->store($first, $last, $rate, $capacity);
+            return $this->trainer->create($first, $last, $rate, $capacity);
         }
     }
 

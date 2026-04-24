@@ -22,8 +22,12 @@
             $stmt->bind_param('i', $id);
             return $stmt->execute();
         }
-        public function update(){
-
+        public function edit($name, $type, $id){
+            $q = "UPDATE customers SET name = ?, type = ? WHERE customer_id = ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param("ssi", $name, $type, $id);
+            return $stmt->execute();
+            
         }
         public function display($search, $type, $order, $limit, $off){
             $s = "%$search%";

@@ -133,7 +133,7 @@
                <span class="font-medium text-xl">Update Customer</span>
                <button onclick="closeUpdate()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
            </div>
-           <form class="px-6 py-4 flex flex-col gap-4">
+           <form class="px-6 py-4 flex flex-col gap-4" id="updateCusomter">
                 <input type="hidden" id="Upid" name="up_id">
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">First Name</label>
@@ -152,7 +152,7 @@
                    </select>
                 </div>
                 <div class="flex justify-end gap-3 pt-2">
-                   <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                   <button type="button" onclick="closeUpdate()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
                    <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update</button>
                </div>
            </form>

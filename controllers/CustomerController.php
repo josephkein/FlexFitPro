@@ -27,6 +27,11 @@
         public function getCustomer($id){
             return $this->customer->get($id);
         }
+
+        // edit user
+        public function update($name, $type, $id){
+            return $this->customer->edit($name, $type, $id);
+        }
     }
 
 ?>
