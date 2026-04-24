@@ -28,8 +28,8 @@
     </style>
     
 </head>
-<body class="flex items-center justify-center h-screen w-screen bg-gray-100 px-4">
-    <div class="flex w-full max-w-md md:max-w-4xl shadow-lg rounded h-150">
+<body class="bg-gray-100 px-4">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full max-w-md md:max-w-4xl shadow-lg rounded h-150">
         <div class="hidden md:flex flex-1 flex-col items-center justify-center bg-violet-600 w-full h-full rounded">
             <div>
                 <img src="./images/flexfit.png" alt="">

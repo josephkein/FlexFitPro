@@ -1,12 +1,13 @@
 
 // Open add customer form
-function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
+function openAddModal() { document.getElementById('addTrainer').classList.remove('hidden'); }
 
 // Close add customer form
 function closeAddModal() { 
-    document.getElementById('addModal').classList.add('hidden'); 
-    document.getElementById('customer-form').reset();
+    document.getElementById('addTrainer').classList.add('hidden'); 
+    document.getElementById('trainerForm').reset();
 }
+
 let page = 1;
 
 const next = document.getElementById('next');
@@ -15,7 +16,7 @@ const prev = document.getElementById('prev');
 next.addEventListener('click', (e) => {
     e.preventDefault();
     page++;
-    fetch(`./api/customers/display.php?page=${page}`)
+    fetch(`./api/trainers/display.php?page=${page}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('page').textContent = page;
@@ -26,7 +27,7 @@ next.addEventListener('click', (e) => {
 prev.addEventListener('click', (e) => {
     e.preventDefault();
     page--;
-    fetch(`./api/customers/display.php?page=${page}`)
+    fetch(`./api/trainers/display.php?page=${page}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('page').textContent = page;
@@ -40,20 +41,26 @@ function renderData(data){
     next.disabled = false;
     prev.disabled = false;
 
-    document.getElementById('membersTable').innerHTML = '';
+    document.getElementById('trainerTable').innerHTML = '';
+
         data.forEach((d) => {
-            let type = d.type == 'student' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600';
-            let color = d.trainer == null ? 'text-gray-500' : '';
-            document.getElementById('membersTable').innerHTML += `
+            let status = d.capacity != d.trainees ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
+            document.getElementById('trainerTable').innerHTML += `
                             <tr>
-                                <td class="px-6 py-3">${d.name}</td>
-                                <td class="px-6 py-3 flex items-center"><span class="${type} py-1 px-3 rounded-full">${d.type}</span></td>
-                                <td class="px-6 py-3">${d.member == null ? 'None' : 'Member'}</td>
-                                <td class="px-6 py-3 ${color}">${d.trainer == null ? 'None' : d.trainer}</td>
+                                <td class="px-6 py-3">${d.trainer}</td>
+                                <td class="px-6 py-3">${d.rate}</td>
+                                <td class="px-6 py-3">${d.capacity}</td>
+                                <td class="px-6 py-3">${d.trainees}</td>
+                                <td class="px-6 py-3">
+                                <span class="px-2 py-1 rounded-full ${status}">${d.capacity == d.trainees ? 'Full' : 'Available'}</span>
+                                </td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
-                                        <button class="bg-blue-500 p-2 rounded-md text-md hover:bg-blue-400" id="update-customer" onclick="updateCustomer(${d.id})">
+                                        <button class="bg-blue-500 p-2 rounded-md text-md">
                                             <img src="./images/edit.png" alt="">
+                                        </button>
+                                        <button class="bg-red-500 p-2 rounded-md text-md">
+                                            <img src="./images/delete.png" alt="">
                                         </button>
                                     </div>
                                 </td>
@@ -69,9 +76,9 @@ function renderData(data){
        if (page == 1) prev.disabled = true;
 }
 
-// Load customers in table
-function loadCustomers(){
-    fetch('./api/customers/display.php')
+// Load trainers in table
+function loadTrainers(){
+    fetch('./api/trainers/display.php')
     .then(res => res.json())
     .then(data => {
         renderData(data);
@@ -79,13 +86,13 @@ function loadCustomers(){
     .catch(err => console.error(err))
 }
 
-loadCustomers();
+loadTrainers();
 
-// Add new customer
-document.getElementById('customer-form').addEventListener('submit', function(e) {
+// Add new trainer
+document.getElementById('trainerForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    fetch('./api/customers/store.php', {
+    fetch('./api/trainers/store.php', {
         method: 'POST',
         body: new FormData(this)
     })
@@ -114,29 +121,29 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     })
 })
 
-// Filter customer by type
-document.getElementById('typeFilter').addEventListener('change', function(){
+// Filter trainer by status
+document.getElementById('status').addEventListener('change', function(){
     let val = this.value;
 
-    fetch(`./api/customers/display.php?type=${val}`)
+    fetch(`./api/trainers/display.php`)
     .then(res => res.json())
     .then(data => {
-        renderData(data);
+        let filtered;
+
+        if (val == 'available'){
+            filtered = data.filter(d => d.capacity != d.trainees);
+        }
+        else if (val == 'full'){
+            filtered = data.filter(d => d.capacity == d.trainees)
+        }
+        else{
+            filtered = data;
+        }
+        renderData(filtered);
     })
 
 })
 
-// Filter customer by membership
-document.getElementById('orderFilter').addEventListener('change', function(){
-    let val = this.value;
-
-    fetch(`./api/customers/display.php?order=${val}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-
-})
 
 // Live search by name
 document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -151,7 +158,7 @@ function debounce(text){
     clearTimeout(timeout);
 
     timeout = setTimeout(() =>{
-        fetch(`./api/customers/display.php?search=${text}`)
+        fetch(`./api/trainers/display.php?search=${text}`)
         .then(res => res.json())
         .then(data => {
             renderData(data);
@@ -160,40 +167,41 @@ function debounce(text){
 }
 
 // Delete customer
-// function deleteCustomer(id){
-//     Swal.fire({
-//         icon: 'warning',
-//         title: 'Are you sure?',
-//         text: "You won't be able to revert this!",
-//         showCancelButton: true,
-//         confirmButtonColor: "#3085d6",
-//         cancelButtonColor: "#d33",
-//         confirmButtonText: "Yes, delete it!"
-//     })
-//     .then((res) => {
-//         if (res.isConfirmed){
-//             fetch ('./api/customers/destroy.php', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/x-www-form-urlencoded'
-//                 },
-//                 body: new URLSearchParams({ id })
-//             })
-//             .then(res => res.json())
-//             .then(data => {
-//                 if (data.status == 'success'){
-//                     Swal.fire({
-//                         title: "Deleted!",
-//                         text: "Customer successfully deleted!",
-//                         icon: "success"
-//                     })
-//                     loadCustomers();
-//                 }
-//             })
-//         }
-//     })
+function deleteCustomer(id){
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    })
+    .then((res) => {
+        if (res.isConfirmed){
+            fetch ('./api/customers/destroy.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ id })
+            })
+            .then(res => res.json())
+            .then(data => { 
+                if (data.status == 'success'){
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Customer successfully deleted!",
+                        icon: "success"
+                    })
+                    loadCustomers();
+                }
+            })
+        }
+    })
     
-// }
+}
+
 function openUpdate(){
     document.getElementById('updateDiv').classList.remove('hidden');
 }
@@ -206,7 +214,7 @@ function updateCustomer(id){
     openUpdate();
 
     console.log(id);
-    fetch('./api/customers/get.php?id=' + id)
+    fetch('./api/trainers/get.php?id=' + id)
     .then(res => res.json())
     .then(data => {
         let name = data.customer_name.split(' ');

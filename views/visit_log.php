@@ -41,11 +41,7 @@
                     </div>
                     <div class="flex gap-3 items-center flex-wrap">
                         <input type="date" value="<?= date('Y-m-d') ?>" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
-                        <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
-                            <option value="">All Status</option>
-                            <option value="checkedin">Checked In</option>
-                            <option value="completed">Completed</option>
-                        </select>
+
                         <button class="flex items-center gap-2 border border-violet-600 text-violet-600 hover:bg-violet-50 px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             Export CSV

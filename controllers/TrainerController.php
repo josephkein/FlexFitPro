@@ -7,7 +7,12 @@
         {
             $this->trainer = $trainer;
         }
-
+        public function display($search, $limit, $off){
+            return $this->trainer->display($search, $limit, $off);
+        }
+        public function addTrainer($first, $last, $rate, $capacity){
+            return $this->trainer->store($first, $last, $rate, $capacity);
+        }
     }
 
 ?>
