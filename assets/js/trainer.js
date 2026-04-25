@@ -56,10 +56,10 @@ function renderData(data){
                                 </td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
-                                        <button class="bg-blue-500 p-2 rounded-md text-md">
+                                        <button class="bg-blue-500 p-2 rounded-md text-md" onclick="updateTrainer(${d.trainer_id})">
                                             <img src="./images/edit.png" alt="">
                                         </button>
-                                        <button class="bg-red-500 p-2 rounded-md text-md">
+                                        <button class="bg-red-500 p-2 rounded-md text-md" onclick="deleteTrainer(${d.trainer_id})">
                                             <img src="./images/delete.png" alt="">
                                         </button>
                                     </div>
@@ -105,7 +105,7 @@ document.getElementById('trainerForm').addEventListener('submit', function(e) {
             Swal.fire({
                 icon: 'success',
                 title: 'Successfullt Added!',
-                text: 'Customer added successfully'
+                text: 'Trainer added successfully'
             })
         }
         else{
@@ -166,61 +166,93 @@ function debounce(text){
     }, 1000)
 }
 
-// Delete customer
-// function deleteTraine(id){
-//     Swal.fire({
-//         icon: 'warning',
-//         title: 'Are you sure?',
-//         text: "You won't be able to revert this!",
-//         showCancelButton: true,
-//         confirmButtonColor: "#3085d6",
-//         cancelButtonColor: "#d33",
-//         confirmButtonText: "Yes, delete it!"
-//     })
-//     .then((res) => {
-//         if (res.isConfirmed){
-//             fetch ('./api/customers/destroy.php', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/x-www-form-urlencoded'
-//                 },
-//                 body: new URLSearchParams({ id })
-//             })
-//             .then(res => res.json())
-//             .then(data => { 
-//                 if (data.status == 'success'){
-//                     Swal.fire({
-//                         title: "Deleted!",
-//                         text: "Customer successfully deleted!",
-//                         icon: "success"
-//                     })
-//                     loadCustomers();
-//                 }
-//             })
-//         }
-//     })
+// Delete trainer
+function deleteTrainer(id){
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    })
+    .then((res) => {
+        if (res.isConfirmed){
+            fetch ('./api/trainers/destroy.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ id })
+            })
+            .then(res => res.json())
+            .then(data => { 
+                if (data.status == 'success'){
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Customer successfully deleted!",
+                        icon: "success"
+                    })
+                    loadTrainers();
+                }
+            })
+        }
+    })
     
-// }
+}
+
+document.getElementById('update-form').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    fetch('./api/trainers/update.php', {
+        method: 'POST',
+        body: new FormData(this)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status == 'success'){
+            console.log(data.message);
+            closeUpdate();
+            this.reset();
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfullt updated!',
+                text: 'Trainer updated successfully'
+            })
+        }
+        else{
+            console.log(data.errors);
+            Swal.fire({
+                icon: 'error',
+                title: 'Cannot be empty!',
+                text: 'Inputs cannot be empty. Input something!'
+            })
+           
+        }
+        loadTrainers();
+    })
+});
 
 function openUpdate(){
-    document.getElementById('updateDiv').classList.remove('hidden');
+    document.getElementById('updateTrainer').classList.remove('hidden');
 }
 
 function closeUpdate(){
-    document.getElementById('updateDiv').classList.add('hidden');
+    document.getElementById('updateTrainer').classList.add('hidden');
 }
 
 function updateTrainer(id){
     openUpdate();
 
-    console.log(id);
     fetch('./api/trainers/get.php?id=' + id)
     .then(res => res.json())
     .then(data => {
-        let name = data.customer_name.split(' ');
-        document.getElementById('up_first').value = name[0];
-        document.getElementById('up_last').value = name[1];
-        document.getElementById('up_type').value = data.customer_type;
+        document.getElementById('up_first').value = data.first_name;
+        document.getElementById('up_last').value = data.last_name;
+        document.getElementById('up_rate').value = data.rate;
+        document.getElementById('up_cap').value = data.capacity;
+        document.getElementById('up_tid').value = id;
     })
 
 }

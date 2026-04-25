@@ -23,11 +23,10 @@
             return $stmt->execute();
         }
         public function edit($name, $type, $id){
-            $q = "UPDATE customers SET name = ?, type = ? WHERE customer_id = ?";
+            $q = "UPDATE customers SET customer_name = ?, customer_type = ? WHERE customer_id = ?";
             $stmt = $this->db->prepare($q);
             $stmt->bind_param("ssi", $name, $type, $id);
-            return $stmt->execute();
-            
+            $stmt->execute();            
         }
         public function display($search, $type, $order, $limit, $off){
             $s = "%$search%";

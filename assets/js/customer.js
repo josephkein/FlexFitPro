@@ -55,11 +55,16 @@ function renderData(data){
                                         <button class="bg-blue-500 p-2 rounded-md text-md hover:bg-blue-400" id="update-customer" onclick="updateCustomer(${d.id})">
                                             <img src="./images/edit.png" alt="">
                                         </button>
+                                        
                                     </div>
                                 </td>
                             </tr>
             `;
         })
+        /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
+                <img src="./images/delete.png" alt="">
+        </button>
+         */
 
         // Display pagination when length of data is 7 above
         if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
@@ -245,6 +250,7 @@ function updateCustomer(id){
         document.getElementById('up_first').value = name[0];
         document.getElementById('up_last').value = name[1];
         document.getElementById('up_type').value = data.customer_type;
+        document.getElementById('up_id').value = id;
     })
 
 }

@@ -127,14 +127,15 @@
         </div>
    </div>
 
+   <!-- Update -->
    <div class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" id="updateDiv">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
             <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
                <span class="font-medium text-xl">Update Customer</span>
                <button onclick="closeUpdate()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
            </div>
-           <form class="px-6 py-4 flex flex-col gap-4" id="updateCusomter">
-                <input type="hidden" id="Upid" name="up_id">
+           <form class="px-6 py-4 flex flex-col gap-4" id="updateCusomter" method="POST">
+                <input type="hidden" id="up_id" name="up_id">
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">First Name</label>
                     <input type="text" name="update_first" id="up_first" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter first name">
