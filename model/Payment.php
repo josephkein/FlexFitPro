@@ -41,7 +41,35 @@
             }
             return null;
         }
-        
+        public function display($search, $type, $date, $limit, $off){
+            $s = "$search%";
+            $t = "$type%";
+            $start = $date . '-01';
+            $end   = date('Y-m-d', strtotime($start . ' +1 month'));
+
+            $q = "SELECT c.customer_name AS customer, u.username AS staff, p.amount AS amount,
+             DATE(p.payment_date) AS date, p.payment_type AS type FROM payments AS p
+              INNER JOIN customers AS c ON c.customer_id = p.customer_id 
+              INNER JOIN users AS u ON u.user_id = p.user_id WHERE c.customer_name LIKE ? AND p.payment_type LIKE ? AND p.payment_date >= ?
+              AND p.payment_date < ? LIMIT ? OFFSET ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('ssssii', $s, $t, $start, $end, $limit, $off);
+            $stmt->execute();
+            $res = $stmt->get_result();
+
+            return $res->fetch_all(MYSQLI_ASSOC);
+
+        }
+
+        public function get($id){
+            $q = "SELECT amount, payment_date, payment_type FROM payments WHERE payment_id = ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+
+            $res = $stmt->get_result();
+            return $res->fetch_assoc();
+        }
     }
 
 ?>

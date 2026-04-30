@@ -7,6 +7,9 @@
         {
             $this->staff = $staff;
         }
+        public function display($search, $role, $status, $limit, $off){
+            return $this->staff->display($search, $role, $status, $limit, $off);
+        }
 
     }
 

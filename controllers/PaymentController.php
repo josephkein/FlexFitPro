@@ -16,6 +16,12 @@
         public function dailyRevenue(){
             return $this->payment->getDailyRevenue();
         }
+        public function display($search, $type, $date, $limit, $off){
+            return $this->payment->display($search, $type, $date, $limit, $off);
+        }
+        public function getPayment($id){
+            return $this->payment->get($id);
+        }
     }
 
 ?>

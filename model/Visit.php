@@ -55,6 +55,32 @@
             return $daily;
             
         }
+
+        public function display($search, $date, $limit, $off){
+            $s = "$search%";
+            $start = $date . '-01';
+            $end   = date('Y-m-d', strtotime($start . ' +1 month'));
+
+            $q = "SELECT c.customer_name AS customer, c.customer_type AS type, u.username AS staff, v.visit_date AS date FROM visits AS v
+             INNER JOIN customers AS c ON c.customer_id = v.customer_id 
+             INNER JOIN users AS u ON u.user_id = v.user_id WHERE c.customer_name LIKE ? AND v.visit_date >= ?
+              AND v.visit_date < ? LIMIT ? OFFSET ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('sssii', $s, $start, $end, $limit, $off);
+            $stmt->execute();
+            $res = $stmt->get_result();
+
+            return $res->fetch_all(MYSQLI_ASSOC);
+        }
+        
+        public function store($customer_id, $user_id, $visit_date){
+            $q = "INSERT INTO visits (customer_id, user_id, visit_date) VALUES (?, ?, ?)";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('iis', $customer_id, $user_id, $visit_date);
+            return $stmt->execute();
+        }
+
+    
     }
 
 ?>

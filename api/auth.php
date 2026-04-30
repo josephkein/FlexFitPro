@@ -24,15 +24,18 @@
             exit;
         }
 
-        $role = $controller->login($username, $password);
+        $acc = $controller->login($username, $password);
 
-        if ($role){
+        if ($acc){
             $_SESSION['username'] = $username;
-            $_SESSION['role'] = $role;
-
+            $_SESSION['role'] = $acc['role'];
+            $_SESSION['status'] = $acc['status'];
+            $_SESSION['user_id'] = $acc['user_id'];
+ 
             echo json_encode([
                 'status' => 'success',
-                'role' => $role
+                'role' => $acc['role'],
+                'act' => $acc['status']
             ]);
         }
         else{

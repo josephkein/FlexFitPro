@@ -8,10 +8,10 @@ function loadDashboard(){
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('total_revenue').textContent = `$${data.total}`;
+        document.getElementById('total_revenue').textContent = `₱${data.total}`;
         document.getElementById('year').textContent = data.year;
         document.getElementById('monthly_visit').textContent = data.monthly_visit;
-        document.getElementById('daily_revenue').textContent = `$${data.daily}`;
+        document.getElementById('daily_revenue').textContent = `₱${data.daily}`;
         document.getElementById('total_visit').textContent = data.total_visit;
 
         const options = {
@@ -77,3 +77,20 @@ function loadDashboard(){
 }
 loadDashboard();
 
+
+
+
+// var map = L.map('map').setView([10.3845, 124.9828], 13);
+
+// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     maxZoom: 19,
+//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+// }).addTo(map);
+
+// function onMapClick(e) {
+//     var marker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
+//     marker.bindPopup("<b>Soophia Bh!</b><br>I am a popup.").openPopup();
+
+// }
+
+// map.on('click', onMapClick);

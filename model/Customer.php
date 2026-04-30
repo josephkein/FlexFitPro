@@ -29,14 +29,19 @@
             $stmt->execute();            
         }
         public function display($search, $type, $order, $limit, $off){
-            $s = "%$search%";
-            $t = "%$type%";
+            $s = "$search%";
+            $t = "$type%";
             $sort = ($order) ? " ORDER BY c.customer_name $order" : "";
  
-            $q = "SELECT c.customer_id AS id, c.customer_name AS name, c.customer_type AS type, m.membership_id AS member, t.first_name AS trainer FROM customers AS c
-             LEFT JOIN memberships AS m ON m.customer_id = c.customer_id 
-             LEFT JOIN coaching AS ch ON ch.customer_id = c.customer_id 
-             LEFT JOIN trainers AS t ON t.trainer_id = ch.trainer_id WHERE c.customer_name LIKE ? AND c.customer_type LIKE ?" . $sort . " LIMIT ? OFFSET ?";
+            $q = "SELECT c.customer_id AS id, c.customer_name AS name, c.customer_type AS type, CASE
+            WHEN m.membership_id IS NULL THEN 'None'
+            WHEN DATE_ADD(m.start_date, INTERVAL p.duration_month MONTH) >= CURDATE() THEN 'Active'
+            ELSE 'Expired'
+            END AS membership_status, t.first_name AS trainer, ch.status AS status FROM customers AS c
+            LEFT JOIN memberships AS m ON m.customer_id = c.customer_id 
+            LEFT JOIN plans AS p ON p.plan_id = m.plan_id
+            LEFT JOIN coaching AS ch ON ch.customer_id = c.customer_id 
+            LEFT JOIN trainers AS t ON t.trainer_id = ch.trainer_id WHERE c.customer_name LIKE ? AND c.customer_type LIKE ?" . $sort . " LIMIT ? OFFSET ?";
             $stmt = $this->db->prepare($q);
             $stmt->bind_param('ssii', $s, $t, $limit, $off);    
             $stmt->execute();

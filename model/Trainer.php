@@ -10,11 +10,11 @@
         
         // display trainers
         public function display($search, $limit, $off){
-            $s = "%$search%";
+            $s = "$search%";
  
             $q = "SELECT t.trainer_id, CONCAT(t.first_name, ' ' , t.last_name) AS trainer,
              t.capacity, t.rate, COUNT(c.coaching_id) AS trainees FROM 
-             trainers AS t LEFT JOIN coaching AS c ON c.trainer_id = t.trainer_id
+             trainers AS t LEFT JOIN coaching AS c ON c.trainer_id = t.trainer_id AND c.status = 'Active'
               WHERE t.first_name LIKE ? 
               GROUP BY t.trainer_id LIMIT ? OFFSET ?";
             $stmt = $this->db->prepare($q);

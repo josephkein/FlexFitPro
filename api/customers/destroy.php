@@ -1,4 +1,10 @@
 <?php
+    session_start();
+    if (!isset($_SESSION['role']) && $_SESSION['role'] != 'admin'){
+        die('Unauthorized');
+        exit;
+    }
+
     require __DIR__ . '/../../database/database.php';
     require __DIR__ . '/../../controllers/CustomerController.php';
     require __DIR__ . '/../../model/Customer.php';

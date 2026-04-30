@@ -17,7 +17,7 @@
             if ($res->num_rows > 0){
                 $assoc = $res->fetch_assoc();
                 if (password_verify($pass, $assoc['password'])){
-                    return $assoc['role'];
+                    return $assoc;
                 }
             }
             return null;

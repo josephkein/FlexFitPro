@@ -24,7 +24,7 @@ loginForm.addEventListener('submit', (e) => {
         })
         .then(res => res.json())
         .then(data => {
-            if (data.status == 'success'){
+            if (data.status == 'success' && data.act == 'active'){
                 Swal.fire({
                     icon:'success',
                     title:'Success!',

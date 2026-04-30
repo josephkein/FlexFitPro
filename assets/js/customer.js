@@ -14,8 +14,10 @@ const prev = document.getElementById('prev');
 // Pagination
 next.addEventListener('click', (e) => {
     e.preventDefault();
+    let order = document.getElementById('orderFilter');
+    let type = document.getElementById('typeFilter');
     page++;
-    fetch(`./api/customers/display.php?page=${page}`)
+    fetch(`./api/customers/display.php?page=${page}&order=${order.value}&type=${type.value}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('page').textContent = page;
@@ -25,8 +27,10 @@ next.addEventListener('click', (e) => {
 
 prev.addEventListener('click', (e) => {
     e.preventDefault();
+    let order = document.getElementById('orderFilter');
+    let type = document.getElementById('typeFilter');
     page--;
-    fetch(`./api/customers/display.php?page=${page}`)
+    fetch(`./api/customers/display.php?page=${page}&order=${order.value}&type=${type.value}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('page').textContent = page;
@@ -43,19 +47,23 @@ function renderData(data){
     document.getElementById('membersTable').innerHTML = '';
         data.forEach((d) => {
             let type = d.type == 'student' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600';
-            let color = d.trainer == null ? 'text-gray-500' : '';
+            let color = d.status == null || d.status == 'Expired' ? 'text-gray-500' : '';
             document.getElementById('membersTable').innerHTML += `
                             <tr>
+                                <td class="px-6 py-3">${d.id}</td>
                                 <td class="px-6 py-3">${d.name}</td>
                                 <td class="px-6 py-3 flex items-center"><span class="${type} py-1 px-3 rounded-full">${d.type}</span></td>
-                                <td class="px-6 py-3">${d.member == null ? 'None' : 'Member'}</td>
-                                <td class="px-6 py-3 ${color}">${d.trainer == null ? 'None' : d.trainer}</td>
+                                <td class="px-6 py-3"><span class="${d.membership_status == 'Active' ? 'bg-green-100 text-green-600' : d.membership_status == 'Expired' ? 'bg-red-100 text-red-600' : 'text-gray-500'} py-1 px-3 rounded-full">${d.membership_status}</span></td>
+                                <td class="px-6 py-3 ${color}">${d.status == 'Expired' || d.status == null ? 'None' : d.trainer}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         <button class="bg-blue-500 p-2 rounded-md text-md hover:bg-blue-400" id="update-customer" onclick="updateCustomer(${d.id})">
-                                            <img src="./images/edit.png" alt="">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M16.293 2.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-13 13A1 1 0 0 1 8 21H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 .293-.707l10-10zM14 7.414l-9 9V19h2.586l9-9zm4 1.172L19.586 7L17 4.414L15.414 6z"></path></svg>
                                         </button>
-                                        
+                                        <button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" onclick="deleteCustomer(${d.id})">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"></path></svg>
+                                        </button>
+                                        <button class="border border-violet-600 p-2 text-violet-600 hover:bg-gray-100" onclick="logVisit(${d.id})">Log</button>
                                     </div>
                                 </td>
                             </tr>
@@ -64,14 +72,68 @@ function renderData(data){
         /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
                 <img src="./images/delete.png" alt="">
         </button>
-         */
-
+         */                                          
         // Display pagination when length of data is 7 above
         if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
        else document.getElementById('pagination').classList.remove('hidden');
 
        if (data.length < 7) next.disabled = true;
        if (page == 1) prev.disabled = true;
+}
+
+function openLog(){
+    document.getElementById('logModal').classList.remove('hidden');
+}
+
+
+
+function logVisit(id) {
+
+    openLog();
+
+    fetch('./api/customers/get.php?id=' + id)
+    .then(res => res.json())
+    .then(data => {
+        let name = data.customer_name.split(' ');
+        document.getElementById('logFirst').value = name[0];
+        document.getElementById('logLast').value = name[1];
+        document.getElementById('logType').value = data.customer_type;
+        document.getElementById('logId').value = id;
+    })
+   
+}
+document.getElementById('logForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+        fetch('./api/visits/store.php', {
+            method: 'POST',
+            body: new FormData(this)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success'){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfullt Logged!',
+                    text: 'Visit logged successfully'
+                })
+                closeLogModal();
+            }
+            else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Log Visit!',
+                    text: 'There was an error logging the visit.'
+                })
+            }
+
+        })
+
+});
+
+function closeLogModal(){
+    document.getElementById('logModal').classList.add('hidden');
+    document.getElementById('logForm').reset();
 }
 
 // Load customers in table
@@ -165,40 +227,40 @@ function debounce(text){
 }
 
 // Delete customer
-// function deleteCustomer(id){
-//     Swal.fire({
-//         icon: 'warning',
-//         title: 'Are you sure?',
-//         text: "You won't be able to revert this!",
-//         showCancelButton: true,
-//         confirmButtonColor: "#3085d6",
-//         cancelButtonColor: "#d33",
-//         confirmButtonText: "Yes, delete it!"
-//     })
-//     .then((res) => {
-//         if (res.isConfirmed){
-//             fetch ('./api/customers/destroy.php', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/x-www-form-urlencoded'
-//                 },
-//                 body: new URLSearchParams({ id })
-//             })
-//             .then(res => res.json())
-//             .then(data => {
-//                 if (data.status == 'success'){
-//                     Swal.fire({
-//                         title: "Deleted!",
-//                         text: "Customer successfully deleted!",
-//                         icon: "success"
-//                     })
-//                     loadCustomers();
-//                 }
-//             })
-//         }
-//     })
+function deleteCustomer(id){
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    })
+    .then((res) => {
+        if (res.isConfirmed){
+            fetch ('./api/customers/destroy.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status == 'success'){
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Customer successfully deleted!",
+                        icon: "success"
+                    })
+                    loadCustomers();
+                }
+            })
+        }
+    })
     
-// }
+}
 function openUpdate(){
     document.getElementById('updateDiv').classList.remove('hidden');
 }

@@ -15,9 +15,6 @@
         case 'memberships':
             require './views/memberships.php';
             break;
-        case 'visits':
-            require './views/visit_log.php';
-            break;
         case 'trainers':
             require './views/trainers.php';
             break;
@@ -25,7 +22,7 @@
             require './views/trainer_assignment.php';
             break;
         case 'visits':
-            require './views/visits.php';
+            require './views/visit_log.php';
             break;
         case 'payments':
             require './views/payments.php';
@@ -37,4 +34,17 @@
     }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>FlexFitPro</title>
+</head>
+<body>
+
+    <script src="./assets/js/sidebar.js"></script>
+</body>
+</html>
 

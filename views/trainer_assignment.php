@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="shortcut icon" href="./images/flexfit.png" type="image/x-icon">
     <title>Trainers</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
@@ -102,23 +103,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="px-6 py-3">John Doe</td>
-                                <td class="px-6 py-3">John Doe</td>
-                                <td class="px-6 py-3">2025-02-04</td>
-                                <td class="px-6 py-3">2025-03-04</td>
-                                <td class="px-6 py-3">
-                                    <div class="flex gap-2">
-                                        <button class="bg-blue-500 p-2 rounded-md text-md">
-                                            <img src="./images/edit.png" alt="">
-                                        </button>
-                                        <button class="bg-red-500 p-2 rounded-md text-md">
-                                            <img src="./images/delete.png" alt="">
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
+                    
                         </tbody>
                     </table>
                     <!-- Pagination -->
@@ -178,9 +163,6 @@
        </div>
    </div>
 
-   <script>
-       function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
-       function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
-   </script>
+   <script src="./assets/js/assign.js"></script>
 </body>
 </html>

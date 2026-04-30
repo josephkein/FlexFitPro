@@ -23,12 +23,12 @@
             return $this->customer->destroy($id);
         }
 
-        // get user
+        // get customer
         public function getCustomer($id){
             return $this->customer->get($id);
         }
 
-        // edit user
+        // edit custmomer
         public function update($name, $type, $id){
             return $this->customer->edit($name, $type, $id);
         }

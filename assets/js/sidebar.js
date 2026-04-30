@@ -36,3 +36,23 @@ logoutBtn.addEventListener('click', (e) => {
         }
     })
 })
+
+const burger = document.getElementById('burger');
+const close = document.getElementById('close');
+const overlay = document.getElementById("overlay");
+
+burger.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    document.getElementById('aside').classList.toggle('translate-x-0');
+    overlay.classList.remove("hidden");
+
+})
+
+close.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    document.getElementById('aside').classList.toggle('translate-x-0');
+    overlay.classList.add("hidden");
+
+})

@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" href="./images/flexfit.png" type="image/x-icon">
     <title>Customers</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
@@ -85,9 +86,10 @@
                     <table class="w-full text-md">
                         <thead class="text-gray-400 text-md uppercase border-b border-gray-100">
                             <tr>
+                                <th class="px-6 py-3 text-left">ID</th>
                                 <th class="px-6 py-3 text-left">Name</th>
                                 <th class="px-6 py-3 text-left">Type</th>  
-                                <th class="px-6 py-3 text-left">Member</th>
+                                <th class="px-6 py-3 text-left">Membership</th>
                                 <th class="px-6 py-3 text-left">Trainer</th>
                                 <th class="px-6 py-3 text-left">Actions</th>
                             </tr>
@@ -189,6 +191,35 @@
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
                    <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Customer</button>
+               </div>
+           </form>
+       </div>
+   </div>
+
+   <div id="logModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-xl">LOG VISIT</span>
+               <button onclick="closeLogModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="logForm">
+            <input type="hidden" id="logId" name="logId">
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">First Name</label>
+                    <input type="text" name="logFirst" id="logFirst" readonly class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Last Name</label>
+                    <input type="text" name="logLast" id="logLast" readonly class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400">
+                </div>
+        
+                <div class="flex flex-col gap-1 flex-1">
+                    <label for="">Customer Type:</label>
+                    <input type="text" name="logType" id="logType" readonly class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400">
+                </div>
+               <div class="flex justify-end gap-3 pt-2">
+                   <button type="button" onclick="closeLogModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                   <button class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded" id="logCustomer">Log Customer Visit</button>
                </div>
            </form>
        </div>
