@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (!isset($_SESSION['role']) && !$_SESSION['role'] && $_SESSION['role'] != 'admin'){
+    if (!isset($_SESSION['role']) || $_SESSION['status'] != 'active') {
         header('Location: ./index.php?url=login');
         exit;
     }
@@ -54,7 +54,7 @@
                 <div class="flex flex-wrap items-center justify-between gap-4">
                     <div class="flex items-center gap-2 bg-white border border-gray-200 rounded px-4 py-2 w-full max-w-sm">
                         <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        <input type="text" placeholder="Search trainer..." class="outline-none text-md w-full">
+                        <input type="text" placeholder="Search trainer..." class="outline-none text-md w-full" id="search">
                     </div>
                     <div class="flex gap-3">
                         <div>

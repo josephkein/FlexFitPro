@@ -17,6 +17,7 @@
     $controller = new CustomerController($customer);
 
     $type = $_GET['type'] ?? '';
+    $membership = $_GET['membership'] ?? '';
     $order = $_GET['order'] ?? '';
     $search = $_GET['search'] ?? '';
     $page = $_GET['page'] ?? 1;
@@ -26,7 +27,7 @@
     $limit = 7;
     $off = ($p - 1) * $limit;
 
-    $display = $controller->display($search, $type, strtoupper($order), $limit, $off);
+    $display = $controller->display($search, $type, strtoupper($order), $membership, $limit, $off);
     
     echo json_encode($display); 
 

@@ -1,4 +1,5 @@
 <?php
+
     $url = $_GET['url'] ?? '';
 ?>
 <div id="overlay" class="fixed inset-0 bg-black/50 hidden md:hidden z-40"></div>
@@ -28,7 +29,7 @@
 
         <nav class="flex flex-col">
 
-            <a href="./index.php?url=admin" class="flex gap-3 md:gap-4 items-center px-5 md:px-10 py-2 md:py-3 <?= $url == 'admin' ? 'bg-violet-500' : '' ?> hover:bg-violet-500">
+            <a href="./index.php?url=dashboard" class="flex gap-3 md:gap-4 items-center px-5 md:px-10 py-2 md:py-3 <?= $url == 'admin' ? 'bg-violet-500' : '' ?> hover:bg-violet-500">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 5a2 2 0 0 1 2-2h6v18H4a2 2 0 0 1-2-2zm12-2h6a2 2 0 0 1 2 2v5h-8zm0 11h8v5a2 2 0 0 1-2 2h-6z"></path></svg>
                 <span class="text-white text-base md:text-xl">Dashboard</span>
             </a>
@@ -74,7 +75,7 @@
 
         </nav>
     </div>
-
+    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
     <!-- ADMIN -->
     <div class="flex flex-col gap-2 border-t-2 border-violet-500 pt-4">
         <div class="text-violet-200 font-medium px-5 md:px-10 text-sm md:text-md">ADMIN</div>
@@ -88,6 +89,7 @@
 
         </nav>
     </div>
+    <?php endif; ?>
 
     <!-- LOGOUT -->
     <div class="flex flex-col gap-2 border-t-2 border-violet-500 pt-4">

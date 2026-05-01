@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (!isset($_SESSION['role']) && !$_SESSION['role'] && $_SESSION['role'] != 'admin'){
+    if (!isset($_SESSION['role']) || $_SESSION['status'] != 'active' || $_SESSION['role'] != 'admin') {
         header('Location: ./index.php?url=login');
         exit;
     }
@@ -116,7 +116,7 @@
                <span class="font-medium text-lg">Add Staff Account</span>
                <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
            </div>
-           <form action="./actions/add_staff.php" method="POST" class="px-6 py-4 flex flex-col gap-4">
+           <form method="POST" id="accForm" class="px-6 py-4 flex flex-col gap-4">
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Username</label>
                    <input type="text" name="username" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter username" required>
@@ -126,7 +126,7 @@
                        <label class="text-md text-gray-500">Role</label>
                        <select name="role" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
                            <option value="admin">Admin</option>
-                           <option value="frontdesk">Staff</option>
+                           <option value="staff">Staff</option>
                        </select>
                    </div>
                    <div class="flex flex-col gap-1 flex-1">
@@ -153,9 +153,7 @@
        </div>
    </div>
 
-   <script>
-       function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
-       function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
+   <script src="./assets/js/staff.js">
    </script>
 </body>
 </html>

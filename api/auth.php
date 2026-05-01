@@ -31,6 +31,14 @@
             $_SESSION['role'] = $acc['role'];
             $_SESSION['status'] = $acc['status'];
             $_SESSION['user_id'] = $acc['user_id'];
+
+            if ($acc['status'] != 'active'){
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Your account is not active. Please contact the administrator.'
+                ]);
+                exit;
+            }
  
             echo json_encode([
                 'status' => 'success',

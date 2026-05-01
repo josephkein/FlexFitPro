@@ -14,8 +14,8 @@
         }
 
         // display customers
-        public function display($search, $type, $order, $limit, $off){
-            return $this->customer->display($search, $type, $order, $limit, $off);
+        public function display($search, $type, $order, $membership, $limit, $off){
+            return $this->customer->display($search, $type, $order, $membership, $limit, $off);
         }
 
         // delete customers

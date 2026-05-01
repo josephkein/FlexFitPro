@@ -28,9 +28,10 @@
             $stmt->bind_param("ssi", $name, $type, $id);
             $stmt->execute();            
         }
-        public function display($search, $type, $order, $limit, $off){
+        public function display($search, $type, $order, $membership, $limit, $off){
             $s = "$search%";
             $t = "$type%";
+            $m = "$membership%";
             $sort = ($order) ? " ORDER BY c.customer_name $order" : "";
  
             $q = "SELECT c.customer_id AS id, c.customer_name AS name, c.customer_type AS type, CASE
@@ -41,9 +42,9 @@
             LEFT JOIN memberships AS m ON m.customer_id = c.customer_id 
             LEFT JOIN plans AS p ON p.plan_id = m.plan_id
             LEFT JOIN coaching AS ch ON ch.customer_id = c.customer_id 
-            LEFT JOIN trainers AS t ON t.trainer_id = ch.trainer_id WHERE c.customer_name LIKE ? AND c.customer_type LIKE ?" . $sort . " LIMIT ? OFFSET ?";
+            LEFT JOIN trainers AS t ON t.trainer_id = ch.trainer_id WHERE c.customer_name LIKE ? AND c.customer_type LIKE ? HAVING membership_status LIKE ?" . $sort . " LIMIT ? OFFSET ?";
             $stmt = $this->db->prepare($q);
-            $stmt->bind_param('ssii', $s, $t, $limit, $off);    
+            $stmt->bind_param('sssii', $s, $t, $m, $limit, $off);    
             $stmt->execute();
             $res = $stmt->get_result();
 

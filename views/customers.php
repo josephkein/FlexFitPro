@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (!isset($_SESSION['role']) && !$_SESSION['role'] && $_SESSION['role'] != 'admin'){
+    if (!isset($_SESSION['role']) || $_SESSION['status'] != 'active') {
         header('Location: ./index.php?url=login');
         exit;
     }
@@ -65,6 +65,12 @@
                             <option value="">All Type</option>
                             <option value="regular">Regular</option>
                             <option value="student">Student</option>
+                        </select>
+                        <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white" id="membershipFilter">
+                            <option value="">Membership Status</option>
+                            <option value="active">Active</option>
+                            <option value="expired">Expired</option>
+                            <option value="none">No Membership</option>
                         </select>
                         <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white" id="orderFilter">
                             <option value="">Order by</option>

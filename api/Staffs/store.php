@@ -2,7 +2,7 @@
 
     session_start();
 
-    if (!isset($_SESSION['role'])) {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         exit('Unauthorized');
     }
 
@@ -16,18 +16,32 @@
     $staff = new Staff($db->getConnection());
     $controller = new StaffController($staff);
 
-    $role = $_GET['role'] ?? '';
-    $status = $_GET['status'] ?? '';
-    $search = $_GET['search'] ?? '';
-    $page = $_GET['page'] ?? 1;
+    $username = $_POST['username'] ?? '';
+    $role = $_POST['role'] ?? '';
+    $status = $_POST['status'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    $p = max(1, $page);
+    if ($password !== $confirm_password){
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Password and confirm password do not match'
+        ]);
+        exit;
+    }
 
-    $limit = 7;
-    $off = ($p - 1) * $limit;
+    $stat = $controller->store($username, $role, $status, $password, $confirm_password);
+    if (!$stat){
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Failed to create staff account'
+        ]);
+        exit;
+    }
 
-    $display = $controller->display($search, $role, $status, $limit, $off);
-    
-    echo json_encode($display); 
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Staff account created successfully'
+    ]);
 
 ?>

@@ -21,6 +21,13 @@
 
             return $res->fetch_all(MYSQLI_ASSOC);
         }
+        public function store($username, $role, $status, $password, $confirm_password){
+            $q = "INSERT INTO users (username, role, status, password) VALUES (?, ?, ?, ?)";
+            $stmt = $this->db->prepare($q);
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt->bind_param('ssss', $username, $role, $status, $hashed_password);
+            return $stmt->execute();
+        }
     }
 
 ?>

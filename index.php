@@ -6,7 +6,7 @@
         case 'login': 
             require './views/login.php';
             break;
-        case 'admin':
+        case 'dashboard':
             require './views/admin_dashboard.php';
             break;
         case 'customers':

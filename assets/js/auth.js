@@ -31,8 +31,7 @@ loginForm.addEventListener('submit', (e) => {
                     text:'Log in successfully'
                 }).then(res => {
                     if (res.isConfirmed){
-                        if (data.role == 'admin') window.location.href = './index.php?url=admin';
-                        else window.location.href = './index.php?url=staff';
+                        window.location.href = './index.php?url=dashboard';
                     }
                 })
             }

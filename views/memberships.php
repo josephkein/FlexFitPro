@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (!isset($_SESSION['role']) && !$_SESSION['role'] && $_SESSION['role'] != 'admin'){
+    if (!isset($_SESSION['role']) || $_SESSION['status'] != 'active') {
         header('Location: ./index.php?url=login');
         exit;
     }
@@ -57,8 +57,12 @@
                                 <span class="text-3xl font-bold text-violet-600">₱800</span>
                                 <span class="text-gray-400 text-sm">/ month</span>
                             </div>
-        
+                            <div class="flex gap-4 w-full justify-end">
+                                <a href="" class="text-blue-500 hover:text-blue-400">Edit</a>
+                                <a href="" class="text-red-500 hover:text-red-400">Delete</a>
+                            </div>
                         </div>
+                        
 
                         <!-- Pro Plan (best seller) -->
                         <div class="flex flex-1 flex-col gap-4 bg-white shadow-md rounded p-6">
@@ -72,6 +76,10 @@
                             <div class="flex items-baseline gap-1">
                                 <span class="text-3xl font-bold text-violet-600">₱2,300</span>
                                 <span class="text-gray-400 text-sm">/ 3 months</span>
+                            </div>
+                            <div class="flex gap-4 w-full justify-end">
+                                <a href="" class="text-blue-500 hover:text-blue-400">Edit</a>
+                                <a href="" class="text-red-500 hover:text-red-400">Delete</a>
                             </div>
                         </div>
 
@@ -88,7 +96,10 @@
                                 <span class="text-3xl font-bold text-violet-600">₱8,500</span>
                                 <span class="text-gray-400 text-sm">/ year</span>
                             </div>
-                           
+                           <div class="flex gap-4 w-full justify-end">
+                                <a href="" class="text-blue-500 hover:text-blue-400">Edit</a>
+                                <a href="" class="text-red-500 hover:text-red-400">Delete</a>
+                            </div>
                         </div>
 
                     </div>
