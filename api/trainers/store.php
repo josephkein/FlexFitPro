@@ -12,6 +12,7 @@
 
     $first = htmlspecialchars(trim($_POST['first_name'] ?? ''));
     $last = htmlspecialchars(trim($_POST['last_name'] ?? ''));
+    $contact = htmlspecialchars(trim($_POST['contact_no'] ?? ''));
     $rate = htmlspecialchars(trim($_POST['rate'] ?? ''));
     $capacity = htmlspecialchars(trim($_POST['capacity'] ?? ''));
 
@@ -19,13 +20,14 @@
 
     if (empty($first)) $errors[] = "First name is required";
     if (empty($last)) $errors[] = "Last name is required";
+    if (empty($contact)) $errors[] = "Contact number is required";
 
     if (empty($rate) || !is_numeric($rate) || $rate <= 0){
         $errors[] = "Rate must be positive number";
     }
 
     if (empty($capacity) || !filter_var($capacity, FILTER_VALIDATE_INT) || $capacity <= 0){
-        $errors[] = "Rate must be positive number";
+        $errors[] = "Capacity must be a positive integer";
     }
 
 
@@ -38,7 +40,7 @@
     }
 
     $name = htmlspecialchars($first . ' ' . $last);
-    $controller->addTrainer($first, $last, $rate, $capacity);
+    $controller->addTrainer($first, $last, $contact, $rate, $capacity);
     
     echo json_encode([
         'status' => 'success',

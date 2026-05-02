@@ -43,10 +43,10 @@
                     <div class="flex gap-3 items-center flex-wrap">
                         <input id="dateFilter" type="date" value="<?= date('Y-m-d') ?>" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
 
-                        <button class="flex items-center gap-2 border border-violet-600 text-violet-600 hover:bg-violet-50 px-4 py-2 rounded text-md font-medium">
+                        <!-- <button class="flex items-center gap-2 border border-violet-600 text-violet-600 hover:bg-violet-50 px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             Export CSV
-                        </button>
+                        </button> -->
                     </div>
                 </div>
 
@@ -62,7 +62,9 @@
                                 <th class="px-6 py-3 text-left">Customer</th>
                                 <th class="px-6 py-3 text-left">Type</th>
                                 <th class="px-6 py-3 text-left">Staff</th>
-                                <th class="px-6 py-3 text-left">Actions</th>
+                                <?php if ($_SESSION['role'] === 'admin'): ?>
+                                    <th class="px-6 py-3 text-left">Actions</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody id="visitTable" class="divide-y divide-gray-50">
@@ -82,6 +84,9 @@
             </main>
         </div>
    </div>
+   <script>
+       window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>;
+   </script>
    <script src="./assets/js/visit.js"></script>
 </body>
 </html>

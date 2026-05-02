@@ -12,8 +12,6 @@
     require __DIR__ . '/../../model/Payment.php';
     require __DIR__ . '/../../controllers/MembershipController.php';
     require __DIR__ . '/../../model/Membership.php';
-    require __DIR__ . '/../../controllers/VisitController.php';
-    require __DIR__ . '/../../model/Visit.php';
     $config = require __DIR__ . '/../../config/config.php';
 
     $db = new Database($config);
@@ -23,23 +21,20 @@
 
 
     $customerId = htmlspecialchars(trim($_POST['customer_id'] ?? ''));
-    $type = 'visit';
+    $type = htmlspecialchars(trim($_POST['type'] ?? 'visit'));
     $amount = htmlspecialchars(trim($_POST['cash'] ?? null));
 
     $membership = new Membership($db->getConnection());
     $membershipController = new MembershipController($membership);
 
-    $visit = new Visit($db->getConnection());
-    $visitController = new VisitController($visit);
-
     $activeMembership = $membershipController->getActive($customerId);
 
 
-    if (!$activeMembership && $amount == null) {
+    if ($activeMembership) {
         echo json_encode([
-            'status' => 'payment_required',
-            'title' => 'Failed to Log Visit',
-            'message' => 'Customer must pay before logging visit'
+            'status' => 'error',
+            'title' => 'Failed to Pay Membership',
+            'message' => 'Customer still have existing membership'
         ]);
         exit;
     }

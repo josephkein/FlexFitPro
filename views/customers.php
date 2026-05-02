@@ -17,6 +17,26 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
         body { font-family: 'Outfit', sans-serif; }
+
+        @keyframes popIn{
+            0%{
+                opacity: 0;
+                transform: scale(0.90);
+            }
+            50%{
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100%{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .popIn{
+            animation: popIn 0.3s ease;
+        }
+
     </style>
 </head>
 <body class="h-screen">
@@ -136,7 +156,7 @@
    </div>
 
    <!-- Update -->
-   <div class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" id="updateDiv">
+   <div class="hidden popIn fixed inset-0 bg-black/50 flex items-center justify-center z-50" id="updateDiv">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
             <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
                <span class="font-medium text-xl">Update Customer</span>
@@ -169,7 +189,7 @@
    </div>
 
    <!-- ADD MEMBER MODAL -->
-   <div id="addModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+   <div id="addModal" class="hidden popIn fixed inset-0 bg-black/50 flex items-center justify-center z-50">
        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
                <span class="font-medium text-xl">Add New Customer</span>
@@ -202,7 +222,9 @@
        </div>
    </div>
 
-   <div id="logModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+   <!-- LOG VISIT MODAL -->
+
+   <div id="logModal" class="hidden popIn fixed inset-0 bg-black/50 flex items-center justify-center z-50">
        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
                <span class="font-medium text-xl">LOG VISIT</span>
@@ -231,6 +253,63 @@
        </div>
    </div>
 
+   <!-- PAYMENT MODAL -->
+   <div id="paymentModal" class="hidden popIn fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+            <span class="font-medium text-xl">Visit Payment</span>
+            <button type="button" onclick="closePaymentModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            </div>
+
+            <!-- Form -->
+            <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="paymentForm">
+            
+            <input type="hidden" name="customer_id" id="payCustomerId">
+
+            <!-- Customer Info -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1">
+                <label class="text-gray-500 text-sm">First Name</label>
+                <input type="text" id="payFirst" readonly class="border border-gray-200 rounded px-3 py-2">
+                </div>
+
+                <div class="flex flex-col gap-1">
+                <label class="text-gray-500 text-sm">Last Name</label>
+                <input type="text" id="payLast" readonly class="border border-gray-200 rounded px-3 py-2">
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label class="text-gray-500 text-sm">Customer Type</label>
+                <input type="text" id="payType" name="payType" readonly class="border border-gray-200 rounded px-3 py-2">
+            </div>
+
+            <!-- Cash Input -->
+            <div class="flex flex-col gap-1">
+                <label class="text-gray-500 text-sm">Cash</label>
+                <input type="number" id="cashInput" name="cash" step="0.01" min="1" placeholder="e.g 50, 70" class="border border-gray-200 rounded px-3 py-2" required>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="closePaymentModal()" 
+                        class="px-4 py-2 border border-gray-200 rounded hover:bg-gray-50">
+                Cancel
+                </button>
+                <button type="submit" 
+                        class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded">
+                Confirm Payment & Log Visit
+                </button>
+            </div>
+
+            </form>
+        </div>
+    </div>
+    <script>
+       window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>;
+   </script>
    <script src="./assets/js/customer.js"></script>
 </body>
 </html>

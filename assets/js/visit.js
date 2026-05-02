@@ -7,8 +7,10 @@ const prev = document.getElementById('prev');
 next.addEventListener('click', (e) => {
     e.preventDefault();
 
+    let date = document.getElementById('dateFilter');
+
     page++;
-    fetch(`./api/visits/display.php?page=${page}`)
+    fetch(`./api/visits/display.php?page=${page}&date=${date.value}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('page').textContent = page;
@@ -19,8 +21,10 @@ next.addEventListener('click', (e) => {
 prev.addEventListener('click', (e) => {
     e.preventDefault();
 
+    let date = document.getElementById('dateFilter');
+
     page--;
-    fetch(`./api/visits/display.php?page=${page}`)
+    fetch(`./api/visits/display.php?page=${page}&date=${date.value}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('page').textContent = page;
@@ -36,18 +40,28 @@ function renderData(data){
 
     document.getElementById('visitTable').innerHTML = '';
         data.forEach((d) => {
-
+            const date = new Date(d.date.replace(" ", "T"));
+            const formatted = date.toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true
+            });
             document.getElementById('visitTable').innerHTML += `
                             <tr>
-                                <td class="px-6 py-3">${d.date}</td>
+                                <td class="px-6 py-3">${formatted}</td>
                                 <td class="px-6 py-3">${d.customer}</td>
                                 <td class="px-6 py-3">${d.type}</td>
                                 <td class="px-6 py-3">${d.staff}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
-                                        <button class="bg-red-500 p-2 rounded-md text-md">
+                                        ${window.isAdmin ? `
+                                        <button class="bg-red-500 hover:bg-red-400 p-2 rounded-md text-md" onclick="deleteVisits('${d.id}')">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"></path></svg>
                                         </button>
+                                        ` : ''}
                                     </div>
                                 </td>
                             </tr>

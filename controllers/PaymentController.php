@@ -22,6 +22,12 @@
         public function getPayment($id){
             return $this->payment->get($id);
         }
+        public function create($customer_id, $user_id, $date, $amount, $type){
+            return $this->payment->create($customer_id, $user_id, $date, $amount, $type);
+        }
+        public function delete($id){
+            return $this->payment->destroy($id);
+        }
     }
 
 ?>

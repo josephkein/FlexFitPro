@@ -44,16 +44,23 @@
         public function display($search, $type, $date, $limit, $off){
             $s = "$search%";
             $t = "$type%";
-            $start = $date . '-01';
-            $end   = date('Y-m-d', strtotime($start . ' +1 month'));
+            $dateFilter = '';
+            if (!empty($date)) {
+                $dateFilter = " AND p.payment_date >= ? AND p.payment_date < DATE_ADD(?, INTERVAL 1 DAY) ";
+            }
 
-            $q = "SELECT c.customer_name AS customer, u.username AS staff, p.amount AS amount,
+            $start = $date . " 00:00:00";
+        
+            $q = "SELECT p.payment_id AS id, c.customer_name AS customer, u.username AS staff, p.amount AS amount,
              DATE(p.payment_date) AS date, p.payment_type AS type FROM payments AS p
               INNER JOIN customers AS c ON c.customer_id = p.customer_id 
-              INNER JOIN users AS u ON u.user_id = p.user_id WHERE c.customer_name LIKE ? AND p.payment_type LIKE ? AND p.payment_date >= ?
-              AND p.payment_date < ? LIMIT ? OFFSET ?";
+              INNER JOIN users AS u ON u.user_id = p.user_id WHERE c.customer_name LIKE ? AND p.payment_type LIKE ?" . $dateFilter . " ORDER BY p.payment_date DESC LIMIT ? OFFSET ?";
             $stmt = $this->db->prepare($q);
-            $stmt->bind_param('ssssii', $s, $t, $start, $end, $limit, $off);
+            if (!empty($date)) {
+                $stmt->bind_param('ssssii', $s, $t, $start, $date, $limit, $off);
+            } else {
+                $stmt->bind_param('ssii', $s, $t, $limit, $off);
+            }
             $stmt->execute();
             $res = $stmt->get_result();
 
@@ -69,6 +76,20 @@
 
             $res = $stmt->get_result();
             return $res->fetch_assoc();
+        }
+
+        public function create ($customer_id, $user_id, $date, $amount, $type) {
+            $q = "INSERT INTO payments (customer_id, user_id, payment_date, amount, payment_type) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('iisds', $customer_id, $user_id, $date, $amount, $type);
+            return $stmt->execute();
+        }
+
+        public function destroy($id){
+            $q = "DELETE FROM payments WHERE payment_id = ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('i', $id);
+            return $stmt->execute();
         }
     }
 

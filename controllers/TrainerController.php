@@ -7,14 +7,14 @@
         {
             $this->trainer = $trainer;
         }
-        public function display($search, $limit, $off){
-            return $this->trainer->display($search, $limit, $off);
+        public function display($search, $min, $max, $limit, $off){
+            return $this->trainer->display($search, $min, $max, $limit, $off);
         }
-        public function addTrainer($first, $last, $rate, $capacity){
-            return $this->trainer->create($first, $last, $rate, $capacity);
+        public function addTrainer($first, $last, $contact, $rate, $capacity){
+            return $this->trainer->create($first, $last, $contact, $rate, $capacity);
         }
-        public function update($first, $last, $rate, $capacity, $id){
-            return $this->trainer->edit($first, $last, $rate, $capacity, $id);
+        public function update($first, $last, $contact, $rate, $capacity, $id){
+            return $this->trainer->edit($first, $last, $contact, $rate, $capacity, $id);
         }
         public function getTrainer($id){
             return $this->trainer->get($id);

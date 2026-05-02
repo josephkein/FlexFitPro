@@ -22,6 +22,14 @@
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
+    if (empty($username) || empty($role) || empty($status) || empty($password) || empty($confirm_password)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Missing required fields'
+        ]);
+        exit;
+    }
+
     if ($password !== $confirm_password){
         echo json_encode([
             'status' => 'error',

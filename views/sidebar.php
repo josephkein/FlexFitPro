@@ -29,7 +29,7 @@
 
         <nav class="flex flex-col">
 
-            <a href="./index.php?url=dashboard" class="flex gap-3 md:gap-4 items-center px-5 md:px-10 py-2 md:py-3 <?= $url == 'admin' ? 'bg-violet-500' : '' ?> hover:bg-violet-500">
+            <a href="./index.php?url=dashboard" class="flex gap-3 md:gap-4 items-center px-5 md:px-10 py-2 md:py-3 <?= $url == 'dashboard' ? 'bg-violet-500' : '' ?> hover:bg-violet-500">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 5a2 2 0 0 1 2-2h6v18H4a2 2 0 0 1-2-2zm12-2h6a2 2 0 0 1 2 2v5h-8zm0 11h8v5a2 2 0 0 1-2 2h-6z"></path></svg>
                 <span class="text-white text-base md:text-xl">Dashboard</span>
             </a>
@@ -83,7 +83,7 @@
         <nav class="flex flex-col">
 
             <a href="./index.php?url=staffs" class="flex gap-3 md:gap-4 items-center px-5 md:px-10 py-2 md:py-3 <?= $url == 'staffs' ? 'bg-violet-500' : '' ?> hover:bg-violet-500">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><g fill="none" stroke="currentColor" stroke-dasharray="28" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="28;0"></animate></path><path stroke-dashoffset="28" d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" to="0"></animate></path></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8M6 8a6 6 0 1 1 12 0A6 6 0 0 1 6 8m2 10a3 3 0 0 0-3 3a1 1 0 1 1-2 0a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5a1 1 0 1 1-2 0a3 3 0 0 0-3-3z"></path></svg>
                 <span class="text-white text-base md:text-xl">Staff accounts</span>
             </a>
 

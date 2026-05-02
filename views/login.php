@@ -1,7 +1,7 @@
 <?php
     session_start();
-    if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin' ){
-        header('Location: ./index.php?url=admin');
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'staff')) {
+        header('Location: ./index.php?url=dashboard');
         exit;
     }
 
@@ -42,7 +42,7 @@
                     <div class="text-3xl text-center font-medium">Welcome, Back!</div>
                     <span class="text-gray-500 text-center">Enter your admin or staff credentials to continue</span>
                 </div>
-                <span class="hidden flex justify-center w-full p-2 text-lg text-red-500 bg-red-100 rounded" id="error-head"></span>
+                <span class="hidden flex justify-center items-center text-center w-full p-2 text-lg text-red-500 bg-red-100 rounded" id="error-head"></span>
                 <div class="flex flex-col gap-2">
                     <div class="relative flex flex-col gap-2">
                         <label for="user" class="">Username:</label>

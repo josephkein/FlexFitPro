@@ -17,8 +17,16 @@
 
     $id = $_POST['id'] ?? '';
 
-    $controller->delete($id);
-    
+    $stat = $controller->delete($id);
+
+    if (!$stat){
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Failed to delete customer'
+        ]);
+        exit;
+    }
+
     echo json_encode([
         'status' => 'success',
         'message' => 'Customer deleted successfully'

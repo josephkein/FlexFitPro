@@ -8,10 +8,10 @@ function loadDashboard(){
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('total_revenue').textContent = `₱${data.total}`;
+        document.getElementById('total_revenue').textContent = `₱${Number(data.total).toLocaleString()}`;
         document.getElementById('year').textContent = data.year;
         document.getElementById('monthly_visit').textContent = data.monthly_visit;
-        document.getElementById('daily_revenue').textContent = `₱${data.daily}`;
+        document.getElementById('daily_revenue').textContent = `₱${Number(data.daily).toLocaleString()}`;
         document.getElementById('total_visit').textContent = data.total_visit;
 
         const options = {

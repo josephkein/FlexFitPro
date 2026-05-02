@@ -54,12 +54,19 @@
                 <div class="flex flex-wrap items-center justify-between gap-4">
                     <div class="flex items-center gap-2 bg-white border border-gray-200 rounded px-4 py-2 w-full max-w-sm">
                         <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        <input type="text" placeholder="Search trainer..." class="outline-none text-md w-full" id="search">
+                        <input type="text" placeholder="Search trainer or customer..." id="searchInput" class="outline-none text-md w-full" id="search">
                     </div>
-                    <div class="flex gap-3">
+                    <div class="flex gap-3 items-center justify-center">
+                        <div>
+                            <select name="session" id="session" class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
+                                <option value="">All Session</option>
+                                <option value="Ongoing">Ongoing</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
                         <div>
                             <label for="date">End date:</label>
-                            <input type="date" value="<?= date('Y-m-d') ?>" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                            <input type="date" id="end" name="end" class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
                         </div>
                         
                 
@@ -82,36 +89,21 @@
                                 <th class="px-6 py-3 text-left">Trainer</th>  
                                 <th class="px-6 py-3 text-left">Start Date</th>
                                 <th class="px-6 py-3 text-left">End Date</th>
+                                <th class="px-6 py-3 text-left">Session</th>
                                 <th class="px-6 py-3 text-left">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="membersTable" class="divide-y divide-gray-50">
+                        <tbody id="assignTable" class="divide-y divide-gray-50">
                             <!-- Rows populated via PHP or JS -->
-                            <tr>
-                                <td class="px-6 py-3">John Doe</td>
-                                <td class="px-6 py-3">John Doe</td>
-                                <td class="px-6 py-3">2025-02-04</td>
-                                <td class="px-6 py-3">2025-03-04</td>
-                                <td class="px-6 py-3">
-                                    <div class="flex gap-2">
-                                        <button class="bg-blue-500 p-2 rounded-md text-md">
-                                            <img src="./images/edit.png" alt="">
-                                        </button>
-                                        <button class="bg-red-500 p-2 rounded-md text-md">
-                                            <img src="./images/delete.png" alt="">
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                    
+                           
                         </tbody>
                     </table>
                     <!-- Pagination -->
-                    <div class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
+                    <div id="pagination" class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
-                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded">1</button>
-                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50">Next</button>
+                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
+                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
                 </div>
@@ -128,7 +120,7 @@
                <span class="font-medium text-xl">Add New Trainer</span>
                <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
            </div>
-           <form action="./actions/add_trainer.php" method="POST" class="px-6 py-4 flex flex-col gap-4">
+           <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="assignForm">
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">First Name</label>
                    <input type="text" name="first_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
@@ -162,7 +154,9 @@
            </form>
        </div>
    </div>
-
+    <script>
+        window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] == 'admin' ? 'true' : 'false' ?>
+    </script>
    <script src="./assets/js/assign.js"></script>
 </body>
 </html>

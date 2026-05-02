@@ -63,17 +63,17 @@ function renderData(data){
                                         <button class="bg-blue-500 p-2 rounded-md text-md hover:bg-blue-400" id="update-customer" onclick="updateCustomer(${d.id})">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M16.293 2.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-13 13A1 1 0 0 1 8 21H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 .293-.707l10-10zM14 7.414l-9 9V19h2.586l9-9zm4 1.172L19.586 7L17 4.414L15.414 6z"></path></svg>
                                         </button>
-                                        <?php if ($_SESSION['role'] == 'admin'): ?>
+                                        ${window.isAdmin ? `
                                         <button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" onclick="deleteCustomer(${d.id})">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"></path></svg>
                                         </button>
-                                        <?php endif; ?>
+                                        ` : ''}
                                         <button class="border border-violet-600 p-2 text-violet-600 hover:bg-gray-100" onclick="logVisit(${d.id})">Log</button>
                                     </div>
                                 </td>
                             </tr>
             `;
-        })
+        });
         /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
                 <img src="./images/delete.png" alt="">
         </button>
@@ -107,34 +107,86 @@ function logVisit(id) {
     })
    
 }
-document.getElementById('logForm').addEventListener('submit', function(e){
-    e.preventDefault();
 
-        fetch('./api/visits/store.php', {
+function visitLog(e){
+    
+    fetch('./api/payments/store.php', {
             method: 'POST',
-            body: new FormData(this)
+            body: new FormData(e)
         })
         .then(res => res.json())
         .then(data => {
             if (data.status == 'success'){
+                console.log(data.message);
                 Swal.fire({
                     icon: 'success',
                     title: 'Successfullt Logged!',
                     text: 'Visit logged successfully'
                 })
                 closeLogModal();
+                closePaymentModal();
             }
             else{
+                closeLogModal();
+                let icon = data.status == 'error' ? 'error' : 'warning';
+                let ok = data.status == 'error' ? 'OK' : 'Go to Payment';
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Log Visit!',
-                    text: 'There was an error logging the visit.'
+                    icon: icon,
+                    title: data.title,
+                    text: data.message,
+                    confirmButtonText: ok
+                }).then(() => {
+                    openPaymentModal();
                 })
             }
 
-        })
+    })
+}
+
+document.getElementById('logForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    visitLog(this);
 
 });
+
+document.getElementById('paymentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    let amt = document.getElementById('cashInput');
+
+    if (amt < 0){
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Amount!',
+            text: 'Please enter a valid amount.'
+        })
+    }
+    else{
+        visitLog(this);
+    }
+});
+
+function openPaymentModal(){
+
+    let id = document.getElementById('logId').value;
+
+    fetch('./api/customers/get.php?id=' + id)
+    .then(res => res.json())
+    .then(data => {
+        let name = data.customer_name.split(' ');
+        document.getElementById('payFirst').value = name[0];
+        document.getElementById('payLast').value = name[1];
+        document.getElementById('payType').value = data.customer_type;
+        document.getElementById('payCustomerId').value = id;
+    })
+    
+    document.getElementById('paymentModal').classList.remove('hidden');
+}
+
+function closePaymentModal(){
+    document.getElementById('paymentModal').classList.add('hidden');
+}
 
 function closeLogModal(){
     document.getElementById('logModal').classList.add('hidden');
@@ -171,7 +223,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
                 icon: 'success',
                 title: 'Successfullt Added!',
                 text: 'Customer added successfully'
-            })
+            })  
         }
         else{
             console.log(data.errors);

@@ -47,11 +47,8 @@
                             <option value="visit">Visit</option>
                             <option value="membership">Membership</option>
                         </select>
-                        <input type="month" id="date" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
-                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            Record Payment
-                        </button>
+                        <input type="date" id="date" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                    
                     </div>
                 </div>
 
@@ -68,7 +65,9 @@
                                 <th class="px-6 py-3 text-left">Type</th>
                                 <th class="px-6 py-3 text-left">Amount</th>
                                 <th class="px-6 py-3 text-left">Staff</th>
-                                <th class="px-6 py-3 text-left">Actions</th>
+                                <?php if ($_SESSION['role'] === 'admin'): ?>
+                                    <th class="px-6 py-3 text-left">Actions</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50" id="paymentTable">
@@ -165,7 +164,9 @@
            </form>
        </div>
    </div>
-
+    <script>
+       window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>;
+   </script>
    <script src="./assets/js/payments.js"></script>
 </body>
 </html>

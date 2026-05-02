@@ -16,9 +16,15 @@
     $staff = new Staff($db->getConnection());
     $controller = new StaffController($staff);
 
-    $id = $_GET['id'] ?? '';
+    $search = $_GET['search'] ?? '';
+    $role = $_GET['role'] ?? '';
+    $status = $_GET['status'] ?? '';
+    $page = $_GET['page'] ?? 1;
 
-    $display = $controller->get($id);
+    $limit = 7;
+    $off = ($page - 1) * $limit;
+
+    $display = $controller->display($search, $role, $status, $limit, $off);
 
     echo json_encode($display);
 

@@ -48,6 +48,7 @@ function renderData(data){
             document.getElementById('trainerTable').innerHTML += `
                             <tr>
                                 <td class="px-6 py-3">${d.trainer}</td>
+                                <td class="px-6 py-3">${d.contact}</td>
                                 <td class="px-6 py-3">${d.rate}</td>
                                 <td class="px-6 py-3">${d.capacity}</td>
                                 <td class="px-6 py-3">${d.trainees}</td>
@@ -59,9 +60,11 @@ function renderData(data){
                                         <button class="bg-blue-500 p-2 rounded-md text-md" onclick="updateTrainer(${d.trainer_id})">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M16.293 2.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-13 13A1 1 0 0 1 8 21H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 .293-.707l10-10zM14 7.414l-9 9V19h2.586l9-9zm4 1.172L19.586 7L17 4.414L15.414 6z"></path></svg>
                                         </button>
+                                        ${window.isAdmin ? `
                                         <button class="bg-red-500 p-2 rounded-md text-md" onclick="deleteTrainer(${d.trainer_id})">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"></path></svg>
                                         </button>
+                                        ` : ''}
                                     </div>
                                 </td>
                             </tr>
@@ -144,6 +147,26 @@ document.getElementById('status').addEventListener('change', function(){
 
 })
 
+let rateTimeout;
+
+function debounceRate(){
+    clearTimeout(rateTimeout);
+
+    rateTimeout = setTimeout(() => {
+        const min = document.getElementById('min').value;
+        const max = document.getElementById('max').value;
+
+        fetch(`./api/trainers/display.php?search=${document.getElementById('searchInput').value}&min=${min}&max=${max}`)
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+    }, 500)
+}
+
+document.getElementById('min').addEventListener('input', debounceRate);
+document.getElementById('max').addEventListener('input', debounceRate);
+
 
 // Live search by name
 document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -217,7 +240,7 @@ document.getElementById('update-form').addEventListener('submit', function(e){
             this.reset();
             Swal.fire({
                 icon: 'success',
-                title: 'Successfullt updated!',
+                title: 'Successfully updated!',
                 text: 'Trainer updated successfully'
             })
         }
@@ -252,6 +275,7 @@ function updateTrainer(id){
         document.getElementById('up_last').value = data.last_name;
         document.getElementById('up_rate').value = data.rate;
         document.getElementById('up_cap').value = data.capacity;
+        document.getElementById('up_contact').value = String(data.contact);
         document.getElementById('up_tid').value = id;
     })
 

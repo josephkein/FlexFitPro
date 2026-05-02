@@ -57,6 +57,10 @@
                         <input type="text" placeholder="Search trainer..." id="searchInput" class="outline-none text-md w-full">
                     </div>
                     <div class="flex gap-3">
+                        <div>
+                            <input type="number" name="min" id="min" step="0.01" placeholder="Min Rate" class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
+                            <input type="number" name="max" id="max" step="0.01" placeholder="Max Rate" class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
+                        </div>
                         <select class="border border-gray-200 rounded px-3 py-2 text-md bg-white" id="status">
                             <option value="">All Status</option>
                             <option value="available">Available</option>
@@ -78,6 +82,7 @@
                         <thead class="text-gray-400 text-md uppercase border-b border-gray-100">
                             <tr>
                                 <th class="px-6 py-3 text-left">Name</th>
+                                <th class="px-6 py-3 text-left">Contact No</th>
                                 <th class="px-6 py-3 text-left">Rate</th>  
                                 <th class="px-6 py-3 text-left">Capacity</th>
                                 <th class="px-6 py-3 text-left">Current Trainees</th>
@@ -120,7 +125,10 @@
                    <label class="text-md text-gray-500">Last Name</label>
                    <input type="text" name="last_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name">
                </div>
-              
+               <div class="flex flex-col gap-1">
+                   <label class="text-md text-gray-500">Contact No</label>
+                   <input type="text" name="contact_no" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter contact number">
+               </div>
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Rate</label>
@@ -156,7 +164,10 @@
                    <label class="text-md text-gray-500">Last Name</label>
                    <input type="text" name="up_last" id="up_last" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
                </div>
-              
+              <div class="flex flex-col gap-1">
+                   <label class="text-md text-gray-500">Contact No</label>
+                   <input type="text" name="up_contact" id="up_contact" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter contact number">
+               </div>
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Rate</label>
@@ -174,8 +185,9 @@
            </form>
        </div>
    </div>
-
-   <script src="./assets/js/trainer.js">
-   </script>
+    <script>
+       window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>;
+    </script>
+   <script src="./assets/js/trainer.js"></script>
 </body>
 </html>

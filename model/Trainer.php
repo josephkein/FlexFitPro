@@ -9,16 +9,19 @@
         }
         
         // display trainers
-        public function display($search, $limit, $off){
+        public function display($search, $min, $max, $limit, $off){
             $s = "$search%";
- 
-            $q = "SELECT t.trainer_id, CONCAT(t.first_name, ' ' , t.last_name) AS trainer,
-             t.capacity, t.rate, COUNT(c.coaching_id) AS trainees FROM 
-             trainers AS t LEFT JOIN coaching AS c ON c.trainer_id = t.trainer_id AND c.status = 'Active'
-              WHERE t.first_name LIKE ? 
-              GROUP BY t.trainer_id LIMIT ? OFFSET ?";
+            $minRate = ($min !== '') ? $min : 0;
+            $maxRate = ($max !== '') ? $max : 999999;
+
+            $q = "SELECT t.trainer_id, CONCAT(t.first_name, ' ' , t.last_name) AS trainer, t.contact_no AS contact,
+                t.capacity, t.rate, COUNT(c.coaching_id) AS trainees FROM 
+                trainers AS t LEFT JOIN coaching AS c ON c.trainer_id = t.trainer_id
+                WHERE t.first_name LIKE ? AND t.rate BETWEEN ? AND ?
+                GROUP BY t.trainer_id LIMIT ? OFFSET ?";
+
             $stmt = $this->db->prepare($q);
-            $stmt->bind_param('sii', $s, $limit, $off);    
+            $stmt->bind_param('sddii', $s, $minRate, $maxRate, $limit, $off);    
             $stmt->execute();
             $res = $stmt->get_result();
 
@@ -26,28 +29,28 @@
         }
 
         // add new trainer
-        public function create($first, $last, $rate, $capacity){
+        public function create($first, $last, $contact, $rate, $capacity){
 
             // insert new trainer
-            $q = "INSERT INTO trainers (first_name, last_name, rate, capacity) VALUES (?, ?, ?, ?)";
+            $q = "INSERT INTO trainers (first_name, last_name, contact_no, rate, capacity) VALUES (?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($q);
-            $stmt->bind_param("ssdi", $first, $last, $rate, $capacity);
+            $stmt->bind_param("sssii", $first, $last, $contact, $rate, $capacity);
             return $stmt->execute();
 
         }
         
         // update trainer
-        public function edit($first, $last, $rate, $capacity, $id){
+        public function edit($first, $last, $contact, $rate, $capacity, $id){
 
-            $q = "UPDATE trainers SET first_name = ?, last_name = ?, rate = ?, capacity = ? WHERE trainer_id = ?";
+            $q = "UPDATE trainers SET first_name = ?, last_name = ?, contact_no = ?, rate = ?, capacity = ? WHERE trainer_id = ?";
             $stmt = $this->db->prepare($q);
-            $stmt->bind_param("ssdii", $first, $last, $rate, $capacity, $id);
+            $stmt->bind_param("sssiii", $first, $last, $contact, $rate, $capacity, $id);
             return $stmt->execute();
         }
 
         // Get trainer by id
         public function get($id){
-            $q = "SELECT first_name, last_name, rate, capacity FROM trainers WHERE trainer_id = ?";
+            $q = "SELECT first_name, last_name, contact_no AS contact, rate, capacity FROM trainers WHERE trainer_id = ?";
             $stmt = $this->db->prepare($q);
             $stmt->bind_param('i', $id);        
             $stmt->execute();
