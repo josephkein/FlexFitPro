@@ -1,6 +1,5 @@
 <?php
     
-    header('Content-Type: application/json');
     require __DIR__ . '/../../database/database.php';
     require __DIR__ . '/../../controllers/TrainerController.php';
     require __DIR__ . '/../../model/Trainer.php';

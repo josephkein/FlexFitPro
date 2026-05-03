@@ -28,6 +28,9 @@
         public function delete($id){
             return $this->payment->destroy($id);
         }
+        public function update($id, $amount, $payment_type){
+            return $this->payment->update($id, $amount, $payment_type);
+        }
     }
 
 ?>

@@ -68,9 +68,9 @@
                             <option value="active">Active</option>
                             <option value="expired">Expired</option>
                         </select>
-                        <button onclick="openAddMember()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            New Member
+                        <button onclick="openAddMembership()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>
+                            Add Membership
                         </button>
                     </div>
                 </div>
@@ -126,6 +126,121 @@
             </main>
         </div>
    </div>
+
+   <div id="addMembershipModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-200 opacity-0">
+       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-xl">Add Membership</span>
+               <button onclick="closeAddMembership()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form id="addMembershipForm" method="POST" class="px-6 py-4 flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Search Customer</label>
+                    <div class="relative">
+                        <input type="text" id="customerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search customer name..." autocomplete="off">
+                        <div id="customerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
+                    </div>
+                    <input type="hidden" id="customerId" name="customer_id">
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Plan</label>
+                    <select id="membershipPlanSelect" name="plan_id" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400" required>
+                        <option value="">Select plan</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-md text-gray-500">Start Date</label>
+                        <input type="date" id="membershipStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeAddMembership()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Create Membership</button>
+                </div>
+           </form>
+       </div>
+   </div>
+
+   <div id="paymentModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-200 opacity-0">
+       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-lg">Membership Payment</span>
+               <button type="button" onclick="closePaymentModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form id="paymentModalForm" class="px-6 py-4 flex flex-col gap-4">
+               <div class="grid grid-cols-1 gap-4">
+                   <div>
+                       <label class="text-sm text-gray-500">Plan</label>
+                       <div id="paymentPlanName" class="mt-1 text-md font-semibold text-gray-900"></div>
+                   </div>
+                   <div>
+                       <label class="text-sm text-gray-500">Amount to Pay</label>
+                       <div id="paymentAmountDisplay" class="mt-1 text-md font-semibold text-violet-700">₱0.00</div>
+                   </div>
+                   <div class="flex flex-col gap-1">
+                       <label class="text-sm text-gray-500">Cash Received</label>
+                       <input type="number" id="paymentCashInput" name="cash" step="0.01" min="0" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter cash amount" required>
+                       <p id="paymentErrorText" class="text-sm text-red-500 hidden"></p>
+                   </div>
+                   <div>
+                       <label class="text-sm text-gray-500">Change</label>
+                       <div id="paymentChangeDisplay" class="mt-1 text-md font-semibold text-green-600">₱0.00</div>
+                   </div>
+               </div>
+
+               <input type="hidden" id="paymentCustomerId" name="customer_id">
+               <input type="hidden" id="paymentPlanId" name="plan_id">
+               <input type="hidden" id="paymentAmount" name="amount">
+               <input type="hidden" id="paymentStartDate" name="start_date">
+
+               <div class="flex justify-end gap-3 pt-2">
+                   <button type="button" onclick="closePaymentModal()" class="px-4 py-2 text-sm border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                   <button type="submit" class="px-4 py-2 text-sm bg-green-600 hover:bg-green-700 text-white rounded">Confirm Payment</button>
+               </div>
+           </form>
+       </div>
+   </div>
+
+   <div id="updateMembershipModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-200 opacity-0">
+       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-xl">Update Membership</span>
+               <button onclick="closeUpdateMembershipModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form id="updateMembershipForm" method="POST" class="px-6 py-4 flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Customer</label>
+                    <input type="text" id="updateCustomerName" class="border border-gray-200 rounded px-3 py-2 text-md bg-gray-100" readonly>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Plan</label>
+                    <select id="updateMembershipPlanSelect" name="plan_id" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400" required>
+                        <option value="">Select plan</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-md text-gray-500">Start Date</label>
+                        <input type="date" id="updateMembershipStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                    </div>
+                </div>
+
+                <input type="hidden" id="updateMembershipId" name="membership_id">
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeUpdateMembershipModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update Membership</button>
+                </div>
+           </form>
+       </div>
+   </div>
+
     <?php if($_SESSION['role'] === 'admin'): ?>
    <!-- ADD PLAN MODAL -->
    <div id="addPlan" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">

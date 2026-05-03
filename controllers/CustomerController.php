@@ -32,6 +32,10 @@
         public function update($name, $type, $id){
             return $this->customer->edit($name, $type, $id);
         }
+
+        public function suggestion($search){
+            return $this->customer->suggestion($search);
+        }
     }
 
 ?>

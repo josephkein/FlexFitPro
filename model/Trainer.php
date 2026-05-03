@@ -16,7 +16,7 @@
 
             $q = "SELECT t.trainer_id, CONCAT(t.first_name, ' ' , t.last_name) AS trainer, t.contact_no AS contact,
                 t.capacity, t.rate, COUNT(c.coaching_id) AS trainees FROM 
-                trainers AS t LEFT JOIN coaching AS c ON c.trainer_id = t.trainer_id
+                trainers AS t LEFT JOIN coaching AS c ON c.trainer_id = t.trainer_id AND c.end_date > CURDATE()
                 WHERE t.first_name LIKE ? AND t.rate BETWEEN ? AND ?
                 GROUP BY t.trainer_id LIMIT ? OFFSET ?";
 

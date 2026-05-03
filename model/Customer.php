@@ -38,7 +38,7 @@
             WHEN m.membership_id IS NULL THEN 'None'
             WHEN DATE_ADD(m.start_date, INTERVAL p.duration_month MONTH) >= CURDATE() THEN 'Active'
             ELSE 'Expired'
-            END AS membership_status, t.first_name AS trainer, ch.status AS status FROM customers AS c
+            END AS membership_status, t.first_name AS trainer, ch.end_date AS end FROM customers AS c
             LEFT JOIN memberships AS m ON m.customer_id = c.customer_id 
             LEFT JOIN plans AS p ON p.plan_id = m.plan_id
             LEFT JOIN coaching AS ch ON ch.customer_id = c.customer_id 
@@ -59,6 +59,13 @@
 
             $res = $stmt->get_result();
             return $res->fetch_assoc();
+        }
+        public function suggestion($search){
+            $stmt = $this->db->prepare("SELECT customer_id AS id, customer_name AS name FROM customers WHERE customer_name LIKE ? ORDER BY customer_name ASC LIMIT 2");
+            $stmt->bind_param('s', $search);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
         }
     }
 

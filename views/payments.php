@@ -157,6 +157,7 @@
                        <input type="number" step="0.01" min="1" id="up_amount"  name="amount" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="0.00" required>
                    </div>
                </div>
+               <input type="hidden" id="up_id" name="payment_id">
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeUpdate()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Payment</button>

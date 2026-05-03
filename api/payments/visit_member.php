@@ -21,7 +21,7 @@
 
 
     $customerId = htmlspecialchars(trim($_POST['customer_id'] ?? ''));
-    $type = htmlspecialchars(trim($_POST['type'] ?? 'visit'));
+    $type = htmlspecialchars(trim($_POST['type'] ?? ''));
     $amount = htmlspecialchars(trim($_POST['cash'] ?? null));
 
     $membership = new Membership($db->getConnection());

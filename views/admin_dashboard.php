@@ -25,7 +25,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen overflow-hidden">
    <div class="flex bg-gray-100 h-full w-full">
     <!-- SIDE BAR -->
         <?php include './views/sidebar.php' ?>

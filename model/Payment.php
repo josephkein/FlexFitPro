@@ -91,6 +91,13 @@
             $stmt->bind_param('i', $id);
             return $stmt->execute();
         }
+
+        public function update($id, $amount, $payment_type){
+            $q = "UPDATE payments SET amount = ?, payment_type = ? WHERE payment_id = ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('dsi', $amount, $payment_type, $id);
+            return $stmt->execute();
+        }
     }
 
 ?>

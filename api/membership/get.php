@@ -15,14 +15,15 @@
     $membership = new Membership($db->getConnection());
     $controller = new MembershipController($membership);
 
-    $id = json_decode(file_get_contents('php://input'), true)['id'] ?? '';
+    $id = $_GET['id'] ?? '';
 
     if (!$id) {
-        echo json_encode(['status' => 'error', 'message' => 'ID required']);
+        echo json_encode(['error' => 'ID required']);
         exit;
     }
 
-    $controller->delete($id);
+    // Need to add a get method in Membership model
+    $data = $membership->get($id);
     
-    echo json_encode(['status' => 'success']);
+    echo json_encode($data);
 ?>

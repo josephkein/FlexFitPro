@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+    if (!isset($_SESSION['role'])) {
         echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
         exit;
     }
@@ -14,19 +14,18 @@
     $assign = new Assign($db->getConnection());
     $controller = new AssignController($assign);
 
-    $data = json_decode(file_get_contents('php://input'), true);
-    $id = $data['id'] ?? '';
+    $id = $_GET['id'] ?? '';
 
     if (empty($id)) {
         echo json_encode(['status' => 'error', 'message' => 'ID is required']);
         exit;
     }
 
-    $data = $controller->destroy($id);
-
-    if ($data) {
-        echo json_encode(['status' => 'success', 'message' => 'Assignment deleted successfully']);
+    $result = $controller->get($id);
+    
+    if ($result) {
+        echo json_encode($result);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Failed to delete assignment']);
+        echo json_encode(['status' => 'error', 'message' => 'Assignment not found']);
     }
 ?>

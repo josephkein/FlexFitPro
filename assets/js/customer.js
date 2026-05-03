@@ -49,15 +49,19 @@ function renderData(data){
 
     document.getElementById('membersTable').innerHTML = '';
         data.forEach((d) => {
+
+            let dateNow = new Date().toLocaleString('en-CA');
             let type = d.type == 'student' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600';
-            let color = d.status == null || d.status == 'Expired' ? 'text-gray-500' : '';
+            let color = d.end < dateNow || d.end == null ? 'text-gray-500' : '';
+            
+            console.log(dateNow);
             document.getElementById('membersTable').innerHTML += `
                             <tr>
                                 <td class="px-6 py-3">${d.id}</td>
                                 <td class="px-6 py-3">${d.name}</td>
-                                <td class="px-6 py-3 flex items-center"><span class="${type} py-1 px-3 rounded-full">${d.type}</span></td>
+                                <td class="px-6 py-3"><span class="${type} py-1 px-3 rounded-full">${d.type}</span></td>
                                 <td class="px-6 py-3"><span class="${d.membership_status == 'Active' ? 'bg-green-100 text-green-600' : d.membership_status == 'Expired' ? 'bg-red-100 text-red-600' : 'text-gray-500'} py-1 px-3 rounded-full">${d.membership_status}</span></td>
-                                <td class="px-6 py-3 ${color}">${d.status == 'Expired' || d.status == null ? 'None' : d.trainer}</td>
+                                <td class="px-6 py-3 ${color}">${d.end < dateNow || d.end == null ? 'None' : d.trainer}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         <button class="bg-blue-500 p-2 rounded-md text-md hover:bg-blue-400" id="update-customer" onclick="updateCustomer(${d.id})">
@@ -127,9 +131,10 @@ function visitLog(e){
                 closePaymentModal();
             }
             else{
+                console.log(data);
                 closeLogModal();
-                let icon = data.status == 'error' ? 'error' : 'warning';
-                let ok = data.status == 'error' ? 'OK' : 'Go to Payment';
+                let icon = data.status == 'pay' ? 'warning' : 'warning';
+                let ok = data.status == 'pay' ? 'Go to Payment' : 'OK';
                 Swal.fire({
                     icon: icon,
                     title: data.title,
@@ -146,7 +151,34 @@ function visitLog(e){
 document.getElementById('logForm').addEventListener('submit', function(e){
     e.preventDefault();
 
-    visitLog(this);
+    fetch('./api/payments/check.php', {
+        method: 'POST',
+        body: new FormData(this)
+    }).then(res => res.json())
+    .then(data => {
+        if (data.status == 'allow'){
+            closeLogModal();
+            Swal.fire({
+                    icon: 'success',
+                    title: 'Successfullt Logged!',
+                    text: 'Visit logged successfully'
+            });
+        }
+        else{
+            closeLogModal();
+            let icon = data.status == 'pay' ? 'warning' : 'warning';
+            let ok = data.status == 'pay' ? 'Go to Payment' : 'OK';
+            Swal.fire({
+                icon: icon,
+                title: data.title,
+                text: data.message,
+                confirmButtonText: ok
+            }).then(() => {
+                openPaymentModal();
+            })
+        }
+    })
+
 
 });
 

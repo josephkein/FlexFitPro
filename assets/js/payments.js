@@ -211,6 +211,37 @@ function deletePayments(id){
 document.getElementById('update-form').addEventListener('submit', function(e){
     e.preventDefault();
 
+    const paymentId = document.getElementById('up_id').value;
+    const amount = document.getElementById('up_amount').value;
+    const paymentType = document.getElementById('up_type').value;
+
+    if (!paymentId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Payment ID is missing'
+        });
+        return;
+    }
+
+    if (!amount || amount <= 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Amount must be greater than 0'
+        });
+        return;
+    }
+
+    if (!paymentType) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Please select a payment type'
+        });
+        return;
+    }
+
     fetch('./api/payments/update.php', {
         method: 'POST',
         body: new FormData(this)
@@ -218,25 +249,30 @@ document.getElementById('update-form').addEventListener('submit', function(e){
     .then(res => res.json())
     .then(data => {
         if (data.status == 'success'){
-            console.log(data.message);
             closeUpdate();
             this.reset();
             Swal.fire({
                 icon: 'success',
-                title: 'Successfullt updated!',
+                title: 'Success!',
                 text: 'Payment updated successfully'
             })
+            loadPayments();
         }
         else{
-            console.log(data.errors);
             Swal.fire({
                 icon: 'error',
-                title: 'Cannot be empty!',
-                text: 'Inputs cannot be empty. Input something!'
+                title: 'Error',
+                text: data.message || 'Failed to update payment'
             })
-           
         }
-        loadPayments();
+    })
+    .catch(err => {
+        console.error(err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to update payment'
+        })
     })
 });
  
@@ -255,8 +291,9 @@ function updatePayments(id){
     fetch('./api/payments/get.php?id=' + id)
     .then(res => res.json())
     .then(data => {
+        document.getElementById('up_id').value = id;
         document.getElementById('up_type').value = data.payment_type;
         document.getElementById('up_amount').value = data.amount;
     })
-
+    .catch(err => console.error(err))
 }

@@ -14,6 +14,17 @@
          public function display($search, $plan, $limit, $off){
             return $this->membership->display($search, $plan, $limit, $off);
          }
+
+         public function create($customer_id, $plan_id, $start_date){
+            return $this->membership->create($customer_id, $plan_id, $start_date);
+         }
+        public function delete($id){
+            return $this->membership->destroy($id);
+        }
+        public function update($id, $plan_id, $start_date){
+            return $this->membership->update($id, $plan_id, $start_date);
+        }
+
     }
 
 ?>

@@ -60,8 +60,8 @@
                         <div>
                             <select name="session" id="session" class="border border-gray-200 rounded px-3 py-2 text-md bg-white">
                                 <option value="">All Session</option>
-                                <option value="Ongoing">Ongoing</option>
-                                <option value="Done">Done</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="done">Done</option>
                             </select>
                         </div>
                         <div>
@@ -113,47 +113,99 @@
         </div>
    </div>
 
-   <!-- ADD TRAINER MODAL -->
-   <div id="addModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+   <!-- ADD ASSIGNMENT MODAL -->
+   <div id="addTrainer" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-               <span class="font-medium text-xl">Add New Trainer</span>
+               <span class="font-medium text-xl">Assign Trainer</span>
                <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
            </div>
-           <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="assignForm">
-               <div class="flex flex-col gap-1">
-                   <label class="text-md text-gray-500">First Name</label>
-                   <input type="text" name="first_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
-               </div>
-               <div class="flex flex-col gap-1">
-                   <label class="text-md text-gray-500">Last Name</label>
-                   <input type="text" name="last_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
-               </div>
-              
-               <div class="flex gap-4">
-                   <div class="flex flex-col gap-1 flex-1">
-                       <label class="text-md text-gray-500">Rate</label>
-                       <input type="number" name="rate" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 250, 500">
-                   </div>
-                   <div class="flex flex-col gap-1 flex-1">
-                       <label class="text-md text-gray-500">Capacity</label>
-                       <input type="number" name="capacity" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 5, 4">
-                   </div>
-               </div>
-               <div class="flex flex-col gap-1">
-                   <label class="text-md text-gray-500">Status</label>
-                   <select name="status" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
-                       <option value="active">Available</option>
-                       <option value="leave">Full</option>
-                   </select>
-               </div>
-               <div class="flex justify-end gap-3 pt-2">
-                   <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Trainer</button>
-               </div>
+           <form id="assignForm" method="POST" class="px-6 py-4 flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Search Customer</label>
+                    <div class="relative">
+                        <input type="text" id="customerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search customer name..." autocomplete="off">
+                        <div id="customerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
+                    </div>
+                    <input type="hidden" id="customerId" name="customer_id">
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Search Trainer</label>
+                    <div class="relative">
+                        <input type="text" id="trainerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search trainer name..." autocomplete="off">
+                        <div id="trainerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
+                    </div>
+                    <input type="hidden" id="trainerId" name="trainer_id">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-md text-gray-500">Start Date</label>
+                        <input type="date" id="startDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-md text-gray-500">End Date</label>
+                        <input type="date" id="endDate" name="end_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Assign Trainer</button>
+                </div>
            </form>
        </div>
    </div>
+
+   <!-- UPDATE ASSIGNMENT MODAL -->
+   <div id="updateTrainer" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
+           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+               <span class="font-medium text-xl">Update Assignment</span>
+               <button onclick="closeUpdate()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+           </div>
+           <form id="updateForm" method="POST" class="px-6 py-4 flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Search Customer</label>
+                    <div class="relative">
+                        <input type="text" id="updateCustomerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search customer name..." autocomplete="off">
+                        <div id="updateCustomerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
+                    </div>
+                    <input type="hidden" id="updateCustomerId" name="customer_id">
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-md text-gray-500">Search Trainer</label>
+                    <div class="relative">
+                        <input type="text" id="updateTrainerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search trainer name..." autocomplete="off">
+                        <div id="updateTrainerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
+                    </div>
+                    <input type="hidden" id="updateTrainerId" name="trainer_id">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-md text-gray-500">Start Date</label>
+                        <input type="date" id="updateStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-md text-gray-500">End Date</label>
+                        <input type="date" id="updateEndDate" name="end_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                    </div>
+                </div>
+
+                <input type="hidden" id="updateAssignId" name="assign_id">
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeUpdate()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update Assignment</button>
+                </div>
+           </form>
+       </div>
+   </div>
+
+   
     <script>
         window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] == 'admin' ? 'true' : 'false' ?>
     </script>

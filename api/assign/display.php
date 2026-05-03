@@ -18,11 +18,12 @@
     $search = $_GET['search'] ?? '';
     $page = $_GET['page'] ?? 1;
     $end = $_GET['end'] ?? '';
+    $session = $_GET['session'] ?? '';
 
     $limit = 7;
     $off = ($page - 1) * $limit;
 
-    $data = $controller->display($search, $end, $limit, $off);
+    $data = $controller->display($search, $end, $session, $limit, $off);
 
     echo json_encode($data);
 ?>

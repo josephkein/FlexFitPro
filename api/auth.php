@@ -1,6 +1,14 @@
 <?php
     session_start();
 
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token'])) {
+    exit('Invalid CSRF request');
+    }
+
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        exit('CSRF validation failed');
+    }
+
     header('Content-Type: application/json');
 
     require '../database/database.php';
