@@ -25,6 +25,9 @@
         public function displayLogs($search, $date, $limit, $off){
             return $this->visit->display($search, $date, $limit, $off);
         }
+        public function todayVisit(){
+            return $this->visit->todayVisit();
+        }
     }
 
 ?>

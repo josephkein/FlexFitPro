@@ -93,37 +93,6 @@ function loadPayments(){
 
 loadPayments();
 
-// Add new trainer
-document.getElementById('payment_form').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    fetch('./api/payments/store.php', {
-        method: 'POST',
-        body: new FormData(this)
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            closeAddModal();
-            this.reset();
-            Swal.fire({
-                icon: 'success',
-                title: 'Successfullt Added!',
-                text: 'Payment added successfully'
-            })
-        }
-        else{
-            console.log(data.errors);
-            Swal.fire({
-                icon: 'error',
-                title: 'Cannot be empty!',
-                text: 'Inputs cannot be empty. Input something!'
-            })
-           
-        }
-        loadPayments();
-    })
-})
 
 // Filter payments by type
 document.getElementById('payment_type').addEventListener('change', function(){

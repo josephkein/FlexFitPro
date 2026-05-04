@@ -22,6 +22,9 @@
         public function destroy($id){
             return $this->trainer->delete($id);
         }
+        public function available(){
+            return $this->trainer->available();
+        }
     }
 
 

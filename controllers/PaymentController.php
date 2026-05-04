@@ -31,6 +31,9 @@
         public function update($id, $amount, $payment_type){
             return $this->payment->update($id, $amount, $payment_type);
         }
+        public function recent(){
+            return $this->payment->recent();
+        }
     }
 
 ?>

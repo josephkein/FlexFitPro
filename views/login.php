@@ -44,7 +44,7 @@
     <div class="h-screen flex flex-col gap-4 justify-center items-center">
         <div class="flex w-full max-w-md md:max-w-5xl shadow-lg rounded-xl h-150">
             <div id="right" class="hidden md:flex flex-1 flex-col bg-violet-800 w-full h-full rounded-l-xl">
-                <div class="flex-1 flex flex-col gap-2 items-center justify-center">
+                <div class="flex-2 flex flex-col gap-2 items-center justify-center">
                     <div class="w-20 h-20 rounded-full bg-violet-600 flex items-center justify-center">
                         <img src="./images/logoflex.png" alt="">
                     </div>
@@ -53,7 +53,7 @@
                         <span class="text-violet-300">Gym Management System</span>
                     </div>
                 </div>
-                <div class="benifits flex-1 flex flex-col mb-10 gap-5 px-10">
+                <div class="benifits flex-2 flex flex-col gap-5 px-10">
                     <div class="flex items-center gap-2">
                         <div class="rounded-xl bg-violet-600 p-3 border border-violet-400">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 15 15" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M5 8.9c1.44 0 2.68.252 3.575.855C9.502 10.38 10 11.343 10 12.6a.501.501 0 0 1-1 0c0-.958-.358-1.596-.983-2.017C7.359 10.141 6.35 9.9 5 9.9s-2.36.241-3.017.684C1.358 11.005 1 11.643 1 12.601a.501.501 0 0 1-1 0c0-1.258.497-2.221 1.424-2.846C2.319 9.152 3.56 8.9 5 8.9m4.975 0c1.439 0 2.68.252 3.575.855c.927.625 1.425 1.588 1.425 2.846a.5.5 0 0 1-1 0c0-.958-.358-1.596-.984-2.017c-.518-.349-1.253-.57-2.202-.65a4.5 4.5 0 0 0-.87-1.033zM5 1.85a3.151 3.151 0 0 1 0 6.3a3.15 3.15 0 1 1 0-6.3m4.975 0a3.15 3.15 0 0 1 0 6.3c-.524 0-1.016-.13-1.45-.356a4.5 4.5 0 0 0 .534-.852a2.15 2.15 0 1 0 0-3.887a4.5 4.5 0 0 0-.535-.85a3.1 3.1 0 0 1 1.45-.355M5 2.85a2.151 2.151 0 0 0 0 4.3a2.15 2.15 0 0 0 0-4.3"></path></svg>
@@ -78,6 +78,9 @@
                         </div>    
                         <span class="text-white text-lg">Role-Based Staff Access Control</span>
                     </div>
+                </div>
+                <div class="flex-1 flex items-center justify-center">
+                    <span class="text-gray-300 text-center text-sm">© 2026 FlexFit Pro. All rights reserved.</span>
                 </div>
             </div>
             <div class="flex-1">
@@ -114,12 +117,11 @@
                 <div class="flex flex-col gap-8">
                     <hr class="border border-gray-200">
                     <span class="text-gray-500 text-center text-sm">Secured with role-based access & session authentication</span>
-                    <span class="text-gray-500 text-center text-sm">© 2026 FlexFit Pro. All rights reserved.</span>
                 </div>
             </form>
             </div>
         </div>
-        <span class="text-gray-400">Demo - wade / rillera </span>
+        <span class="text-gray-400">Demo - user / 1324 </span>
     </div>
     <script src="./assets/js/auth.js">
     </script>

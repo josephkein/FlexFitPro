@@ -56,6 +56,20 @@
             
         }
 
+        public function todayVisit(){
+            $q = "SELECT COUNT(visit_id) AS visits FROM visits 
+            WHERE visit_date >= CURDATE() 
+            AND visit_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+
+            $stmt = $this->db->prepare($q);
+            $stmt->execute();
+
+            $res = $stmt->get_result();
+            $data = $res->fetch_assoc();
+            return $data['visits'];
+
+        }
+
         public function display($search, $date, $limit, $off){
             $s = "%{$search}%";
 

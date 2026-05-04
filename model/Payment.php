@@ -98,6 +98,17 @@
             $stmt->bind_param('dsi', $amount, $payment_type, $id);
             return $stmt->execute();
         }
+
+        public function recent(){
+            $q = "SELECT c.customer_name AS name, p.payment_type, c.customer_type, p.amount,
+             p.payment_date AS time FROM payments AS p JOIN customers 
+             AS c ON c.customer_id = p.customer_id ORDER BY p.payment_date
+              DESC LIMIT 5";
+            $stmt = $this->db->prepare($q);
+            $stmt->execute();
+
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        }
     }
 
 ?>

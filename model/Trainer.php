@@ -28,6 +28,26 @@
             return $res->fetch_all(MYSQLI_ASSOC);
         }
 
+        public function available(){
+            $q = "SELECT COUNT(*) AS available
+                FROM (
+                    SELECT t.trainer_id
+                    FROM trainers t
+                    LEFT JOIN coaching c 
+                        ON c.trainer_id = t.trainer_id 
+                        AND c.end_date > CURDATE()
+                    GROUP BY t.trainer_id, t.capacity
+                    HAVING COUNT(c.coaching_id) < t.capacity
+                ) AS available_trainers";
+
+            $stmt = $this->db->prepare($q);
+            $stmt->execute();
+            $res = $stmt->get_result();
+
+            $row = $res->fetch_assoc();
+            return $row['available'];
+        }
+
         // add new trainer
         public function create($first, $last, $contact, $rate, $capacity){
 

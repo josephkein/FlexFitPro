@@ -376,36 +376,37 @@ function hideMembershipCustomerSuggestions() {
 function closeUpdatePlanModal(){
     document.getElementById('updatePlanModal').classList.add('hidden');
 }
+if (window.isAdmin){
+    document.getElementById('addPlanForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch('./api/plans/store.php', {
+            method: 'POST',
+            body: new FormData(this)
+        }).then(res => res.json())
+        .then(data => {
+            console.log('hello');
+            if (data.status == 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Plan created successfully!',
+                    text: 'The plan has been created.'
+                });
+                loadPlans();
+                this.reset();
+                closeAddPlan();
+            }
+            else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message
+                });
+            }
+        })
 
-document.getElementById('addPlanForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    fetch('./api/plans/store.php', {
-        method: 'POST',
-        body: new FormData(this)
-    }).then(res => res.json())
-    .then(data => {
-        console.log('hello');
-        if (data.status == 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Plan created successfully!',
-                text: 'The plan has been created.'
-            });
-            loadPlans();
-            this.reset();
-            closeAddPlan();
-        }
-        else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message
-            });
-        }
-    })
+    });
 
-});
 
 document.getElementById('updatePlanForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -434,6 +435,7 @@ document.getElementById('updatePlanForm').addEventListener('submit', function(e)
         }
     })
 })
+}
 
 document.getElementById('updateMembershipForm').addEventListener('submit', function(e) {
     e.preventDefault();
