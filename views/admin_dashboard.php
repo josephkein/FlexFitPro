@@ -42,7 +42,7 @@
                     </div>
                     <div class="flex gap-4 flex-wrap">
 
-                        <div class="flex flex-1 flex-col justify-center p-4 bg-white shadow-md rounded border-l-2 border-violet-600 w-full">
+                        <div class="flex flex-1 flex-col justify-center p-4 bg-white shadow-md rounded border-l-2 border-violet-800 w-full">
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-400">Total Revenue</span>
                                 <div class="p-2 bg-violet-100 rounded-lg">
@@ -176,7 +176,7 @@
                             <div class="flex flex-1 flex-col gap-4 bg-white p-6 rounded-lg shadow-md">
                                 <div class="flex justify-between">
                                     <span class="text-xl">Monthly Revenue</span>
-                                    <span class="flex items-center text-violet-600 bg-violet-100 px-3 rounded-2xl" id="year"></span>
+                                    <span class="flex items-center text-violet-800 bg-violet-200 px-3 rounded-2xl" id="year"></span>
                                 </div>
                                 <div class="w-full">
                                     <div id="chart"></div>
@@ -185,7 +185,7 @@
                             <div class="flex flex-1 flex-col gap-4 bg-white p-6 rounded-lg shadow-md">
                                 <div class="flex justify-between">
                                     <span class="text-xl">Daily Visits</span>
-                                    <span class="flex items-center text-violet-600 bg-violet-100 px-3 rounded-2xl">This Week</span>
+                                    <span class="flex items-center text-violet-800 bg-violet-200 px-3 rounded-2xl">This Week</span>
                                 </div>
                                 <div class="w-full">
                                     <div id="visitsChart" class="h-80 w-full"></div>

@@ -93,7 +93,7 @@
                     <div class="flex justify-center items-center px-6 py-4 border-t border-gray-100" id="pagination">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-sm border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-sm border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-sm border border-violet-800 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-sm border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
@@ -103,38 +103,7 @@
         </div>
    </div>
 
-   <!-- RECORD PAYMENT MODAL -->
-   <div id="addModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4">
-           <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-               <span class="font-medium text-lg">Record Payment</span>
-               <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-           </div>
-           <form id="payment_form" method="POST" class="px-6 py-4 flex flex-col gap-4">
-               <div class="flex flex-col gap-1">
-                   <label class="text-md text-gray-500">Customer ID</label>
-                    <input type="number" name="customer_id" min="1" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g 1, 3, 15" required>
-               </div>
-               <div class="flex gap-4">
-                   <div class="flex flex-col gap-1 flex-1">
-                       <label class="text-md text-gray-500">Payment Type</label>
-                       <select name="payment_type" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400" required>
-                           <option value="visit">Visit</option>
-                           <option value="membership">Membership</option>
-                       </select>
-                   </div>
-                   <div class="flex flex-col gap-1 flex-1">
-                       <label class="text-md text-gray-500">Amount (₱)</label>
-                       <input type="number" step="0.01" min="1" name="amount" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="0.00" required>
-                   </div>
-               </div>
-               <div class="flex justify-end gap-3 pt-2">
-                   <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Payment</button>
-               </div>
-           </form>
-       </div>
-   </div>
+  
 
    <!-- UPDATE PAYMENT MODAL -->
    <div id="updatePayment" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -160,7 +129,7 @@
                <input type="hidden" id="up_id" name="payment_id">
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeUpdate()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Payment</button>
+                   <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Save Payment</button>
                </div>
            </form>
        </div>

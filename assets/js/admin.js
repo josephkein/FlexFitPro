@@ -30,7 +30,7 @@ function loadDashboard(){
                 'Jul','Aug','Sep','Oct','Nov','Dec'
                 ]
             },
-            colors: ['#7C3AED'], // violet-600 to match your sidebar
+            colors: ['#5D0EC0'], // violet-600 to match your sidebar
             stroke: {
                 curve: 'smooth',
                 width: 3
@@ -64,7 +64,7 @@ function loadDashboard(){
                 name: 'Revenue',
                 data: data.daily_visit
             }],
-            colors:['#7F22FE'],
+            colors:['#5D0EC0'],
             xaxis: {
             categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             }

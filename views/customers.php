@@ -97,7 +97,7 @@
                             <option value="asc">Ascending</option>
                             <option value="desc">Descending</option>
                         </select>
-                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                             Add Customer
                         </button>
@@ -145,7 +145,7 @@
                     <div class="flex justify-center items-center px-6 py-4 border-t border-gray-100" id="pagination">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-violet-800 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>

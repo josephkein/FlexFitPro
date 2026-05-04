@@ -8,13 +8,20 @@
         }
         public function display($search, $end, $session, $limit, $off){
             $s = "$search%";
-            $start = $end . " 00:00:00";
 
+            // Session filter: ongoing or done assignments
             $condition = "";
             if ($session == 'ongoing') {
                 $condition = "AND c.end_date >= CURDATE()";
             } elseif ($session == 'done') {
                 $condition = "AND c.end_date < CURDATE()";
+            }
+
+            // End date filter: only add this condition when the user selected a date
+            $endCondition = "";
+            if (!empty($end)) {
+                $endCondition = "AND c.end_date >= ? AND c.end_date < ?";
+                $endNext = date('Y-m-d', strtotime($end . ' +1 day'));
             }
 
             $q = "SELECT c.coaching_id AS id, 
@@ -27,15 +34,23 @@
                 JOIN trainers AS t ON c.trainer_id = t.trainer_id 
                 JOIN customers AS cu ON c.customer_id = cu.customer_id
                 WHERE (
-                        CONCAT(t.first_name, ' ', t.last_name) LIKE ?
-                        OR cu.customer_name LIKE ?
+                    t.first_name LIKE ?
+                    OR t.last_name LIKE ?
+                    OR cu.customer_name LIKE ?
                 )
                 $condition
+                $endCondition
                 ORDER BY c.coaching_id DESC 
                 LIMIT ? OFFSET ?";
 
             $stmt = $this->conn->prepare($q);
-            $stmt->bind_param('ssii', $s, $s, $limit, $off);
+
+            if (!empty($end)) {
+                $stmt->bind_param('sssssii', $s, $s, $s, $end, $endNext, $limit, $off);
+            } else {
+                $stmt->bind_param('sssii', $s, $s, $s, $limit, $off);
+            }
+
             $stmt->execute();
 
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);

@@ -50,7 +50,7 @@
                             <option value="active">Active</option>
                             <option value="disabled">Disabled</option>
                         </select>
-                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                             Add Account
                         </button>
@@ -79,7 +79,7 @@
                     <div id="pagination" class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-violet-800 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
@@ -99,19 +99,19 @@
            <form method="POST" id="accForm" class="px-6 py-4 flex flex-col gap-4">
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Username</label>
-                   <input type="text" name="username" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter username" required>
+                   <input type="text" name="username" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter username" required>
                </div>
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Role</label>
-                       <select name="role" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                       <select name="role" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-600">
                            <option value="admin">Admin</option>
                            <option value="staff">Staff</option>
                        </select>
                    </div>
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Status</label>
-                       <select name="status" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                       <select name="status" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-600">
                            <option value="active">Active</option>
                            <option value="disabled">Disabled</option>
                        </select>
@@ -119,15 +119,15 @@
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Password</label>
-                   <input type="password" name="password" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Set initial password" required>
+                   <input type="password" name="password" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Set initial password" required>
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Confirm Password</label>
-                   <input type="password" name="confirm_password" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Repeat password" required>
+                   <input type="password" name="confirm_password" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Repeat password" required>
                </div>
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Create Account</button>
+                   <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Create Account</button>
                </div>
            </form>
        </div>
@@ -144,19 +144,19 @@
             <input type="hidden" name="acc_id" id="acc_id"> 
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Username</label>
-                   <input type="text" name="update_username" id="update_username" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter username" required>
+                   <input type="text" name="update_username" id="update_username" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter username" required>
                </div>
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Role</label>
-                       <select name="update_role" id="update_role" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                       <select name="update_role" id="update_role" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-600">
                            <option value="admin">Admin</option>
                            <option value="staff">Staff</option>
                        </select>
                    </div>
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Status</label>
-                       <select name="update_status" id="update_status" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400">
+                       <select name="update_status" id="update_status" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-600">
                            <option value="active">Active</option>
                            <option value="disabled">Disabled</option>
                        </select>
@@ -164,11 +164,11 @@
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">New Password (Optional)</label>
-                   <input type="password" name="update_password" id="update_password" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Set new password">
+                   <input type="password" name="update_password" id="update_password" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Set new password">
                </div>
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeUpdateModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update Account</button>
+                   <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Update Account</button>
                </div>
            </form>
        </div>

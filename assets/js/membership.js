@@ -59,7 +59,7 @@ function renderPlans(plans){
                         <span class="${bg} text-xs px-2 py-1 rounded-full">${p.name}</span>
                 </div>
                 <div class="flex items-baseline gap-1">
-                    <span class="text-3xl font-bold text-violet-600">₱${Number(p.price).toLocaleString()}</span>
+                    <span class="text-3xl font-bold text-violet-800">₱${Number(p.price).toLocaleString()}</span>
                     <span class="text-gray-400 text-sm">/ ${p.duration == 1 ? p.duration + ' month' : p.duration + ' months'}</span>      
                 </div>
                 ${window.isAdmin ? `

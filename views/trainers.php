@@ -66,7 +66,7 @@
                             <option value="available">Available</option>
                             <option value="full">Full</option>
                         </select>
-                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                             Add Trainer
                         </button>
@@ -98,7 +98,7 @@
                     <div id="pagination" class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-violet-800 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
@@ -119,29 +119,29 @@
            <form method="POST" class="px-6 py-4 flex flex-col gap-4" id="trainerForm">
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">First Name</label>
-                   <input type="text" name="first_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name">
+                   <input type="text" name="first_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter full name">
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Last Name</label>
-                   <input type="text" name="last_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name">
+                   <input type="text" name="last_name" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter full name">
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Contact No</label>
-                   <input type="text" name="contact_no" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter contact number">
+                   <input type="text" name="contact_no" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter contact number">
                </div>
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Rate</label>
-                       <input type="number" step="0.01" min="1" name="rate" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 250.55, 499.99">
+                       <input type="number" step="0.01" min="1" name="rate" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="e.g. 250.55, 499.99">
                    </div>
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Capacity</label>
-                       <input type="number" min="1" name="capacity" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 5, 4">
+                       <input type="number" min="1" name="capacity" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="e.g. 5, 4">
                    </div>
                </div>
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Trainer</button>
+                   <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Save Trainer</button>
                </div>
            </form>
        </div>
@@ -158,29 +158,29 @@
                 <input type="hidden" name="up_tid" id="up_tid">
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">First Name</label>
-                   <input type="text" name="up_first" id="up_first" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
+                   <input type="text" name="up_first" id="up_first" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter full name" required>
                </div>
                <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Last Name</label>
-                   <input type="text" name="up_last" id="up_last" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter full name" required>
+                   <input type="text" name="up_last" id="up_last" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter full name" required>
                </div>
               <div class="flex flex-col gap-1">
                    <label class="text-md text-gray-500">Contact No</label>
-                   <input type="text" name="up_contact" id="up_contact" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter contact number">
+                   <input type="text" name="up_contact" id="up_contact" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter contact number">
                </div>
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Rate</label>
-                       <input type="number" step="0.01" min="1"  name="up_rate" id="up_rate" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 250, 500">
+                       <input type="number" step="0.01" min="1"  name="up_rate" id="up_rate" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="e.g. 250, 500">
                    </div>
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-md text-gray-500">Capacity</label>
-                       <input type="number" min="1"  name="up_cap" id="up_cap" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="e.g. 5, 4">
+                       <input type="number" min="1"  name="up_cap" id="up_cap" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="e.g. 5, 4">
                    </div>
                </div>
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeUpdate()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Save Trainer</button>
+                   <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Save Trainer</button>
                </div>
            </form>
        </div>

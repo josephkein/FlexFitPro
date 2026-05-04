@@ -39,7 +39,7 @@
                     <div class="flex justify-between items-center">
                         <div class="text-gray-500 font-medium">MEMBERSHIP PLANS</div>
                         <?php if($_SESSION['role'] === 'admin'): ?>
-                        <button onclick="openAddPlan()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                        <button onclick="openAddPlan()" class="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                             New Plan
                         </button>
@@ -68,7 +68,7 @@
                             <option value="active">Active</option>
                             <option value="expired">Expired</option>
                         </select>
-                        <button onclick="openAddMembership()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                        <button onclick="openAddMembership()" class="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>
                             Add Membership
                         </button>
@@ -117,7 +117,7 @@
                     <div id="pagination" class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-violet-800 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
 
                 <div class="flex justify-end gap-3 pt-2">
                     <button type="button" onclick="closeAddMembership()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Create Membership</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Create Membership</button>
                 </div>
            </form>
        </div>
@@ -179,11 +179,11 @@
                    </div>
                    <div>
                        <label class="text-sm text-gray-500">Amount to Pay</label>
-                       <div id="paymentAmountDisplay" class="mt-1 text-md font-semibold text-violet-700">₱0.00</div>
+                       <div id="paymentAmountDisplay" class="mt-1 text-md font-semibold text-violet-800">₱0.00</div>
                    </div>
                    <div class="flex flex-col gap-1">
                        <label class="text-sm text-gray-500">Cash Received</label>
-                       <input type="number" id="paymentCashInput" name="cash" step="0.01" min="0" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Enter cash amount" required>
+                       <input type="number" id="paymentCashInput" name="cash" step="0.01" min="0" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Enter cash amount" required>
                        <p id="paymentErrorText" class="text-sm text-red-500 hidden"></p>
                    </div>
                    <div>
@@ -219,7 +219,7 @@
 
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">Plan</label>
-                    <select id="updateMembershipPlanSelect" name="plan_id" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-400" required>
+                    <select id="updateMembershipPlanSelect" name="plan_id" class="border border-gray-200 rounded px-3 py-2 text-md bg-white outline-none focus:border-violet-600" required>
                         <option value="">Select plan</option>
                     </select>
                 </div>
@@ -227,7 +227,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="flex flex-col gap-1">
                         <label class="text-md text-gray-500">Start Date</label>
-                        <input type="date" id="updateMembershipStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                        <input type="date" id="updateMembershipStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" required>
                     </div>
                 </div>
 
@@ -235,7 +235,7 @@
 
                 <div class="flex justify-end gap-3 pt-2">
                     <button type="button" onclick="closeUpdateMembershipModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update Membership</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Update Membership</button>
                 </div>
            </form>
        </div>
@@ -257,16 +257,16 @@
                <div class="flex gap-4">
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-sm text-gray-500">Price (₱)</label>
-                       <input type="number" name="price" step="0.01" min="0" class="border border-gray-200 rounded px-3 py-2 text-sm outline-none focus:border-violet-400" placeholder="0.00">
+                       <input type="number" name="price" step="0.01" min="0" class="border border-gray-200 rounded px-3 py-2 text-sm outline-none focus:border-violet-600" placeholder="0.00">
                    </div>
                    <div class="flex flex-col gap-1 flex-1">
                        <label class="text-sm text-gray-500">Duration</label>
-                        <input type="number" name="duration" step="1" min="1" class="border border-gray-200 rounded px-3 py-2 text-sm outline-none focus:border-violet-400" placeholder="1">
+                        <input type="number" name="duration" step="1" min="1" class="border border-gray-200 rounded px-3 py-2 text-sm outline-none focus:border-violet-600" placeholder="1">
                    </div>
                </div>
                <div class="flex justify-end gap-3 pt-2">
                    <button type="button" onclick="closeAddPlan()" class="px-4 py-2 text-sm border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                   <button type="submit" class="px-4 py-2 text-sm bg-violet-600 hover:bg-violet-700 text-white rounded">Save Plan</button>
+                   <button type="submit" class="px-4 py-2 text-sm bg-violet-700 hover:bg-violet-800 text-white rounded">Save Plan</button>
                </div>
            </form>
        </div>

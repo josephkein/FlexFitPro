@@ -75,7 +75,7 @@
                     <div id="pagination" class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-sm border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-sm border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-sm border border-violet-700 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-sm border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>

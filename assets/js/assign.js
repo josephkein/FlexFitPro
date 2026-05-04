@@ -19,14 +19,12 @@ const prev = document.getElementById('prev');
 // Pagination
 next.addEventListener('click', (e) => {
     e.preventDefault();
-    page++;
-    loadAssign();
+    loadAssign(page + 1);
 })
 
 prev.addEventListener('click', (e) => {
     e.preventDefault();
-    page--;
-    loadAssign();
+    loadAssign(page - 1);
 })
 
 // Render or display customer's data

@@ -70,7 +70,7 @@
                         </div>
                         
                 
-                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-md font-medium">
+                        <button onclick="openAddModal()" class="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white px-4 py-2 rounded text-md font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                             Assign
                         </button>
@@ -102,7 +102,7 @@
                     <div id="pagination" class="flex justify-center items-center px-6 py-4 border-t border-gray-100">
                         <div class="flex gap-2">
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="prev">Prev</button>
-                            <button class="px-3 py-1 text-md border border-violet-600 bg-violet-600 text-white rounded" id="page">1</button>
+                            <button class="px-3 py-1 text-md border border-violet-800 bg-violet-800 text-white rounded" id="page">1</button>
                             <button class="px-3 py-1 text-md border border-gray-200 rounded hover:bg-violet-50" id="next">Next</button>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">Search Customer</label>
                     <div class="relative">
-                        <input type="text" id="customerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search customer name..." autocomplete="off">
+                        <input type="text" id="customerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Search customer name..." autocomplete="off">
                         <div id="customerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
                     </div>
                     <input type="hidden" id="customerId" name="customer_id">
@@ -133,7 +133,7 @@
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">Search Trainer</label>
                     <div class="relative">
-                        <input type="text" id="trainerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search trainer name..." autocomplete="off">
+                        <input type="text" id="trainerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Search trainer name..." autocomplete="off">
                         <div id="trainerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
                     </div>
                     <input type="hidden" id="trainerId" name="trainer_id">
@@ -142,17 +142,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="flex flex-col gap-1">
                         <label class="text-md text-gray-500">Start Date</label>
-                        <input type="date" id="startDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                        <input type="date" id="startDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" required>
                     </div>
                     <div class="flex flex-col gap-1">
                         <label class="text-md text-gray-500">End Date</label>
-                        <input type="date" id="endDate" name="end_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                        <input type="date" id="endDate" name="end_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" required>
                     </div>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-2">
                     <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Assign Trainer</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Assign Trainer</button>
                 </div>
            </form>
        </div>
@@ -169,7 +169,7 @@
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">Search Customer</label>
                     <div class="relative">
-                        <input type="text" id="updateCustomerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search customer name..." autocomplete="off">
+                        <input type="text" id="updateCustomerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Search customer name..." autocomplete="off">
                         <div id="updateCustomerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
                     </div>
                     <input type="hidden" id="updateCustomerId" name="customer_id">
@@ -178,7 +178,7 @@
                 <div class="flex flex-col gap-1">
                     <label class="text-md text-gray-500">Search Trainer</label>
                     <div class="relative">
-                        <input type="text" id="updateTrainerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-400" placeholder="Search trainer name..." autocomplete="off">
+                        <input type="text" id="updateTrainerSearchInput" class="border border-gray-200 rounded w-full px-3 py-2 text-md outline-none focus:border-violet-600" placeholder="Search trainer name..." autocomplete="off">
                         <div id="updateTrainerSuggestions" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-30"></div>
                     </div>
                     <input type="hidden" id="updateTrainerId" name="trainer_id">
@@ -187,11 +187,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="flex flex-col gap-1">
                         <label class="text-md text-gray-500">Start Date</label>
-                        <input type="date" id="updateStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                        <input type="date" id="updateStartDate" name="start_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" required>
                     </div>
                     <div class="flex flex-col gap-1">
                         <label class="text-md text-gray-500">End Date</label>
-                        <input type="date" id="updateEndDate" name="end_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-400" required>
+                        <input type="date" id="updateEndDate" name="end_date" class="border border-gray-200 rounded px-3 py-2 text-md outline-none focus:border-violet-600" required>
                     </div>
                 </div>
 
@@ -199,7 +199,7 @@
 
                 <div class="flex justify-end gap-3 pt-2">
                     <button type="button" onclick="closeUpdate()" class="px-4 py-2 text-md border border-gray-200 rounded hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 text-md bg-violet-600 hover:bg-violet-700 text-white rounded">Update Assignment</button>
+                    <button type="submit" class="px-4 py-2 text-md bg-violet-700 hover:bg-violet-800 text-white rounded">Update Assignment</button>
                 </div>
            </form>
        </div>
