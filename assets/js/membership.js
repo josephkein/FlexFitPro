@@ -238,6 +238,18 @@ document.getElementById('addMembershipForm').addEventListener('submit', function
         return;
     }
 
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    if (startDate < today) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Date',
+            text: 'Date cannot be earlier than today.'
+        });
+        return;
+    }
+
     if (!startDate) {
         Swal.fire({
             icon: 'error',
@@ -594,14 +606,35 @@ function renderData(data){
 
     document.getElementById('membershipTable').innerHTML = '';
         data.forEach((d) => {
-            let color = new Date(d.end) > Date.now() ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            const start = new Date(d.start);
+            const end = new Date(d.end);
+
+            start.setHours(0,0,0,0);
+            end.setHours(0,0,0,0);
+
+            let status = '';
+            let color = '';
+
+            if (today < start) {
+                status = 'Pending';
+                color = 'bg-yellow-100 text-yellow-700';
+            } else if (today >= start && today <= end) {
+                status = 'Active';
+                color = 'bg-green-100 text-green-700';
+            } else {
+                status = 'Expired';
+                color = 'bg-red-100 text-red-700';
+            }
             document.getElementById('membershipTable').innerHTML += `
                             <tr>
                                 <td class="px-6 py-3">${d.customer}</td>
                                 <td class="px-6 py-3">${d.plan}</td>
                                 <td class="px-6 py-3">${d.start}</td>
                                 <td class="px-6 py-3">${d.end}</td>
-                                <td class="px-6 py-3 flex items-center"><span class="${color} px-2 py-1 rounded-full">${new Date(d.end) > Date.now() ? 'Active' : 'Expired'}</span></td>
+                                <td class="px-6 py-3 flex items-center"><span class="${color} px-2 py-1 rounded-full">${status}</span></td>
                                 ${window.isAdmin ? `
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">

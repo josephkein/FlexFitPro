@@ -136,7 +136,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-400">Today's Visits</span>
                                 <div class="p-2 bg-violet-100 rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(124, 197, 4);"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8h7a3 3 0 1 0-3-3M4 16h11a3 3 0 1 1-3 3M2 12h17a3 3 0 1 0-3-3"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="26" height="26" viewBox="0 0 24 24" style="color: rgb(228, 171, 0);"><path fill="currentColor" fill-rule="evenodd" d="M12.153 3.802c3.734.067 7.309 2.237 9.228 6.14a4.79 4.79 0 0 1 0 4.217c-1.92 3.902-5.494 6.072-9.228 6.14c-3.75.067-7.427-1.99-9.532-6.003a4.84 4.84 0 0 1 0-4.492c2.105-4.013 5.781-6.07 9.532-6.002m-7.761 6.932c3.545-6.759 11.99-6.425 15.195.09c.379.77.379 1.681 0 2.452c-3.205 6.515-11.65 6.849-15.195.09a2.84 2.84 0 0 1 0-2.632" clip-rule="evenodd"></path><path fill="currentColor" fill-rule="evenodd" d="M15.7 12.05a3.75 3.75 0 1 1-7.5 0a3.75 3.75 0 0 1 7.5 0m-3.75 1.75a1.75 1.75 0 1 0 0-3.5a1.75 1.75 0 0 0 0 3.5" clip-rule="evenodd"></path></svg>
                                 </div>
                             </div>
                             <div class="text-3xl font-bold" id="today_visit">0</div>

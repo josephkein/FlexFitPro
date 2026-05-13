@@ -41,8 +41,9 @@ if (!$customerId) {
 */
 
 $activeMembership = $membershipController->getActive($customerId);
+$isActive = $membershipController->isActiveToday($customerId);
 
-if ($activeMembership && $activeMembership['end_date'] >= date('Y-m-d')) {
+if ($isActive && $activeMembership['end_date'] >= date('Y-m-d')) {
     $visitController->addVisit($customerId, $userId, $datetime);
     echo json_encode([
         'status' => 'allow',

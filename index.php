@@ -43,7 +43,6 @@
     <title>FlexFitPro</title>
 </head>
 <body>
-
     <script src="./assets/js/sidebar.js"></script>
 </body>
 </html>

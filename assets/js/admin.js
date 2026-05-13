@@ -138,23 +138,23 @@ const actData = [
     }
     
     loadTransactions();
+if (!window.isAdmin){
+    function loadCards(){
 
-function loadCards(){
-
-        fetch('./api/dashboard-api.php', {
-            method: 'POST',
-            headers: { 'Content-Type' : 'application/json'},
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('available_trainers').textContent = data.available;
-            document.getElementById('today_revenue').textContent = `₱${Number(data.daily).toLocaleString()}`;
-            document.getElementById('today_visit').textContent = data.today;
-            
-        })
-    }
-    loadCards();
-
+            fetch('./api/dashboard-api.php', {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json'},
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('available_trainers').textContent = data.available;
+                document.getElementById('today_revenue').textContent = `₱${Number(data.daily).toLocaleString()}`;
+                document.getElementById('today_visit').textContent = data.today;
+                
+            })
+        }
+        loadCards();
+}
 // var map = L.map('map').setView([10.3845, 124.9828], 13);
 
 // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

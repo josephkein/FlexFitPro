@@ -58,7 +58,7 @@
     </div>
 
     <!-- FINANCE -->
-    <div class="flex flex-col gap-2 border-t-2 border-violet-500 pt-4">
+    <div class="flex flex-col gap-2 border-t-2 border-violet-700 pt-4">
         <div class="text-violet-200 font-medium px-5 md:px-10 text-sm md:text-md">FINANCE</div>
 
         <nav class="flex flex-col">

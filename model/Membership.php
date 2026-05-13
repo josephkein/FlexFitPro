@@ -21,6 +21,21 @@
             $res = $stmt->get_result();
             return $res->fetch_assoc(); 
         }
+
+        public function isActiveToday($customer_id){
+            $q = "SELECT 1
+            FROM memberships m
+            JOIN plans p ON p.plan_id = m.plan_id
+            WHERE m.customer_id = ?
+            AND CURDATE() BETWEEN m.start_date
+                AND DATE_ADD(m.start_date, INTERVAL p.duration_month MONTH)
+            LIMIT 1";
+
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            return $stmt->get_result()->num_rows > 0;
+        }
         // display members
         public function display($search, $plan, $limit, $off){
             $s = "$search%";

@@ -35,6 +35,13 @@
         exit;
     }
 
+    $cap = $controller->isFull($trainer_id);
+
+    if ($cap['capacity'] == $cap['current']){
+        echo json_encode(['status' => 'error', 'message' => 'Trainer capacity is already full']);
+        exit;
+    }
+
     $data = $controller->update($customer_id, $trainer_id, $start_date, $end_date, $assign_id);
 
     if ($data) {

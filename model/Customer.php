@@ -34,11 +34,16 @@
             $m = "$membership%";
             $sort = ($order) ? " ORDER BY c.customer_name $order" : "";
  
-            $q = "SELECT c.customer_id AS id, c.customer_name AS name, c.customer_type AS type, CASE
-            WHEN m.membership_id IS NULL THEN 'None'
-            WHEN DATE_ADD(m.start_date, INTERVAL p.duration_month MONTH) >= CURDATE() THEN 'Active'
-            ELSE 'Expired'
-            END AS membership_status, t.first_name AS trainer, ch.end_date AS end FROM customers AS c
+            $q = "SELECT c.customer_id AS id, c.customer_name AS name, c.customer_type AS type, 
+            CASE
+                WHEN m.membership_id IS NULL THEN 'None'
+                WHEN CURDATE() < m.start_date THEN 'Pending'
+                WHEN CURDATE() BETWEEN m.start_date
+                 AND DATE_ADD(m.start_date, INTERVAL p.duration_month MONTH)
+                THEN 'Active'
+                ELSE 'Expired'
+                END AS membership_status, t.first_name AS trainer, ch.end_date AS end 
+            FROM customers AS c
             LEFT JOIN memberships AS m ON m.customer_id = c.customer_id 
             LEFT JOIN plans AS p ON p.plan_id = m.plan_id
             LEFT JOIN coaching AS ch ON ch.customer_id = c.customer_id 

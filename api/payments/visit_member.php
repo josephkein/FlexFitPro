@@ -32,8 +32,8 @@
 
     if ($activeMembership) {
         echo json_encode([
-            'status' => 'error',
-            'title' => 'Failed to Pay Membership',
+            'status' => 'allow',
+            'title' => 'Allow to visit',
             'message' => 'Customer still have existing membership'
         ]);
         exit;
@@ -68,7 +68,6 @@
     $userId = $_SESSION['user_id'];
 
     $controller->create($customerId, $userId, $datetime, $amount, $type);
-    $visitController->addVisit($customerId, $userId, $datetime);
     
     echo json_encode([
         'status' => 'success',

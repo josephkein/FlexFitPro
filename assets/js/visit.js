@@ -22,7 +22,7 @@ prev.addEventListener('click', (e) => {
     e.preventDefault();
 
     let date = document.getElementById('dateFilter');
-
+    
     page--;
     fetch(`./api/visits/display.php?page=${page}&date=${date.value}`)
     .then(res => res.json())

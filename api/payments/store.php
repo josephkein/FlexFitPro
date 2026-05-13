@@ -37,11 +37,13 @@
     $cash = htmlspecialchars(trim($_POST['cash'] ?? null));
     $change = htmlspecialchars(trim($_POST['change'] ?? '0'));
     $startDate = htmlspecialchars(trim($_POST['start_date'] ?? date('Y-m-d')));
+    $today = date('Y-m-d');
 
     $isMembershipPayment = !empty($planId);
     $paymentType = $isMembershipPayment ? 'membership' : 'visit';
     $amount = null;
     $activeMembership = $membershipController->getActive($customerId);
+
 
     if ($isMembershipPayment) {
         $planData = $planController->get($planId);
@@ -68,6 +70,11 @@
     if (!is_numeric($amount) || $amount <= 0) {
         $errors[] = "Amount must be a positive number";
     }
+
+    if ($startDate < $today){
+        $errors[] = "Start date must not be less than current date";
+    }
+
 
     if ($isMembershipPayment) {
         if (!is_numeric($cash) || $cash < $amount) {
@@ -108,6 +115,7 @@
         }
         
     } else {
+        
         $visitController->addVisit($customerId, $userId, $datetime);
     }
     
