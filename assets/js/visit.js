@@ -158,6 +158,7 @@ function deleteVisits(id) {
                             loadVisits();
                         }
                     })
+                    .catch(err => console.error(err))
             }
         })
 

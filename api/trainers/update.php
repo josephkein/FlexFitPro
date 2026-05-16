@@ -1,57 +1,55 @@
 <?php
-    
-    require __DIR__ . '/../../database/database.php';
-    require __DIR__ . '/../../controllers/TrainerController.php';
-    require __DIR__ . '/../../model/Trainer.php';
-    $config = require __DIR__ . '/../../config/config.php';
 
-    $db = new Database($config);
+require __DIR__ . '/../../database/database.php';
+require __DIR__ . '/../../controllers/TrainerController.php';
+require __DIR__ . '/../../model/Trainer.php';
+$config = require __DIR__ . '/../../config/config.php';
 
-    $trainer = new Trainer($db->getConnection());
-    $controller = new TrainerController($trainer);
+$db = new Database($config);
 
-    $first = htmlspecialchars(trim($_POST['up_first'] ?? ''));
-    $last = htmlspecialchars(trim($_POST['up_last'] ?? ''));
-    $contact = htmlspecialchars(trim($_POST['up_contact'] ?? ''));
-    $rate = htmlspecialchars(trim($_POST['up_rate'] ?? ''));
-    $capacity = htmlspecialchars(trim($_POST['up_cap'] ?? ''));
-    $id = $_POST['up_tid'] ?? '';
+$trainer = new Trainer($db->getConnection());
+$controller = new TrainerController($trainer);
 
-    $errors = [];
-    if (empty($first)) $errors[] = "First name is required";
-    if (empty($last)) $errors[] = "Last name is required";
-    if (empty($contact)) $errors[] = "Contact number is required";
+$first = htmlspecialchars(trim($_POST['up_first'] ?? ''));
+$last = htmlspecialchars(trim($_POST['up_last'] ?? ''));
+$contact = htmlspecialchars(trim($_POST['up_contact'] ?? ''));
+$rate = htmlspecialchars(trim($_POST['up_rate'] ?? ''));
+$capacity = htmlspecialchars(trim($_POST['up_cap'] ?? ''));
+$id = $_POST['up_tid'] ?? '';
 
-    if (empty($rate) || !is_numeric($rate) || $rate <= 0){
-        $errors[] = "Rate must be positive number";
-    }
+$errors = [];
+if (empty($first)) $errors[] = "First name is required";
+if (empty($last)) $errors[] = "Last name is required";
+if (empty($contact)) $errors[] = "Contact number is required";
 
-    if (empty($capacity) || !filter_var($capacity, FILTER_VALIDATE_INT) || $capacity <= 0){
-        $errors[] = "Capacity must be a positive integer";
-    }
+if (empty($rate) || !is_numeric($rate) || $rate <= 0) {
+    $errors[] = "Rate must be positive number";
+}
+
+if (empty($capacity) || !filter_var($capacity, FILTER_VALIDATE_INT) || $capacity <= 0) {
+    $errors[] = "Capacity must be a positive integer";
+}
 
 
-    if (!empty($errors)){
-        echo json_encode([
-            'status' => 'error',
-            'errors' => $errors
-        ]);
-        exit;
-    }
-    
-    $up = $controller->update($first, $last, $contact, $rate, $capacity, $id);
-    
-    if (!$up){
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Failed to update trainer'
-        ]);
-        exit;
-    }
-
+if (!empty($errors)) {
     echo json_encode([
-        'status' => 'success',
-        'message' => 'Trainer updated successfully'
-    ]); 
+        'status' => 'error',
+        'errors' => $errors
+    ]);
+    exit;
+}
 
-?>
+$up = $controller->update($first, $last, $contact, $rate, $capacity, $id);
+
+if (!$up) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Failed to update trainer'
+    ]);
+    exit;
+}
+
+echo json_encode([
+    'status' => 'success',
+    'message' => 'Trainer updated successfully'
+]);
