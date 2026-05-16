@@ -22,6 +22,9 @@
         public function get($plan_id){
             return $this->plan->get($plan_id);
         }
+        public function getByMember($id){
+            return $this->plan->getByMember($id);
+        }
     }
 
 ?>

@@ -110,7 +110,8 @@
             $q = "INSERT INTO visits (customer_id, user_id, visit_date) VALUES (?, ?, ?)";
             $stmt = $this->db->prepare($q);
             $stmt->bind_param('iis', $customer_id, $user_id, $visit_date);
-            return $stmt->execute();
+            $stmt->execute();
+            return $this->db->insert_id;
         }
 
     

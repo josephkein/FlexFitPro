@@ -16,6 +16,8 @@
     require __DIR__ . '/../../model/Plan.php';
     require __DIR__ . '/../../controllers/VisitController.php';
     require __DIR__ . '/../../model/Visit.php';
+     require __DIR__ . '/../../controllers/HistoryController.php'; // + history
+    require __DIR__ . '/../../model/History.php';      
     $config = require __DIR__ . '/../../config/config.php';
 
     $db = new Database($config);
@@ -31,6 +33,9 @@
 
     $visit = new Visit($db->getConnection());
     $visitController = new VisitController($visit);
+
+    $history = new History($db->getConnection());                     
+    $historyController = new HistoryController($history); 
 
     $customerId = htmlspecialchars(trim($_POST['customer_id'] ?? ''));
     $planId = htmlspecialchars(trim($_POST['plan_id'] ?? ''));
@@ -99,11 +104,38 @@
     $paymentController->create($customerId, $userId, $datetime, $amount, $paymentType);
 
     if ($isMembershipPayment) {
-        if ($activeMembership == null){
-            $membershipController->create($customerId, $planId, $startDate);
+
+        $planData = $planController->get($planId);
+        $newPlanName = $planData['name'];
+
+        if ($activeMembership == null) {
+
+            // FIRST PLAN EVER (old = null)
+            $membershipId = $membershipController->create($customerId, $planId, $startDate);
+
+            $historyController->logPlanChange(
+                $customerId,
+                null,
+                $newPlanName,
+                $membershipId
+            );
+
         }
-        else if ($activeMembership['end_date'] < date('Y-m-d')){
+        else if ($activeMembership['end_date'] < date('Y-m-d')) {
+
+            // PLAN CHANGE
+            $oldPlan = $planController->getByMember($activeMembership['id']);
+            $oldPlanName = $oldPlan['name'];
+
             $membershipController->update($activeMembership['id'], $planId, $startDate);
+
+            $historyController->logPlanChange(
+                $customerId,
+                $oldPlanName,
+                $newPlanName,
+                $activeMembership['id']
+            );
+
         }
         else{
             echo json_encode([
@@ -113,10 +145,10 @@
             ]);
             exit;
         }
-        
     } else {
         
-        $visitController->addVisit($customerId, $userId, $datetime);
+        $visitId = $visitController->addVisit($customerId, $userId, $datetime);
+        $historyController->logVisit($customerId, $datetime, $visitId);
     }
     
     echo json_encode([

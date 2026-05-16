@@ -29,6 +29,9 @@
         public function isFull($trainer_id){
             return $this->assign->isFull($trainer_id);
         }
+        public function getByCT($c, $t){
+            return $this->assign->getByCT($c, $t);
+        }
     }
 
 

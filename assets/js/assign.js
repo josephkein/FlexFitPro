@@ -3,8 +3,8 @@
 function openAddModal() { document.getElementById('addTrainer').classList.remove('hidden'); }
 
 // Close add customer form
-function closeAddModal() { 
-    document.getElementById('addTrainer').classList.add('hidden'); 
+function closeAddModal() {
+    document.getElementById('addTrainer').classList.add('hidden');
     document.getElementById('assignForm').reset();
     document.getElementById('customerId').value = '';
     document.getElementById('trainerId').value = '';
@@ -28,7 +28,7 @@ prev.addEventListener('click', (e) => {
 })
 
 // Render or display customer's data
-function renderData(data){
+function renderData(data) {
 
     next.disabled = false;
     prev.disabled = false;
@@ -39,12 +39,12 @@ function renderData(data){
         const row = document.createElement('tr');
         row.className = 'hover:bg-gray-50';
         row.innerHTML = `
-            <td class="px-6 py-4">${d.trainee}</td>
-            <td class="px-6 py-4">${d.trainer}</td>
-            <td class="px-6 py-4">${d.start}</td>
-            <td class="px-6 py-4">${d.end}</td>
+            <td class="px-6 py-4">${escHtml(d.trainee)}</td>
+            <td class="px-6 py-4">${escHtml(d.trainer)}</td>
+            <td class="px-6 py-4">${escHtml(d.start)}</td>
+            <td class="px-6 py-4">${escHtml(d.end)}</td>
             <td class="px-6 py-4">
-                <span class="px-2 py-1 rounded text-sm ${d.session === 'Ongoing' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">${d.session}</span>
+                <span class="px-2 py-1 rounded text-sm ${d.session === 'Ongoing' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">${escHtml(d.session)}</span>
             </td>
             <td class="px-6 py-3">
                                     <div class="flex gap-2">
@@ -74,23 +74,23 @@ function renderData(data){
 }
 
 // Load trainers in table
-function loadAssign(){
+function loadAssign() {
     const search = document.getElementById('searchInput').value;
     const end = document.getElementById('end').value;
     const session = document.getElementById('session').value;
     fetch(`./api/assign/display.php?page=${page}&search=${encodeURIComponent(search)}&end=${end}&session=${session}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 }
 
 loadAssign();
 
 // Add new trainer
-document.getElementById('assignForm').addEventListener('submit', function(e) {
+document.getElementById('assignForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const customerId = document.getElementById('customerId').value;
@@ -120,29 +120,29 @@ document.getElementById('assignForm').addEventListener('submit', function(e) {
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            closeAddModal();
-            loadAssign();
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Assignment created successfully'
-            })
-        }
-        else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message
-            })
-        }
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                closeAddModal();
+                loadAssign();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Assignment created successfully'
+                })
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message
+                })
+            }
+        })
+        .catch(err => console.error(err))
 })
 
-document.getElementById('end').addEventListener('change', function(e){
+document.getElementById('end').addEventListener('change', function (e) {
     page = 1;
     loadAssign();
 });
@@ -161,7 +161,7 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 // Debouncing technique for controlling live search
 let timeout;
 
-function debounce(text){
+function debounce(text) {
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
@@ -171,7 +171,7 @@ function debounce(text){
 }
 
 // Delete trainer
-function deleteAssign(id){
+function deleteAssign(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -181,43 +181,43 @@ function deleteAssign(id){
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
     })
-    .then((res) => {
-        if (res.isConfirmed) {
-            fetch('./api/assign/destroy.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify({ id })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status == 'success'){
-                    loadAssign();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Assignment deleted successfully'
+        .then((res) => {
+            if (res.isConfirmed) {
+                fetch('./api/assign/destroy.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status == 'success') {
+                            loadAssign();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: 'Assignment deleted successfully'
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message
+                            })
+                        }
                     })
-                }
-                else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: data.message
-                    })
-                }
-            })
-            .catch(err => console.error(err))
-        }
-    })
+                    .catch(err => console.error(err))
+            }
+        })
 }
 
-function openUpdate(){
+function openUpdate() {
     document.getElementById('updateTrainer').classList.remove('hidden');
 }
 
-function closeUpdate(){
+function closeUpdate() {
     document.getElementById('updateTrainer').classList.add('hidden');
     document.getElementById('updateForm').reset();
     document.getElementById('updateCustomerId').value = '';
@@ -226,24 +226,24 @@ function closeUpdate(){
     document.getElementById('updateTrainerSuggestions').classList.add('hidden');
 }
 
-function updateAssign(id){
+function updateAssign(id) {
     openUpdate();
 
     fetch('./api/assign/get.php?id=' + id)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('updateAssignId').value = data.id;
-        document.getElementById('updateCustomerSearchInput').value = data.trainee;
-        document.getElementById('updateCustomerId').value = data.customer_id;
-        document.getElementById('updateTrainerSearchInput').value = data.trainer;
-        document.getElementById('updateTrainerId').value = data.trainer_id;
-        document.getElementById('updateStartDate').value = data.start;
-        document.getElementById('updateEndDate').value = data.end;
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('updateAssignId').value = data.id;
+            document.getElementById('updateCustomerSearchInput').value = data.trainee;
+            document.getElementById('updateCustomerId').value = data.customer_id;
+            document.getElementById('updateTrainerSearchInput').value = data.trainer;
+            document.getElementById('updateTrainerId').value = data.trainer_id;
+            document.getElementById('updateStartDate').value = data.start;
+            document.getElementById('updateEndDate').value = data.end;
+        })
+        .catch(err => console.error(err))
 }
 
-document.getElementById('updateForm').addEventListener('submit', function(e){
+document.getElementById('updateForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const customerId = document.getElementById('updateCustomerId').value;
@@ -273,82 +273,82 @@ document.getElementById('updateForm').addEventListener('submit', function(e){
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            closeUpdate();
-            loadAssign();
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Assignment updated successfully'
-            })
-        }
-        else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message
-            })
-        }
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                closeUpdate();
+                loadAssign();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Assignment updated successfully'
+                })
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message
+                })
+            }
+        })
+        .catch(err => console.error(err))
 });
 
 // Live search for customers in add modal
-document.getElementById('customerSearchInput').addEventListener('input', function() {
+document.getElementById('customerSearchInput').addEventListener('input', function () {
     const query = this.value;
     if (query.length < 2) {
         document.getElementById('customerSuggestions').classList.add('hidden');
         return;
     }
     fetch(`./api/customers/search.php?q=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => {
-        renderCustomerSuggestions(data, 'customerSuggestions', 'customerId', 'customerSearchInput');
-    });
+        .then(res => res.json())
+        .then(data => {
+            renderCustomerSuggestions(data, 'customerSuggestions', 'customerId', 'customerSearchInput');
+        });
 });
 
 // Live search for trainers in add modal
-document.getElementById('trainerSearchInput').addEventListener('input', function() {
+document.getElementById('trainerSearchInput').addEventListener('input', function () {
     const query = this.value;
     if (query.length < 2) {
         document.getElementById('trainerSuggestions').classList.add('hidden');
         return;
     }
     fetch(`./api/trainers/search.php?q=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => {
-        renderTrainerSuggestions(data, 'trainerSuggestions', 'trainerId', 'trainerSearchInput');
-    });
+        .then(res => res.json())
+        .then(data => {
+            renderTrainerSuggestions(data, 'trainerSuggestions', 'trainerId', 'trainerSearchInput');
+        });
 });
 
 // Live search for customers in update modal
-document.getElementById('updateCustomerSearchInput').addEventListener('input', function() {
+document.getElementById('updateCustomerSearchInput').addEventListener('input', function () {
     const query = this.value;
     if (query.length < 2) {
         document.getElementById('updateCustomerSuggestions').classList.add('hidden');
         return;
     }
     fetch(`./api/customers/search.php?q=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => {
-        renderCustomerSuggestions(data, 'updateCustomerSuggestions', 'updateCustomerId', 'updateCustomerSearchInput');
-    });
+        .then(res => res.json())
+        .then(data => {
+            renderCustomerSuggestions(data, 'updateCustomerSuggestions', 'updateCustomerId', 'updateCustomerSearchInput');
+        });
 });
 
 // Live search for trainers in update modal
-document.getElementById('updateTrainerSearchInput').addEventListener('input', function() {
+document.getElementById('updateTrainerSearchInput').addEventListener('input', function () {
     const query = this.value;
     if (query.length < 2) {
         document.getElementById('updateTrainerSuggestions').classList.add('hidden');
         return;
     }
     fetch(`./api/trainers/search.php?q=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => {
-        renderTrainerSuggestions(data, 'updateTrainerSuggestions', 'updateTrainerId', 'updateTrainerSearchInput');
-    });
+        .then(res => res.json())
+        .then(data => {
+            renderTrainerSuggestions(data, 'updateTrainerSuggestions', 'updateTrainerId', 'updateTrainerSearchInput');
+        });
 });
 
 function renderCustomerSuggestions(suggestions, containerId, hiddenId, inputId) {

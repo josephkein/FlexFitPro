@@ -60,7 +60,9 @@
             $q = "INSERT INTO coaching (customer_id, trainer_id, start_date, end_date) VALUES (?, ?, ?, ?)";
             $stmt = $this->conn->prepare($q);
             $stmt->bind_param("iiss", $customer_id, $trainer_id, $start_date, $end_date);
-            return $stmt->execute();
+            $stmt->execute();
+
+            return $this->conn->insert_id;
         }
 
         public function update($customer_id, $trainer_id, $start_date, $end_date, $assign_id){
@@ -80,6 +82,14 @@
             $q = "SELECT c.coaching_id AS id, c.customer_id, c.trainer_id, cu.customer_name AS trainee, CONCAT(t.first_name, ' ', t.last_name) AS trainer, c.start_date AS start, c.end_date AS end FROM coaching AS c JOIN trainers AS t ON c.trainer_id = t.trainer_id JOIN customers AS cu ON c.customer_id = cu.customer_id WHERE c.coaching_id = ?";
             $stmt = $this->conn->prepare($q);
             $stmt->bind_param('i', $id);
+            $stmt->execute();
+
+            return $stmt->get_result()->fetch_assoc();
+        }
+        public function getByCT($c, $t){
+            $q = "SELECT c.coaching_id AS id, t.trainer_id, CONCAT(t.first_name, ' ', t.last_name) AS tname, cu.customer_id  FROM coaching AS c JOIN trainers AS t ON t.trainer_id = c.trainer_id JOIN customers AS cu ON c.customer_id = cu.customer_id WHERE cu.customer_id = ? AND t.trainer_id = ?";
+            $stmt = $this->conn->prepare($q);
+            $stmt->bind_param('ii', $c, $t);
             $stmt->execute();
 
             return $stmt->get_result()->fetch_assoc();

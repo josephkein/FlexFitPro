@@ -3,8 +3,8 @@
 function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
 
 // Close add customer form
-function closeAddModal() { 
-    document.getElementById('addModal').classList.add('hidden'); 
+function closeAddModal() {
+    document.getElementById('addModal').classList.add('hidden');
     document.getElementById('customer-form').reset();
 }
 let page = 1;
@@ -19,11 +19,11 @@ next.addEventListener('click', (e) => {
     let membership = document.getElementById('membershipFilter');
     page++;
     fetch(`./api/customers/display.php?page=${page}&order=${order.value}&type=${type.value}&membership=${membership.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 prev.addEventListener('click', (e) => {
@@ -33,35 +33,35 @@ prev.addEventListener('click', (e) => {
     let membership = document.getElementById('membershipFilter');
     page--;
     fetch(`./api/customers/display.php?page=${page}&order=${order.value}&type=${type.value}&membership=${membership.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 
 // Render or display customer's data
-function renderData(data){
+function renderData(data) {
 
     next.disabled = false;
     prev.disabled = false;
 
     document.getElementById('membersTable').innerHTML = '';
-        data.forEach((d) => {
+    data.forEach((d) => {
 
-            let dateNow = new Date().toLocaleString('en-CA');
-            let type = d.type == 'student' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600';
-            let color = d.end < dateNow || d.end == null ? 'text-gray-500' : '';
-            
-            console.log(dateNow);
-            document.getElementById('membersTable').innerHTML += `
+        let dateNow = new Date().toLocaleString('en-CA');
+        let type = d.type == 'student' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600';
+        let color = d.end < dateNow || d.end == null ? 'text-gray-500' : '';
+
+        console.log(dateNow);
+        document.getElementById('membersTable').innerHTML += `
                             <tr>
-                                <td class="px-6 py-3">${d.id}</td>
-                                <td class="px-6 py-3">${d.name}</td>
-                                <td class="px-6 py-3"><span class="${type} py-1 px-3 rounded-full">${d.type}</span></td>
-                                <td class="px-6 py-3"><span class="${d.membership_status == 'Active' ? 'bg-green-100 text-green-600' : d.membership_status == 'Expired' ? 'bg-red-100 text-red-600' : 'text-gray-500'} py-1 px-3 rounded-full">${d.membership_status}</span></td>
-                                <td class="px-6 py-3 ${color}">${d.end < dateNow || d.end == null ? 'None' : d.trainer}</td>
+                                <td class="px-6 py-3">${escHtml(d.id)}</td>
+                                <td class="px-6 py-3">${escHtml(d.name)}</td>
+                                <td class="px-6 py-3"><span class="${type} py-1 px-3 rounded-full">${escHtml(d.type)}</span></td>
+                                <td class="px-6 py-3"><span class="${d.membership_status == 'Active' ? 'bg-green-100 text-green-600' : d.membership_status == 'Expired' ? 'bg-red-100 text-red-600' : 'text-gray-500'} py-1 px-3 rounded-full">${escHtml(d.membership_status)}</span></td>
+                                <td class="px-6 py-3 ${color}">${d.end < dateNow || d.end == null ? 'None' : escHtml(d.trainer)}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         <button class="bg-blue-500 p-2 rounded-md text-md hover:bg-blue-400" id="update-customer" onclick="updateCustomer(${d.id})">
@@ -73,24 +73,28 @@ function renderData(data){
                                         </button>
                                         ` : ''}
                                         <button class="border border-violet-600 p-2 text-violet-600 hover:bg-gray-100" onclick="logVisit(${d.id})">Log</button>
+                                        <button onclick="openHistoryModal(${d.id}, '${d.name}')"
+                                            class="bg-violet-100 hover:bg-violet-200 text-violet-700 px-3 py-1.5 rounded text-xs font-medium">
+                                            History
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
             `;
-        });
-        /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
-                <img src="./images/delete.png" alt="">
-        </button>
-         */                                          
-        // Display pagination when length of data is 7 above
-        if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
-       else document.getElementById('pagination').classList.remove('hidden');
+    });
+    /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
+            <img src="./images/delete.png" alt="">
+    </button>
+     */
+    // Display pagination when length of data is 7 above
+    if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
+    else document.getElementById('pagination').classList.remove('hidden');
 
-       if (data.length < 7) next.disabled = true;
-       if (page == 1) prev.disabled = true;
+    if (data.length < 7) next.disabled = true;
+    if (page == 1) prev.disabled = true;
 }
 
-function openLog(){
+function openLog() {
     document.getElementById('logModal').classList.remove('hidden');
 }
 
@@ -101,26 +105,26 @@ function logVisit(id) {
     openLog();
 
     fetch('./api/customers/get.php?id=' + id)
-    .then(res => res.json())
-    .then(data => {
-        let name = data.customer_name.split(' ');
-        document.getElementById('logFirst').value = name[0];
-        document.getElementById('logLast').value = name[1];
-        document.getElementById('logType').value = data.customer_type;
-        document.getElementById('logId').value = id;
-    })
-   
-}
-
-function visitLog(e){
-    
-    fetch('./api/payments/store.php', {
-            method: 'POST',
-            body: new FormData(e)
-        })
         .then(res => res.json())
         .then(data => {
-            if (data.status == 'success'){
+            let name = data.customer_name.split(' ');
+            document.getElementById('logFirst').value = name[0];
+            document.getElementById('logLast').value = name[1];
+            document.getElementById('logType').value = data.customer_type;
+            document.getElementById('logId').value = id;
+        })
+
+}
+
+function visitLog(e) {
+
+    fetch('./api/payments/store.php', {
+        method: 'POST',
+        body: new FormData(e)
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
                 console.log(data.message);
                 Swal.fire({
                     icon: 'success',
@@ -130,7 +134,7 @@ function visitLog(e){
                 closeLogModal();
                 closePaymentModal();
             }
-            else{
+            else {
                 console.log(data);
                 closeLogModal();
                 let icon = data.status == 'pay' ? 'warning' : 'warning';
@@ -145,163 +149,163 @@ function visitLog(e){
                 })
             }
 
-    })
+        })
 }
 
-document.getElementById('logForm').addEventListener('submit', function(e){
+document.getElementById('logForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     fetch('./api/payments/check.php', {
         method: 'POST',
         body: new FormData(this)
     }).then(res => res.json())
-    .then(data => {
-        if (data.status == 'allow'){
-            closeLogModal();
-            Swal.fire({
+        .then(data => {
+            if (data.status == 'allow') {
+                closeLogModal();
+                Swal.fire({
                     icon: 'success',
                     title: 'Successfullt Logged!',
                     text: 'Visit logged successfully'
-            });
-        }
-        else{
-            closeLogModal();
-            let icon = data.status == 'pay' ? 'warning' : 'warning';
-            let ok = data.status == 'pay' ? 'Go to Payment' : 'OK';
-            Swal.fire({
-                icon: icon,
-                title: data.title,
-                text: data.message,
-                confirmButtonText: ok
-            }).then(() => {
-                openPaymentModal();
-            })
-        }
-    })
+                });
+            }
+            else {
+                closeLogModal();
+                let icon = data.status == 'pay' ? 'warning' : 'warning';
+                let ok = data.status == 'pay' ? 'Go to Payment' : 'OK';
+                Swal.fire({
+                    icon: icon,
+                    title: data.title,
+                    text: data.message,
+                    confirmButtonText: ok
+                }).then(() => {
+                    openPaymentModal();
+                })
+            }
+        })
 
 
 });
 
-document.getElementById('paymentForm').addEventListener('submit', function(e){
+document.getElementById('paymentForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     let amt = document.getElementById('cashInput');
 
-    if (amt < 0){
+    if (amt < 0) {
         Swal.fire({
             icon: 'error',
             title: 'Invalid Amount!',
             text: 'Please enter a valid amount.'
         })
     }
-    else{
+    else {
         visitLog(this);
     }
 });
 
-function openPaymentModal(){
+function openPaymentModal() {
 
     let id = document.getElementById('logId').value;
 
     fetch('./api/customers/get.php?id=' + id)
-    .then(res => res.json())
-    .then(data => {
-        let name = data.customer_name.split(' ');
-        document.getElementById('payFirst').value = name[0];
-        document.getElementById('payLast').value = name[1];
-        document.getElementById('payType').value = data.customer_type;
-        document.getElementById('payCustomerId').value = id;
-    })
-    
+        .then(res => res.json())
+        .then(data => {
+            let name = data.customer_name.split(' ');
+            document.getElementById('payFirst').value = name[0];
+            document.getElementById('payLast').value = name[1];
+            document.getElementById('payType').value = data.customer_type;
+            document.getElementById('payCustomerId').value = id;
+        })
+
     document.getElementById('paymentModal').classList.remove('hidden');
 }
 
-function closePaymentModal(){
+function closePaymentModal() {
     document.getElementById('paymentModal').classList.add('hidden');
 }
 
-function closeLogModal(){
+function closeLogModal() {
     document.getElementById('logModal').classList.add('hidden');
     document.getElementById('logForm').reset();
 }
 
 // Load customers in table
-function loadCustomers(){
+function loadCustomers() {
     fetch('./api/customers/display.php')
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 }
 
 loadCustomers();
 
 // Add new customer
-document.getElementById('customer-form').addEventListener('submit', function(e) {
+document.getElementById('customer-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     fetch('./api/customers/store.php', {
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            console.log(data.message);
-            closeAddModal();
-            this.reset();
-            Swal.fire({
-                icon: 'success',
-                title: 'Successfullt Added!',
-                text: 'Customer added successfully'
-            })  
-        }
-        else{
-            console.log(data.errors);
-            Swal.fire({
-                icon: 'error',
-                title: 'Cannot be empty!',
-                text: 'Inputs cannot be empty. Input something!'
-            })
-           
-        }
-        loadCustomers();
-    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                console.log(data.message);
+                closeAddModal();
+                this.reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfullt Added!',
+                    text: 'Customer added successfully'
+                })
+            }
+            else {
+                console.log(data.errors);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Cannot be empty!',
+                    text: 'Inputs cannot be empty. Input something!'
+                })
+
+            }
+            loadCustomers();
+        })
 })
 
 // Filter customer by type
-document.getElementById('typeFilter').addEventListener('change', function(){
+document.getElementById('typeFilter').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/customers/display.php?type=${val}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
-document.getElementById('membershipFilter').addEventListener('change', function(){
+document.getElementById('membershipFilter').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/customers/display.php?membership=${val}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
 // Filter customer by membership
-document.getElementById('orderFilter').addEventListener('change', function(){
+document.getElementById('orderFilter').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/customers/display.php?order=${val}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
@@ -314,20 +318,20 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 // Debouncing technique for controlling live search
 let timeout;
 
-function debounce(text){
+function debounce(text) {
     clearTimeout(timeout);
 
-    timeout = setTimeout(() =>{
+    timeout = setTimeout(() => {
         fetch(`./api/customers/display.php?search=${text}`)
-        .then(res => res.json())
-        .then(data => {
-            renderData(data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                renderData(data);
+            })
     }, 1000)
 }
 
 // Delete customer
-function deleteCustomer(id){
+function deleteCustomer(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -337,82 +341,201 @@ function deleteCustomer(id){
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
     })
-    .then((res) => {
-        if (res.isConfirmed){
-            fetch ('./api/customers/destroy.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({ id })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status == 'success'){
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Customer successfully deleted!",
-                        icon: "success"
+        .then((res) => {
+            if (res.isConfirmed) {
+                fetch('./api/customers/destroy.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ id })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Customer successfully deleted!",
+                                icon: "success"
+                            })
+                            loadCustomers();
+                        }
                     })
-                    loadCustomers();
-                }
-            })
-        }
-    })
-    
+            }
+        })
+
 }
-function openUpdate(){
+function openUpdate() {
     document.getElementById('updateDiv').classList.remove('hidden');
 }
 
-function closeUpdate(){
+function closeUpdate() {
     document.getElementById('updateDiv').classList.add('hidden');
 }
 
 // Update form
-document.getElementById('updateCusomter').addEventListener('submit', function(e){
+document.getElementById('updateCusomter').addEventListener('submit', function (e) {
     e.preventDefault();
 
     fetch('./api/customers/update.php', {
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            console.log(data.message);
-            closeUpdate();
-            this.reset();
-            Swal.fire({
-                icon: 'success',
-                title: 'Successfullt Added!',
-                text: 'Customer added successfully'
-            })
-        }
-        else{
-            // console.log(data.errors);
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Cannot be empty!',
-            //     text: 'Inputs cannot be empty. Input something!'
-            // })
-           
-        }
-        loadCustomers();
-    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                console.log(data.message);
+                closeUpdate();
+                this.reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfullt Added!',
+                    text: 'Customer added successfully'
+                })
+            }
+            else {
+                // console.log(data.errors);
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Cannot be empty!',
+                //     text: 'Inputs cannot be empty. Input something!'
+                // })
+
+            }
+            loadCustomers();
+        })
 });
 
-function updateCustomer(id){
+function updateCustomer(id) {
     openUpdate();
 
     fetch('./api/customers/get.php?id=' + id)
-    .then(res => res.json())
-    .then(data => {
-        let name = data.customer_name.split(' ');
-        document.getElementById('up_first').value = name[0];
-        document.getElementById('up_last').value = name[1];
-        document.getElementById('up_type').value = data.customer_type;
-        document.getElementById('up_id').value = id;
-    })
+        .then(res => res.json())
+        .then(data => {
+            let name = data.customer_name.split(' ');
+            document.getElementById('up_first').value = name[0];
+            document.getElementById('up_last').value = name[1];
+            document.getElementById('up_type').value = data.customer_type;
+            document.getElementById('up_id').value = id;
+        })
 
+}
+
+
+
+
+// HISTORY
+
+function openHistoryModal(id, name) {
+    document.getElementById('historyModal').classList.remove('hidden');
+    document.getElementById('historyCustomerName').textContent = name;
+    document.getElementById('historyLoading').classList.remove('hidden');
+    document.getElementById('historyContent').classList.add('hidden');
+
+    fetch(`./api/customers/history.php?id=${id}`)
+        .then(r => r.json())
+        .then(data => {
+            populateHistory(data);
+            document.getElementById('historyLoading').classList.add('hidden');
+            document.getElementById('historyContent').classList.remove('hidden');
+        })
+        .catch(() => {
+            document.getElementById('historyLoading').textContent = 'Failed to load history.';
+        });
+}
+
+function closeHistoryModal() {
+    document.getElementById('historyModal').classList.add('hidden');
+}
+
+function populateHistory(data) {
+    const container = document.getElementById('historyContent');
+    let html = '';
+
+    const val = (v) =>
+        (v === null || v === undefined || v === '' || v === '0000-00-00 00:00:00')
+            ? 'None'
+            : v;
+
+    const safeDate = (v) => {
+        v = val(v);
+        return v === 'None' ? 'None' : fmtDateTime(v);
+    };
+
+    // ── PLAN ─────────────────────────────
+    if (data.plan) {
+        html += `
+            <div class="flex items-start gap-3 border-b py-3">
+                <div class="text-xl text-blue-600">
+                    <i class="fa fa-id-card"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">
+                        Previous Plan: ${val(data.plan.old_value)} → ${val(data.plan.new_value)}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        ${safeDate(data.plan.changed_at)}
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── TRAINER ──────────────────────────
+    if (data.trainer) {
+        html += `
+            <div class="flex items-start gap-3 border-b py-3">
+                <div class="text-xl text-green-600">
+                    <i class="fa fa-dumbbell"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">
+                        Previous Trainer: ${val(data.trainer.old_value)} → ${val(data.trainer.new_value)}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        ${safeDate(data.trainer.changed_at)}
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── VISIT ────────────────────────────
+    if (data.visit) {
+        const visitDate = val(data.visit.visit_date);
+
+        html += `
+            <div class="flex items-start gap-3 border-b py-3">
+                <div class="text-xl text-purple-600">
+                    <i class="fa fa-calendar-check"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">
+                        Previous Visit: ${visitDate === 'None' ? 'None' : fmtDateTime(visitDate)}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        Logged at ${safeDate(data.visit.changed_at)}
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    if (!html) {
+        html = `<p class="text-gray-500">No previous records found</p>`;
+    }
+
+    container.innerHTML = html;
+}
+
+// --- Helpers ---
+function fmtDateTime(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleString('en-PH', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 }

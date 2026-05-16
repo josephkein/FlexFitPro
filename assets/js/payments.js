@@ -3,8 +3,8 @@
 function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
 
 // Close add customer form
-function closeAddModal() { 
-    document.getElementById('addModal').classList.add('hidden'); 
+function closeAddModal() {
+    document.getElementById('addModal').classList.add('hidden');
     document.getElementById('payment_form').reset();
 }
 
@@ -21,41 +21,41 @@ next.addEventListener('click', (e) => {
     e.preventDefault();
     page++;
     fetch(`./api/payments/display.php?page=${page}&type=${paymentT.value}&date=${date.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 prev.addEventListener('click', (e) => {
     e.preventDefault();
     page--;
     fetch(`./api/payments/display.php?page=${page}&type=${paymentT.value}&date=${date.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 // Render or display customer's data
-function renderData(data){
+function renderData(data) {
 
     next.disabled = false;
     prev.disabled = false;
 
     document.getElementById('paymentTable').innerHTML = '';
 
-        data.forEach((d) => {
-            let status = d.capacity != d.trainees ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
-            document.getElementById('paymentTable').innerHTML += `
+    data.forEach((d) => {
+        let status = d.capacity != d.trainees ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
+        document.getElementById('paymentTable').innerHTML += `
                             <tr>
-                                <td class="px-6 py-3">${d.date}</td>
-                                <td class="px-6 py-3">${d.customer}</td>
-                                <td class="px-6 py-3">${d.type}</td>
-                                <td class="px-6 py-3">₱${d.amount}</td>
-                                <td class="px-6 py-3">${d.staff}</td>
+                                <td class="px-6 py-3">${escHtml(d.date)}</td>
+                                <td class="px-6 py-3">${escHtml(d.customer)}</td>
+                                <td class="px-6 py-3">${escHtml(d.type)}</td>
+                                <td class="px-6 py-3">₱${escHtml(d.amount)}</td>
+                                <td class="px-6 py-3">${escHtml(d.staff)}</td>
                                 ${window.isAdmin ? `
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
@@ -67,14 +67,14 @@ function renderData(data){
                                 ` : ''}
                             </tr>
             `;
-        })
+    })
 
-        // Display pagination when length of data is 7 above
-        if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
-       else document.getElementById('pagination').classList.remove('hidden');
+    // Display pagination when length of data is 7 above
+    if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
+    else document.getElementById('pagination').classList.remove('hidden');
 
-       if (data.length < 7) next.disabled = true;
-       if (page == 1) prev.disabled = true;
+    if (data.length < 7) next.disabled = true;
+    if (page == 1) prev.disabled = true;
 }
 
 /*
@@ -85,39 +85,39 @@ function renderData(data){
 
 
 // Load trainers in table
-function loadPayments(){
+function loadPayments() {
     fetch('./api/payments/display.php')
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 }
 
 loadPayments();
 
 
 // Filter payments by type
-document.getElementById('payment_type').addEventListener('change', function(){
+document.getElementById('payment_type').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/payments/display.php?type=${val}&date=${date.value}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
 // Filter payments by date
-document.getElementById('date').addEventListener('change', function(){
+document.getElementById('date').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/payments/display.php?date=${val}&type=${paymentT.value}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
@@ -131,20 +131,20 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 // Debouncing technique for controlling live search
 let timeout;
 
-function debounce(text){
+function debounce(text) {
     clearTimeout(timeout);
 
-    timeout = setTimeout(() =>{
+    timeout = setTimeout(() => {
         fetch(`./api/payments/display.php?search=${text}`)
-        .then(res => res.json())
-        .then(data => {
-            renderData(data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                renderData(data);
+            })
     }, 1000)
 }
 
 // Delete trainer
-function deletePayments(id){
+function deletePayments(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -154,33 +154,33 @@ function deletePayments(id){
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
     })
-    .then((res) => {
-        if (res.isConfirmed){
-            fetch ('./api/payments/destroy.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id })
-            })
-            .then(res => res.json())
-            .then(data => { 
-                if (data.status == 'success'){
-                    console.log(data.id);
-                    Swal.fire({
-                        title: "Deleted!",  
-                        text: "Payment successfully deleted!",
-                        icon: "success"
+        .then((res) => {
+            if (res.isConfirmed) {
+                fetch('./api/payments/destroy.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status == 'success') {
+                            console.log(data.id);
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Payment successfully deleted!",
+                                icon: "success"
+                            })
+                            loadPayments();
+                        }
                     })
-                    loadPayments();
-                }
-            })
-        }
-    })
-    
+            }
+        })
+
 }
 
-document.getElementById('update-form').addEventListener('submit', function(e){
+document.getElementById('update-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const paymentId = document.getElementById('up_id').value;
@@ -218,54 +218,54 @@ document.getElementById('update-form').addEventListener('submit', function(e){
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            closeUpdate();
-            this.reset();
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Payment updated successfully'
-            })
-            loadPayments();
-        }
-        else{
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                closeUpdate();
+                this.reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Payment updated successfully'
+                })
+                loadPayments();
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'Failed to update payment'
+                })
+            }
+        })
+        .catch(err => {
+            console.error(err);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: data.message || 'Failed to update payment'
+                text: 'Failed to update payment'
             })
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Failed to update payment'
         })
-    })
 });
- 
 
-function openUpdate(){
+
+function openUpdate() {
     document.getElementById('updatePayment').classList.remove('hidden');
 }
 
-function closeUpdate(){
+function closeUpdate() {
     document.getElementById('updatePayment').classList.add('hidden');
 }
 
-function updatePayments(id){
+function updatePayments(id) {
     openUpdate();
 
     fetch('./api/payments/get.php?id=' + id)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('up_id').value = id;
-        document.getElementById('up_type').value = data.payment_type;
-        document.getElementById('up_amount').value = data.amount;
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('up_id').value = id;
+            document.getElementById('up_type').value = data.payment_type;
+            document.getElementById('up_amount').value = data.amount;
+        })
+        .catch(err => console.error(err))
 }

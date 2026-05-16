@@ -1,37 +1,37 @@
 function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
 function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
 
-document.getElementById('accForm').addEventListener('submit', function(e) {
+document.getElementById('accForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     fetch('./api/staffs/store.php', {
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            console.log(data.message);
-            closeAddModal();
-            this.reset();
-            Swal.fire({
-                icon: 'success',
-                title: 'Successfullt Added!',
-                text: data.message
-            })
-            loadStaffs();
-        }
-        else{
-            console.log(data.errors);
-            Swal.fire({
-                icon: 'error',
-                title: 'Something Went Wrong!',
-                text: data.message
-            })
-           
-        }
-        // loadStaffs();
-    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                console.log(data.message);
+                closeAddModal();
+                this.reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfullt Added!',
+                    text: data.message
+                })
+                loadStaffs();
+            }
+            else {
+                console.log(data.errors);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Something Went Wrong!',
+                    text: data.message
+                })
+
+            }
+            // loadStaffs();
+        })
 })
 
 
@@ -49,11 +49,11 @@ next.addEventListener('click', (e) => {
 
     page++;
     fetch(`./api/staffs/display.php?page=${page}&role=${role.value}&status=${status.value}&search=${search.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 prev.addEventListener('click', (e) => {
@@ -65,34 +65,34 @@ prev.addEventListener('click', (e) => {
 
     page--;
     fetch(`./api/staffs/display.php?page=${page}&role=${role.value}&status=${status.value}&search=${search.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 
 // Render or display customer's data
-function renderData(data){
+function renderData(data) {
 
     next.disabled = false;
     prev.disabled = false;
 
     document.getElementById('staffTable').innerHTML = '';
-        data.forEach((d) => {
-            let status = d.status == 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
+    data.forEach((d) => {
+        let status = d.status == 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
 
-            document.getElementById('staffTable').innerHTML += `
+        document.getElementById('staffTable').innerHTML += `
                             <tr>
                                 <td class="px-6 py-3">
                                     <div class="flex items-center gap-2">
-                                        ${d.username}
+                                        ${escHtml(d.username)}
                                     </div>
                                 </td>
-                                <td class="px-6 py-3">${d.role}</td>
+                                <td class="px-6 py-3">${escHtml(d.role)}</td>
                                 <td class="px-6 py-3">
-                                    <span class="${status} px-2 py-1 rounded-full">${d.status}</span>
+                                    <span class="${status} px-2 py-1 rounded-full">${escHtml(d.status)}</span>
                                 </td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
@@ -106,26 +106,26 @@ function renderData(data){
                                 </td>
                             </tr>
             `;
-        });
-        /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
-                <img src="./images/delete.png" alt="">
-        </button>
-         */                                          
-        // Display pagination when length of data is 7 above
-        if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
-       else document.getElementById('pagination').classList.remove('hidden');
+    });
+    /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
+            <img src="./images/delete.png" alt="">
+    </button>
+     */
+    // Display pagination when length of data is 7 above
+    if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
+    else document.getElementById('pagination').classList.remove('hidden');
 
-       if (data.length < 7) next.disabled = true;
-       if (page == 1) prev.disabled = true;
+    if (data.length < 7) next.disabled = true;
+    if (page == 1) prev.disabled = true;
 }
 
-function loadStaffs(){
+function loadStaffs() {
     fetch('./api/staffs/display.php')
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 }
 
 loadStaffs();
@@ -138,22 +138,22 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 
 let time;
 
-function debouncedSearch(val){
+function debouncedSearch(val) {
 
     clearTimeout(time);
 
     time = setTimeout(() => {
         fetch(`./api/staffs/display.php?search=${val}`)
-        .then(res => res.json())
-        .then(data => {
-            renderData(data);
-        })
-        .catch(err => console.error(err))
+            .then(res => res.json())
+            .then(data => {
+                renderData(data);
+            })
+            .catch(err => console.error(err))
     }, 1000);
 
 }
 
-function deleteStaff(id){
+function deleteStaff(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -163,111 +163,111 @@ function deleteStaff(id){
         confirmButtonText: "Yes, delete it!",
         showCancelButton: true,
     }).then((res) => {
-        if (res.isConfirmed){
+        if (res.isConfirmed) {
             fetch('./api/staffs/destroy.php', {
                 method: 'POST',
                 header: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status == 'success'){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successfully Deleted!',
-                        text: 'Account successfully deleted!'
-                    })
-                    loadStaffs();
-                }
-                else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Something Went Wrong!',
-                        text: data.message
-                    })
-                }
-            })
-            .catch(err => console.error(err))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status == 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Deleted!',
+                            text: 'Account successfully deleted!'
+                        })
+                        loadStaffs();
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something Went Wrong!',
+                            text: data.message
+                        })
+                    }
+                })
+                .catch(err => console.error(err))
         }
     })
 }
 
 
-document.getElementById('role').addEventListener('change', function(){
+document.getElementById('role').addEventListener('change', function () {
     fetch(`./api/staffs/display.php?role=${this.value}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 });
 
-document.getElementById('status').addEventListener('change', function(){
+document.getElementById('status').addEventListener('change', function () {
     fetch(`./api/staffs/display.php?status=${this.value}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 });
 
-function openUpdateModal(id){
+function openUpdateModal(id) {
     document.getElementById('updateModal').classList.remove('hidden');
 }
 
-function closeUpdateModal(id){
+function closeUpdateModal(id) {
     document.getElementById('updateModal').classList.add('hidden');
 }
 
-function updateStaff(id){
+function updateStaff(id) {
     openUpdateModal();
 
     fetch(`./api/staffs/get.php?id=${id}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('acc_id').value = id;
-        document.getElementById('update_username').value = data.username;
-        document.getElementById('update_role').value = data.role;
-        document.getElementById('update_status').value = data.status;
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('acc_id').value = id;
+            document.getElementById('update_username').value = data.username;
+            document.getElementById('update_role').value = data.role;
+            document.getElementById('update_status').value = data.status;
+        })
+        .catch(err => console.error(err))
 }
 
 
-document.getElementById('updateForm').addEventListener('submit', function(e){
+document.getElementById('updateForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     fetch('./api/staffs/update.php', {
         method: 'POST',
         body: new FormData(this)
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status == 'success'){
-            Swal.fire({
-                icon: 'success',
-                title: 'Successfully Updated!',
-                text: 'Account successfully updated!'
-            })
-            this.reset();
-            closeUpdateModal();
-            loadStaffs();
-        }
-        else{
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Updated!',
+                    text: 'Account successfully updated!'
+                })
+                this.reset();
+                closeUpdateModal();
+                loadStaffs();
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed!',
+                    text: data.message
+                })
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
             Swal.fire({
                 icon: 'error',
-                title: 'Update Failed!',
-                text: data.message
+                title: 'Error!',
+                text: 'An error occurred while updating'
             })
-        }
-    })
-    .catch(err => {
-        console.error('Error:', err);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'An error occurred while updating'
-        })
-    });
+        });
 
 });

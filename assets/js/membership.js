@@ -10,11 +10,11 @@ next.addEventListener('click', (e) => {
 
     page++;
     fetch(`./api/membership/display.php?page=${page}&plan=${plan.value}&search=${search.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 prev.addEventListener('click', (e) => {
@@ -24,26 +24,26 @@ prev.addEventListener('click', (e) => {
 
     page--;
     fetch(`./api/membership/display.php?page=${page}&plan=${plan.value}&search=${search.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
-function loadPlans(){
+function loadPlans() {
 
     fetch('./api/plans/display.php')
-    .then(res => res.json())
-    .then(data => {
-        renderPlans(data);
+        .then(res => res.json())
+        .then(data => {
+            renderPlans(data);
 
-    })
+        })
 }
 
 loadPlans();
 
-function renderPlans(plans){
+function renderPlans(plans) {
     document.getElementById('plans').innerHTML = '';
 
 
@@ -69,7 +69,7 @@ function renderPlans(plans){
                 </div>
                 ` : ''}
             </div>
-        `;  
+        `;
     });
 
     populateMembershipPlanSelect(plans);
@@ -104,13 +104,13 @@ function populatePlanFilter(plans) {
     });
 }
 
-function showModal(modal){
+function showModal(modal) {
     if (!modal) return;
     modal.classList.remove('hidden', 'opacity-0');
     modal.classList.add('flex', 'opacity-100');
 }
 
-function hideModal(modal){
+function hideModal(modal) {
     if (!modal) return;
     modal.classList.remove('opacity-100');
     modal.classList.add('opacity-0');
@@ -120,40 +120,40 @@ function hideModal(modal){
     }, 200);
 }
 
-function openAddPlan(){
+function openAddPlan() {
     document.getElementById('addPlan').classList.remove('hidden');
 }
 
-function closeAddPlan(){
+function closeAddPlan() {
     document.getElementById('addPlan').classList.add('hidden');
 }
 
-function openUpdatePlanModal(){
+function openUpdatePlanModal() {
     document.getElementById('updatePlanModal').classList.remove('hidden');
 }
 
-function closeUpdatePlanModal(){
+function closeUpdatePlanModal() {
     document.getElementById('updatePlanModal').classList.add('hidden');
 }
 
-function openUpdateMembershipModal(){
+function openUpdateMembershipModal() {
     showModal(document.getElementById('updateMembershipModal'));
 }
 
-function closeUpdateMembershipModal(){
+function closeUpdateMembershipModal() {
     hideModal(document.getElementById('updateMembershipModal'));
 }
 
-function openAddMembership(){
+function openAddMembership() {
     showModal(document.getElementById('addMembershipModal'));
 }
 
-function closeAddMembership(){
+function closeAddMembership() {
     hideModal(document.getElementById('addMembershipModal'));
     resetAddMembershipForm();
 }
 
-function resetAddMembershipForm(){
+function resetAddMembershipForm() {
     const form = document.getElementById('addMembershipForm');
     if (!form) return;
     form.reset();
@@ -161,11 +161,11 @@ function resetAddMembershipForm(){
     hideMembershipCustomerSuggestions();
 }
 
-function openPaymentModal(){
+function openPaymentModal() {
     showModal(document.getElementById('paymentModal'));
 }
 
-function closePaymentModal(){
+function closePaymentModal() {
     hideModal(document.getElementById('paymentModal'));
     showModal(document.getElementById('addMembershipModal'));
 }
@@ -211,7 +211,7 @@ if (membershipCustomerSearch && membershipCustomerSuggestions) {
     });
 }
 
-document.getElementById('addMembershipForm').addEventListener('submit', function(e) {
+document.getElementById('addMembershipForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const customerId = document.getElementById('customerId').value;
@@ -239,7 +239,7 @@ document.getElementById('addMembershipForm').addEventListener('submit', function
     }
 
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
 
     if (startDate < today) {
         Swal.fire({
@@ -272,7 +272,7 @@ document.getElementById('addMembershipForm').addEventListener('submit', function
     }
 
     paymentPlanName.textContent = planName;
-    paymentAmountDisplay.textContent = `₱${Number(planAmount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    paymentAmountDisplay.textContent = `₱${Number(planAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     paymentAmountHidden.value = planAmount;
     paymentCustomerIdHidden.value = customerId;
     paymentPlanIdHidden.value = planId;
@@ -286,7 +286,7 @@ document.getElementById('addMembershipForm').addEventListener('submit', function
     openPaymentModal();
 });
 
-paymentCashInput.addEventListener('input', function() {
+paymentCashInput.addEventListener('input', function () {
     const amount = parseFloat(paymentAmountHidden.value) || 0;
     const cashValue = parseFloat(this.value);
     const isValidCash = !isNaN(cashValue);
@@ -299,7 +299,7 @@ paymentCashInput.addEventListener('input', function() {
     }
 
     const change = cashValue - amount;
-    paymentChangeDisplay.textContent = `₱${Number(change >= 0 ? change : 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    paymentChangeDisplay.textContent = `₱${Number(change >= 0 ? change : 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     if (change < 0) {
         paymentErrorText.textContent = 'Insufficient payment.';
@@ -310,7 +310,7 @@ paymentCashInput.addEventListener('input', function() {
     }
 });
 
-paymentModalForm.addEventListener('submit', function(e) {
+paymentModalForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const amount = parseFloat(paymentAmountHidden.value) || 0;
@@ -330,32 +330,32 @@ paymentModalForm.addEventListener('submit', function(e) {
         method: 'POST',
         body: payload
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === 'success') {
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Payment completed',
+                    text: 'Membership payment has been submitted successfully.'
+                });
+                hideModal(paymentModal);
+                closeAddMembership();
+                loadMembership();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: data.title || 'Payment Error',
+                    text: data.message || (data.errors ? data.errors.join(', ') : 'Unable to complete payment.')
+                });
+            }
+        })
+        .catch(() => {
             Swal.fire({
-                icon: 'success',
-                title: 'Payment completed',
-                text: 'Membership payment has been submitted successfully.'
-            });
-            hideModal(paymentModal);
-            closeAddMembership();
-            loadMembership();
-        } else {
-            Swal.fire({ 
                 icon: 'error',
-                title: data.title || 'Payment Error',
-                text: data.message || (data.errors ? data.errors.join(', ') : 'Unable to complete payment.')
+                title: 'Network error',
+                text: 'Unable to submit payment right now.'
             });
-        }
-    })
-    .catch(() => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Network error',
-            text: 'Unable to submit payment right now.'
         });
-    });
 });
 
 function renderMembershipCustomerSuggestions(results) {
@@ -385,30 +385,88 @@ function hideMembershipCustomerSuggestions() {
     membershipCustomerSuggestions.innerHTML = '';
 }
 
-function closeUpdatePlanModal(){
+function closeUpdatePlanModal() {
     document.getElementById('updatePlanModal').classList.add('hidden');
 }
-if (window.isAdmin){
-    document.getElementById('addPlanForm').addEventListener('submit', function(e) {
+if (window.isAdmin) {
+    document.getElementById('addPlanForm').addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         fetch('./api/plans/store.php', {
             method: 'POST',
             body: new FormData(this)
         }).then(res => res.json())
+            .then(data => {
+                console.log('hello');
+                if (data.status == 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Plan created successfully!',
+                        text: 'The plan has been created.'
+                    });
+                    loadPlans();
+                    this.reset();
+                    closeAddPlan();
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
+            })
+
+    });
+
+
+    document.getElementById('updatePlanForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        fetch('./api/plans/update.php', {
+            method: 'POST',
+            body: new FormData(this)
+        }).then(res => res.json())
+            .then(data => {
+                console.log('hello');
+                if (data.status == 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Updated successfully!',
+                        text: 'The plan has been updated.'
+                    });
+                    loadPlans();
+                    closeUpdatePlanModal();
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
+            })
+    })
+}
+
+document.getElementById('updateMembershipForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    fetch('./api/membership/update.php', {
+        method: 'POST',
+        body: new FormData(this)
+    }).then(res => res.json())
         .then(data => {
-            console.log('hello');
             if (data.status == 'success') {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Plan created successfully!',
-                    text: 'The plan has been created.'
+                    title: 'Updated successfully!',
+                    text: 'The membership has been updated.'
                 });
-                loadPlans();
-                this.reset();
-                closeAddPlan();
+                loadMembership();
+                closeUpdateMembershipModal();
             }
-            else{
+            else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -416,80 +474,22 @@ if (window.isAdmin){
                 });
             }
         })
-
-    });
-
-
-document.getElementById('updatePlanForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    fetch('./api/plans/update.php', {
-        method: 'POST',
-        body: new FormData(this)
-    }).then(res => res.json())
-    .then(data => {
-        console.log('hello');
-        if (data.status == 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Updated successfully!',
-                text: 'The plan has been updated.'
-            });
-            loadPlans();
-            closeUpdatePlanModal();
-        }
-        else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message
-            });
-        }
-    })
-})
-}
-
-document.getElementById('updateMembershipForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    fetch('./api/membership/update.php', {
-        method: 'POST',
-        body: new FormData(this)
-    }).then(res => res.json())
-    .then(data => {
-        if (data.status == 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Updated successfully!',
-                text: 'The membership has been updated.'
-            });
-            loadMembership();
-            closeUpdateMembershipModal();
-        }
-        else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message
-            });
-        }
-    })
 })
 
-function editPlan(id){
+function editPlan(id) {
     openUpdatePlanModal();
 
     fetch(`./api/plans/get.php?id=${id}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('update_plan').value = data.name;
-        document.getElementById('update_duration').value = data.duration;
-        document.getElementById('update_price').value = data.price;
-        document.getElementById('planId').value = id;
-    });
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('update_plan').value = data.name;
+            document.getElementById('update_duration').value = data.duration;
+            document.getElementById('update_price').value = data.price;
+            document.getElementById('planId').value = id;
+        });
 }
 
-function deletePlan(id){
+function deletePlan(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -499,7 +499,7 @@ function deletePlan(id){
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
     }).then((res) => {
-        if (res.isConfirmed){
+        if (res.isConfirmed) {
             fetch('./api/plans/destroy.php', {
                 method: 'POST',
                 headers: {
@@ -507,58 +507,58 @@ function deletePlan(id){
                 },
                 body: JSON.stringify({ id })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status == 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted successfully!',
-                        text: 'The plan has been deleted.'
-                    });
-                    loadPlans();
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to delete plan.'
-                    });
-                }
-            });
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status == 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted successfully!',
+                            text: 'The plan has been deleted.'
+                        });
+                        loadPlans();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to delete plan.'
+                        });
+                    }
+                });
         }
     })
 }
 
-function updateMembership(id){
+function updateMembership(id) {
     openUpdateMembershipModal();
 
     fetch(`./api/membership/get.php?id=${id}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('updateCustomerName').value = data.customer_name;
-        document.getElementById('updateMembershipStartDate').value = data.start_date;
-        document.getElementById('updateMembershipId').value = data.id;
-
-        // Populate plan select
-        const planSelect = document.getElementById('updateMembershipPlanSelect');
-        planSelect.innerHTML = '<option value="">Select plan</option>';
-        // Assuming plans are loaded, but to be safe, fetch again or use existing
-        fetch('./api/plans/display.php')
         .then(res => res.json())
-        .then(plans => {
-            plans.forEach(p => {
-                const option = document.createElement('option');
-                option.value = p.id;
-                option.dataset.price = p.price;
-                option.dataset.name = p.name;
-                option.textContent = `${p.name} - ₱${Number(p.price).toLocaleString()} (${p.duration == 1 ? p.duration + ' mo' : p.duration + ' mos'})`;
-                if (p.id == data.plan_id) option.selected = true;
-                planSelect.appendChild(option);
-            });
+        .then(data => {
+            document.getElementById('updateCustomerName').value = data.customer_name;
+            document.getElementById('updateMembershipStartDate').value = data.start_date;
+            document.getElementById('updateMembershipId').value = data.id;
+
+            // Populate plan select
+            const planSelect = document.getElementById('updateMembershipPlanSelect');
+            planSelect.innerHTML = '<option value="">Select plan</option>';
+            // Assuming plans are loaded, but to be safe, fetch again or use existing
+            fetch('./api/plans/display.php')
+                .then(res => res.json())
+                .then(plans => {
+                    plans.forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p.id;
+                        option.dataset.price = p.price;
+                        option.dataset.name = p.name;
+                        option.textContent = `${p.name} - ₱${Number(p.price).toLocaleString()} (${p.duration == 1 ? p.duration + ' mo' : p.duration + ' mos'})`;
+                        if (p.id == data.plan_id) option.selected = true;
+                        planSelect.appendChild(option);
+                    });
+                });
         });
-    });
 }
 
-function deleteMembership(id){
+function deleteMembership(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -568,7 +568,7 @@ function deleteMembership(id){
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
     }).then((res) => {
-        if (res.isConfirmed){
+        if (res.isConfirmed) {
             fetch('./api/membership/destroy.php', {
                 method: 'POST',
                 headers: {
@@ -576,65 +576,65 @@ function deleteMembership(id){
                 },
                 body: JSON.stringify({ id })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status == 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted successfully!',
-                        text: 'The membership has been deleted.'
-                    });
-                    loadMembership();
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to delete membership.'
-                    });
-                }
-            });
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status == 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted successfully!',
+                            text: 'The membership has been deleted.'
+                        });
+                        loadMembership();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to delete membership.'
+                        });
+                    }
+                });
         }
     })
 }
 
 
 // Render or display customer's data
-function renderData(data){
+function renderData(data) {
 
     next.disabled = false;
     prev.disabled = false;
 
     document.getElementById('membershipTable').innerHTML = '';
-        data.forEach((d) => {
-            const today = new Date();
-            today.setHours(0,0,0,0);
+    data.forEach((d) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-            const start = new Date(d.start);
-            const end = new Date(d.end);
+        const start = new Date(d.start);
+        const end = new Date(d.end);
 
-            start.setHours(0,0,0,0);
-            end.setHours(0,0,0,0);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
 
-            let status = '';
-            let color = '';
+        let status = '';
+        let color = '';
 
-            if (today < start) {
-                status = 'Pending';
-                color = 'bg-yellow-100 text-yellow-700';
-            } else if (today >= start && today <= end) {
-                status = 'Active';
-                color = 'bg-green-100 text-green-700';
-            } else {
-                status = 'Expired';
-                color = 'bg-red-100 text-red-700';
-            }
-            document.getElementById('membershipTable').innerHTML += `
+        if (today < start) {
+            status = 'Pending';
+            color = 'bg-yellow-100 text-yellow-700';
+        } else if (today >= start && today <= end) {
+            status = 'Active';
+            color = 'bg-green-100 text-green-700';
+        } else {
+            status = 'Expired';
+            color = 'bg-red-100 text-red-700';
+        }
+        document.getElementById('membershipTable').innerHTML += `
                             <tr>
-                                <td class="px-6 py-3">${d.customer}</td>
-                                <td class="px-6 py-3">${d.plan}</td>
-                                <td class="px-6 py-3">${d.start}</td>
-                                <td class="px-6 py-3">${d.end}</td>
-                                <td class="px-6 py-3 flex items-center"><span class="${color} px-2 py-1 rounded-full">${status}</span></td>
+                                <td class="px-6 py-3">${escHtml(d.customer)}</td>
+                                <td class="px-6 py-3">${escHtml(d.plan)}</td>
+                                <td class="px-6 py-3">${escHtml(d.start)}</td>
+                                <td class="px-6 py-3">${escHtml(d.end)}</td>
+                                <td class="px-6 py-3 flex items-center"><span class="${color} px-2 py-1 rounded-full">${escHtml(status)}</span></td>
                                 ${window.isAdmin ? `
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
@@ -651,64 +651,64 @@ function renderData(data){
                                 ` : ''}
                             </tr>
             `;
-        });
-        /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
-                <img src="./images/delete.png" alt="">
-        </button>
-         */                                          
-        // Display pagination when length of data is 7 above
-        if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
-       else document.getElementById('pagination').classList.remove('hidden');
+    });
+    /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
+            <img src="./images/delete.png" alt="">
+    </button>
+     */
+    // Display pagination when length of data is 7 above
+    if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
+    else document.getElementById('pagination').classList.remove('hidden');
 
-       if (data.length < 7) next.disabled = true;
-       if (page == 1) prev.disabled = true;
+    if (data.length < 7) next.disabled = true;
+    if (page == 1) prev.disabled = true;
 }
 
-function loadMembership(){
+function loadMembership() {
     fetch('./api/membership/display.php')
-    .then(res => res.json())
-    .then(data => {
-        
-        renderData(data);
-    })
-    
+        .then(res => res.json())
+        .then(data => {
+
+            renderData(data);
+        })
+
 }
 
 loadMembership();
 
-document.getElementById('planFilter').addEventListener('change', function(){
+document.getElementById('planFilter').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/membership/display.php?plan=${val}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
 // Filter customer by membership
-document.getElementById('statusFilter').addEventListener('change', function(){
+document.getElementById('statusFilter').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/membership/display.php`)
-    .then(res => res.json())
-    .then(data => {
-        let filter =  '';
-        if (val == 'active'){
-            filter = data.filter(d => {
-                const end = new Date(d.end);
-                return end > Date.now();
-            });
-        }
-        else{
-            filter = data.filter(d => {
-                const end = new Date(d.end);
-                return end < Date.now();
-            });
-        }
-        renderData(filter);
-    })
+        .then(res => res.json())
+        .then(data => {
+            let filter = '';
+            if (val == 'active') {
+                filter = data.filter(d => {
+                    const end = new Date(d.end);
+                    return end > Date.now();
+                });
+            }
+            else {
+                filter = data.filter(d => {
+                    const end = new Date(d.end);
+                    return end < Date.now();
+                });
+            }
+            renderData(filter);
+        })
 
 })
 
@@ -721,14 +721,14 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 // Debouncing technique for controlling live search
 let timeout;
 
-function debounce(text){
+function debounce(text) {
     clearTimeout(timeout);
 
-    timeout = setTimeout(() =>{
+    timeout = setTimeout(() => {
         fetch(`./api/membership/display.php?search=${text}`)
-        .then(res => res.json())
-        .then(data => {
-            renderData(data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                renderData(data);
+            })
     }, 1000)
 }

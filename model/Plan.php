@@ -40,4 +40,11 @@
             $stmt->execute();
             return $stmt->get_result()->fetch_assoc();
         }
+        public function getByMember($id){
+            $q = "SELECT plan_id AS id, plan_name AS name, m.membership_id, duration_month AS duration, price FROM plans INNER JOIN memberships AS m ON m.plan_id = plans.plan_id WHERE m.membership_id = ?";
+            $stmt = $this->db->prepare($q);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        }
     }

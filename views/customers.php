@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="shortcut icon" href="./images/flexfit.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Customers</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
@@ -307,6 +308,51 @@
             </form>
         </div>
     </div>
+
+
+    <!-- History Modal -->
+    <div id="historyModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+
+        <div class="bg-white w-full max-w-lg rounded-xl shadow-lg overflow-hidden">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center px-6 py-4">
+                <h2 class="text-lg font-semibold text-gray-800">
+                    Customer History: <span id="historyCustomerName" class="text-blue-600"></span>
+                </h2>
+
+                <button onclick="closeHistoryModal()"
+                    class="text-gray-500 hover:text-red-500 text-xl font-bold">
+                    ×
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-4">
+
+                <!-- Loading -->
+                <div id="historyLoading" class="text-center text-gray-500">
+                    Loading history...
+                </div>
+
+                <!-- Timeline Content -->
+                <div id="historyContent" class="hidden space-y-3 max-h-[60vh] overflow-y-auto">
+                    <!-- JS will render history here -->
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 flex justify-end">
+                <button onclick="closeHistoryModal()"
+                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-700">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+
     <script>
        window.isAdmin = <?= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>;
    </script>

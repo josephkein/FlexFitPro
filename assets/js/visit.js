@@ -11,50 +11,50 @@ next.addEventListener('click', (e) => {
 
     page++;
     fetch(`./api/visits/display.php?page=${page}&date=${date.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 prev.addEventListener('click', (e) => {
     e.preventDefault();
 
     let date = document.getElementById('dateFilter');
-    
+
     page--;
     fetch(`./api/visits/display.php?page=${page}&date=${date.value}`)
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('page').textContent = page;
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('page').textContent = page;
+            renderData(data);
+        })
 })
 
 // Render or display customer's data
-function renderData(data){
+function renderData(data) {
 
     next.disabled = false;
     prev.disabled = false;
 
     document.getElementById('visitTable').innerHTML = '';
-        data.forEach((d) => {
-            const date = new Date(d.date.replace(" ", "T"));
-            const formatted = date.toLocaleString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true
-            });
-            document.getElementById('visitTable').innerHTML += `
+    data.forEach((d) => {
+        const date = new Date(d.date.replace(" ", "T"));
+        const formatted = date.toLocaleString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
+        });
+        document.getElementById('visitTable').innerHTML += `
                             <tr>
-                                <td class="px-6 py-3">${formatted}</td>
-                                <td class="px-6 py-3">${d.customer}</td>
-                                <td class="px-6 py-3">${d.type}</td>
-                                <td class="px-6 py-3">${d.staff}</td>
+                                <td class="px-6 py-3">${escHtml(formatted)}</td>
+                                <td class="px-6 py-3">${escHtml(d.customer)}</td>
+                                <td class="px-6 py-3">${escHtml(d.type)}</td>
+                                <td class="px-6 py-3">${escHtml(d.staff)}</td>
                                 <td class="px-6 py-3">
                                     <div class="flex gap-2">
                                         ${window.isAdmin ? `
@@ -66,43 +66,43 @@ function renderData(data){
                                 </td>
                             </tr>
             `;
-        })
-        /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
-                <img src="./images/delete.png" alt="">
-        </button>
-         */
+    })
+    /*<button class="bg-red-500 p-2 rounded-md text-md hover:bg-red-400" id="delete-customer" onclick="deleteCustomer(${d.id})">
+            <img src="./images/delete.png" alt="">
+    </button>
+     */
 
-        // Display pagination when length of data is 7 above
-        if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
-       else document.getElementById('pagination').classList.remove('hidden');
+    // Display pagination when length of data is 7 above
+    if (data.length < 7 && page == 1) document.getElementById('pagination').classList.add('hidden');
+    else document.getElementById('pagination').classList.remove('hidden');
 
-       if (data.length < 7) next.disabled = true;
-       if (page == 1) prev.disabled = true;
+    if (data.length < 7) next.disabled = true;
+    if (page == 1) prev.disabled = true;
 }
 
 
 // Load customers in table
-function loadVisits(){
+function loadVisits() {
     fetch('./api/visits/display.php')
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
-    .catch(err => console.error(err))
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
+        .catch(err => console.error(err))
 }
 
 loadVisits();
 
 
 // Filter customer by type
-document.getElementById('dateFilter').addEventListener('change', function(){
+document.getElementById('dateFilter').addEventListener('change', function () {
     let val = this.value;
 
     fetch(`./api/visits/display.php?date=${val}`)
-    .then(res => res.json())
-    .then(data => {
-        renderData(data);
-    })
+        .then(res => res.json())
+        .then(data => {
+            renderData(data);
+        })
 
 })
 
@@ -115,20 +115,20 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 // Debouncing technique for controlling live search
 let timeout;
 
-function debounce(text){
+function debounce(text) {
     clearTimeout(timeout);
 
-    timeout = setTimeout(() =>{
+    timeout = setTimeout(() => {
         fetch(`./api/visits/display.php?search=${text}`)
-        .then(res => res.json())
-        .then(data => {
-            renderData(data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                renderData(data);
+            })
     }, 1000)
 }
 
 // Delete customer
-function deleteVisits(id){
+function deleteVisits(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -138,28 +138,28 @@ function deleteVisits(id){
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
     })
-    .then((res) => {
-        if (res.isConfirmed){
-            fetch ('./api/visits/destroy.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({ id })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status == 'success'){
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Visit successfully deleted!",
-                        icon: "success"
+        .then((res) => {
+            if (res.isConfirmed) {
+                fetch('./api/visits/destroy.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ id })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Visit successfully deleted!",
+                                icon: "success"
+                            })
+                            loadVisits();
+                        }
                     })
-                    loadVisits();
-                }
-            })
-        }
-    })
-    
+            }
+        })
+
 }
 

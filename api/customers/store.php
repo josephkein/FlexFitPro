@@ -2,11 +2,13 @@
     require __DIR__ . '/../../database/database.php';
     require __DIR__ . '/../../controllers/CustomerController.php';
     require __DIR__ . '/../../model/Customer.php';
+    require __DIR__ . '/../../model/CustomerHistory.php';
     $config = require __DIR__ . '/../../config/config.php';
 
     $db = new Database($config);
 
     $customer = new Customer($db->getConnection());
+    $history = new CustomerHistory($db->getConnection());
     $controller = new CustomerController($customer);
 
     $first = trim($_POST['first_name']);
@@ -28,8 +30,8 @@
     }
 
     $username = htmlspecialchars($first . ' ' . $last);
-    $controller->addCustomer($username, $type);
-    
+    $controller->addCustomer($username, $type); 
+
     echo json_encode([
         'status' => 'success',
         'message' => 'Customer added successfully'

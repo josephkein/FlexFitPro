@@ -57,7 +57,8 @@
             $q = "INSERT INTO memberships (customer_id, plan_id, start_date) VALUES (?, ?, ?)";
             $stmt = $this->db->prepare($q);
             $stmt->bind_param('iis', $customer_id, $plan_id, $start_date);
-            return $stmt->execute();
+            $stmt->execute();
+            return $this->db->insert_id;
         }
         public function destroy($id){
             $q = "DELETE FROM memberships WHERE membership_id = ?";

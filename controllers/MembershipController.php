@@ -27,6 +27,9 @@
         public function update($id, $plan_id, $start_date){
             return $this->membership->update($id, $plan_id, $start_date);
         }
+        public function get($id){
+            return $this->membership->get($id);
+        }
 
     }
 
